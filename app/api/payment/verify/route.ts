@@ -9,6 +9,7 @@ import { User } from "@/models/User";
 import { Event } from "@/models/Event";
 import mongoose from "mongoose";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
+import { sendRegistrationConfirmationEmail } from "@/lib/email";
 
 const keyId = process.env.RAZORPAY_KEY_ID;
 const keySecret = process.env.RAZORPAY_KEY_SECRET;
@@ -203,6 +204,21 @@ export async function POST(req: Request) {
       },
       { new: true }
     ).exec();
+
+    try {
+      await sendRegistrationConfirmationEmail({
+        email: user.email,
+        studentName: user.name,
+        eventTitle: event.title,
+        eventPrice: Number(event.price),
+        amountPaise: amount,
+        paymentId: razorpay_payment_id,
+        orderId: razorpay_order_id,
+        registrationId: String(registration._id)
+      });
+    } catch (emailError) {
+      console.error("Failed to send registration confirmation email", emailError);
+    }
 
     return NextResponse.json({
       message: "Payment verified and registration completed",

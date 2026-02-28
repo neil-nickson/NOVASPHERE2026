@@ -50,3 +50,56 @@ export async function sendVerificationEmail(email: string, otpCode: string) {
   return { sent: true };
 }
 
+type RegistrationConfirmationPayload = {
+  email: string;
+  studentName: string;
+  eventTitle: string;
+  eventPrice: number;
+  amountPaise: number;
+  paymentId: string;
+  orderId: string;
+  registrationId: string;
+};
+
+export async function sendRegistrationConfirmationEmail({
+  email,
+  studentName,
+  eventTitle,
+  eventPrice,
+  amountPaise,
+  paymentId,
+  orderId,
+  registrationId
+}: RegistrationConfirmationPayload) {
+  if (!transporter) {
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("Email environment variables are not fully configured");
+    }
+
+    console.warn("SMTP is not configured. Skipping registration confirmation email in development.");
+    return { sent: false };
+  }
+
+  const paidAmount = (amountPaise / 100).toFixed(2);
+
+  await transporter.sendMail({
+    from: EMAIL_FROM,
+    to: email,
+    subject: "Registration Confirmed - NOVASPHERE 2026",
+    html: `
+      <p>Hi ${studentName},</p>
+      <p>Your registration has been confirmed successfully for NOVASPHERE 2026.</p>
+      <p><strong>Event:</strong> ${eventTitle}</p>
+      <p><strong>Event Fee:</strong> ₹${eventPrice.toFixed(2)}</p>
+      <p><strong>Paid Amount:</strong> ₹${paidAmount}</p>
+      <p><strong>Payment ID:</strong> ${paymentId}</p>
+      <p><strong>Order ID:</strong> ${orderId}</p>
+      <p><strong>Registration ID:</strong> ${registrationId}</p>
+      <p>Please keep this email for your records.</p>
+      <p>Regards,<br/>NOVASPHERE 2026 Team</p>
+    `
+  });
+
+  return { sent: true };
+}
+

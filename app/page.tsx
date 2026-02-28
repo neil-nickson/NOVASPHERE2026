@@ -282,6 +282,7 @@ export default function HomePage() {
               <p>Mohamed Taufiq, 1st Year(AIML)</p>
               <p>Mohanvel, 1st Year(AIML)</p>
               <p>Keith Rocha, 1st Year(AIML)</p>
+              <p>Muhammed Haani,1st Year(AIML)</p>
             </div>
           </article>
 
