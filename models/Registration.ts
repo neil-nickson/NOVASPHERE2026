@@ -1,0 +1,48 @@
+import mongoose, { Schema, type Model, type Document } from "mongoose";
+
+export interface IRegistration extends Document {
+  userId: mongoose.Types.ObjectId;
+  eventId: mongoose.Types.ObjectId;
+  studentName: string;
+  studentEmail: string;
+  mobileNumber: string;
+  college: string;
+  course: string;
+  year: "1st" | "2nd" | "3rd" | "4th";
+  eventTitle: string;
+  eventPrice: number;
+  paymentId: string;
+  orderId: string;
+  amount: number;
+  status: string;
+  createdAt: Date;
+}
+
+const RegistrationSchema = new Schema<IRegistration>(
+  {
+    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    eventId: { type: Schema.Types.ObjectId, ref: "Event", required: true },
+    studentName: { type: String, required: true },
+    studentEmail: { type: String, required: true },
+    mobileNumber: { type: String, required: true },
+    college: { type: String, required: true },
+    course: { type: String, required: true },
+    year: { type: String, required: true, enum: ["1st", "2nd", "3rd", "4th"] },
+    eventTitle: { type: String, required: true },
+    eventPrice: { type: Number, required: true },
+    paymentId: { type: String, required: true },
+    orderId: { type: String, required: true },
+    amount: { type: Number, required: true },
+    status: { type: String, required: true }
+  },
+  { timestamps: { createdAt: true, updatedAt: true } }
+);
+
+RegistrationSchema.index({ userId: 1, eventId: 1 }, { unique: true });
+RegistrationSchema.index({ orderId: 1 }, { unique: true });
+RegistrationSchema.index({ paymentId: 1 }, { unique: true });
+
+export const Registration: Model<IRegistration> =
+  mongoose.models.Registration ||
+  mongoose.model<IRegistration>("Registration", RegistrationSchema);
+

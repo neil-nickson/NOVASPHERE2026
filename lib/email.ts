@@ -1,0 +1,52 @@
+import nodemailer from "nodemailer";
+
+const EMAIL_SERVER_USER = process.env.EMAIL_SERVER_USER;
+const EMAIL_SERVER_PASSWORD = process.env.EMAIL_SERVER_PASSWORD;
+const EMAIL_SERVER_HOST = process.env.EMAIL_SERVER_HOST;
+const EMAIL_SERVER_PORT = Number(process.env.EMAIL_SERVER_PORT || 587);
+const EMAIL_FROM = process.env.EMAIL_FROM;
+const hasEmailConfig =
+  !!EMAIL_SERVER_USER &&
+  !!EMAIL_SERVER_PASSWORD &&
+  !!EMAIL_SERVER_HOST &&
+  !!EMAIL_FROM;
+
+const transporter = hasEmailConfig
+  ? nodemailer.createTransport({
+      host: EMAIL_SERVER_HOST,
+      port: EMAIL_SERVER_PORT,
+      secure: EMAIL_SERVER_PORT === 465,
+      auth: {
+        user: EMAIL_SERVER_USER,
+        pass: EMAIL_SERVER_PASSWORD
+      }
+    })
+  : null;
+
+export async function sendVerificationEmail(email: string, otpCode: string) {
+  if (!transporter) {
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("Email environment variables are not fully configured");
+    }
+
+    console.warn("SMTP is not configured. Skipping verification email in development.");
+    console.info(`DEV OTP for ${email}: ${otpCode}`);
+    return { sent: false };
+  }
+
+  await transporter.sendMail({
+    from: EMAIL_FROM,
+    to: email,
+    subject: "Your login code - Inter-College Events",
+    html: `
+      <p>Thank you for registering for Inter-College Events.</p>
+      <p>Your one-time verification code is:</p>
+      <p style="font-size: 20px; font-weight: bold; letter-spacing: 4px;">${otpCode}</p>
+      <p>This code will expire in 10 minutes.</p>
+      <p>If you did not request this, you can ignore this email.</p>
+    `
+  });
+
+  return { sent: true };
+}
+

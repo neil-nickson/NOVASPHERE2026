@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 222 47% 4%;
+  --foreground: 210 40% 98%;
+  --muted: 217 33% 10%;
+  --muted-foreground: 215 20% 70%;
+  --card: 222 47% 7%;
+  --card-foreground: 210 40% 98%;
+  --border: 217 33% 18%;
+  --ring: 212 100% 70%;
+  --primary: 212 100% 62%;
+  --primary-foreground: 222 47% 8%;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  background-color: hsl(var(--background));
+}
+
+body {
+  position: relative;
+  color: hsl(var(--foreground));
+  background: transparent;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image: url("/site-background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(rgba(3, 8, 20, 0.22), rgba(3, 8, 20, 0.22));
+  pointer-events: none;
+}
+
+::selection {
+  background: rgba(59, 130, 246, 0.35);
+}
+
