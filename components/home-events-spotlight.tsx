@@ -106,9 +106,6 @@ export function HomeEventsSpotlight() {
             Event Spotlight
           </p>
         </div>
-        <div className="hidden rounded-full border border-purple-300/35 bg-purple-500/10 px-3 py-1 text-[11px] font-semibold tracking-[0.15em] text-purple-100 md:block">
-          Auto switch every 5s
-        </div>
       </div>
 
       <div className="mt-6 grid gap-4 md:grid-cols-[1fr,1.35fr,1fr]">
