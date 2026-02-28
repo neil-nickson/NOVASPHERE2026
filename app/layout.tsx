@@ -9,7 +9,12 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "NOVASHPERE 2026",
-  description: "Inter-College Event Website"
+  description: "Inter-College Event Website",
+  icons: {
+    icon: "/nova%20sphere%20logo.jpeg",
+    shortcut: "/nova%20sphere%20logo.jpeg",
+    apple: "/nova%20sphere%20logo.jpeg"
+  }
 };
 
 export default function RootLayout({

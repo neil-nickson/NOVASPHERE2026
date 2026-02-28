@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
@@ -33,6 +33,36 @@ interface Props {
 
 const CATEGORY_BY_INDEX = ["TECH", "DEBATE", "DESIGN", "CHALLENGE", "DEBUG"];
 
+let razorpayLoaderPromise: Promise<void> | null = null;
+
+function loadRazorpaySdk() {
+  if (typeof window === "undefined") {
+    return Promise.reject(new Error("Unable to load payment SDK"));
+  }
+
+  if (window.Razorpay) {
+    return Promise.resolve();
+  }
+
+  if (razorpayLoaderPromise) {
+    return razorpayLoaderPromise;
+  }
+
+  razorpayLoaderPromise = new Promise<void>((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    script.onload = () => resolve();
+    script.onerror = () => {
+      razorpayLoaderPromise = null;
+      reject(new Error("Payment SDK failed to load"));
+    };
+    document.body.appendChild(script);
+  });
+
+  return razorpayLoaderPromise;
+}
+
 function getCleanTitle(title: string) {
   const parts = title.trim().split(" ");
   if (parts.length > 1 && /\d/.test(parts[0])) {
@@ -47,15 +77,6 @@ export function EventsClient({ events }: Props) {
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (window.Razorpay) return;
-    const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
-    script.async = true;
-    document.body.appendChild(script);
-  }, []);
-
   async function handleRegister(event: EventDto) {
     if (status !== "authenticated") {
       router.push("/login");
@@ -64,6 +85,8 @@ export function EventsClient({ events }: Props) {
 
     setLoadingId(event.id);
     try {
+      await loadRazorpaySdk();
+
       const res = await fetch("/api/payment/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

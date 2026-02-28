@@ -1,6 +1,18 @@
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { Countdown } from "@/components/countdown";
-import { HomeEventsSpotlight } from "@/components/home-events-spotlight";
+
+const HomeEventsSpotlight = dynamic(
+  () => import("@/components/home-events-spotlight").then((mod) => mod.HomeEventsSpotlight),
+  {
+    ssr: false,
+    loading: () => (
+      <section className="rounded-3xl border border-white/10 bg-black/45 p-6 text-sm text-white/60">
+        Loading featured events...
+      </section>
+    )
+  }
+);
 
 const EVENT_DATE = "2026-03-18T09:00:00+05:30";
 
@@ -14,6 +26,7 @@ export default function HomePage() {
           muted
           loop
           playsInline
+          preload="metadata"
         >
           <source src="/event-hero.mp4" type="video/mp4" />
         </video>
@@ -266,7 +279,7 @@ export default function HomePage() {
               <p>Ishwarya Ramesh, 2ndYear(DS)</p>
               <p>Navneeth Tripathy, 1st Year(AIML)</p>
               <p>Neil Nickson, 1st Year(AIML)</p>
-              <p>Mohhamed Taufiq, 1st Year(AIML)</p>
+              <p>Mohamed Taufiq, 1st Year(AIML)</p>
               <p>Mohanvel, 1st Year(AIML)</p>
               <p>Keith Rocha, 1st Year(AIML)</p>
             </div>
