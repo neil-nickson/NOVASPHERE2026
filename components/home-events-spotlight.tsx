@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type HomeEventCard = {
   id: string;
@@ -71,12 +71,22 @@ const HOME_EVENTS: HomeEventCard[] = [
   }
 ];
 
+const ROTATE_MS = 5000;
+
 function mod(value: number, total: number) {
   return (value + total) % total;
 }
 
 export function HomeEventsSpotlight() {
   const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveIndex((current) => mod(current + 1, HOME_EVENTS.length));
+    }, ROTATE_MS);
+
+    return () => window.clearInterval(timer);
+  }, []);
 
   const activeEvent = HOME_EVENTS[activeIndex];
   const prevEvent = useMemo(
@@ -95,6 +105,9 @@ export function HomeEventsSpotlight() {
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-purple-300/90">
             Event Spotlight
           </p>
+        </div>
+        <div className="hidden rounded-full border border-purple-300/35 bg-purple-500/10 px-3 py-1 text-[11px] font-semibold tracking-[0.15em] text-purple-100 md:block">
+          Auto switch every 5s
         </div>
       </div>
 
