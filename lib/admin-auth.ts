@@ -2,7 +2,7 @@ import crypto from "crypto";
 
 export const ADMIN_COOKIE_NAME = "novasphere_admin";
 const ADMIN_SESSION_TTL_MS = 1000 * 60 * 60 * 8;
-const ADMIN_FIXED_PASSWORD = "5abc3xyz2abc";
+const ADMIN_FIXED_PASSWORD = "5abc3xyz2abc8";
 
 type AdminTokenPayload = {
   u: string;
