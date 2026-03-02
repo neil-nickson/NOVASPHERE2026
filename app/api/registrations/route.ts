@@ -103,16 +103,24 @@ export async function POST(req: Request) {
       paymentUpiId
     } = parsed.data;
 
-    if (!mongoose.Types.ObjectId.isValid(eventId)) {
-      return NextResponse.json({ error: "Invalid eventId" }, { status: 400 });
-    }
-
     await connectDB();
 
-    const event = await Event.findById(eventId).lean().exec();
-    if (!event) {
-      return NextResponse.json({ error: "Event not found" }, { status: 404 });
+    const isObjectId = mongoose.Types.ObjectId.isValid(eventId);
+    let eventDoc = isObjectId ? await Event.findById(eventId).exec() : null;
+
+    if (!eventDoc) {
+      eventDoc = await Event.findOne({ title: eventTitle.trim() }).exec();
     }
+
+    if (!eventDoc) {
+      eventDoc = await Event.create({
+        title: eventTitle.trim(),
+        description: `${eventTitle.trim()} registration`,
+        price: PRICE_PER_PARTICIPANT
+      });
+    }
+
+    const event = eventDoc.toObject();
 
     const user = await User.findById(userId).lean().exec();
     if (!user) {
@@ -128,7 +136,7 @@ export async function POST(req: Request) {
 
     const alreadyRegistered = await Registration.findOne({
       userId,
-      eventId,
+      eventId: eventDoc._id,
       status: "paid"
     })
       .lean()
@@ -169,7 +177,7 @@ export async function POST(req: Request) {
 
     const registration = await Registration.create({
       userId,
-      eventId,
+      eventId: eventDoc._id,
       studentName: user.name,
       studentEmail: user.email,
       mobileNumber: user.mobileNumber,
@@ -193,7 +201,7 @@ export async function POST(req: Request) {
     await User.findByIdAndUpdate(
       userId,
       {
-        $addToSet: { registeredEvents: eventId }
+        $addToSet: { registeredEvents: eventDoc._id }
       },
       { new: true }
     ).exec();
