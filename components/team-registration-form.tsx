@@ -149,9 +149,21 @@ export function TeamRegistrationForm({
         })
       });
 
-      const data = await res.json();
+      const raw = await res.text();
+      let data: any = {};
+      if (raw) {
+        try {
+          data = JSON.parse(raw);
+        } catch {
+          data = {};
+        }
+      }
+
       if (!res.ok) {
-        throw new Error(data.error || "Failed to submit registration");
+        if (res.status === 401) {
+          throw new Error("Your session expired. Please login again.");
+        }
+        throw new Error(data.error || `Failed to submit registration (HTTP ${res.status})`);
       }
 
       setSuccess("Registration submitted successfully. Payment details recorded.");
