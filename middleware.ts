@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
 
-const protectedPaths = ["/dashboard", "/api/payment", "/api/registrations"];
+const protectedPaths = ["/dashboard", "/api/payment"];
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
@@ -43,7 +43,7 @@ export async function middleware(req: NextRequest) {
   response.headers.set("X-Content-Type-Options", "nosniff");
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
 
-  if (pathname.startsWith("/api/payment") || pathname.startsWith("/api/registrations")) {
+  if (pathname.startsWith("/api/payment")) {
     response.headers.set("Cache-Control", "no-store, max-age=0");
   }
 
@@ -54,8 +54,7 @@ export const config = {
   matcher: [
     "/dashboard",
     "/dashboard/:path*",
-    "/api/payment/:path*",
-    "/api/registrations/:path*"
+    "/api/payment/:path*"
   ]
 };
 
