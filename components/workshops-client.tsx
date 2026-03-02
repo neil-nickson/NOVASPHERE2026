@@ -1,15 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-
-declare global {
-  interface Window {
-    Razorpay: any;
-  }
-}
+import { TeamRegistrationForm } from "@/components/team-registration-form";
 
 interface WorkshopItem {
   id: string;
@@ -25,86 +20,18 @@ interface Props {
 }
 
 export function WorkshopsClient({ workshops }: Props) {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
-  const [loadingId, setLoadingId] = useState<string | null>(null);
+  const [registrationOpenId, setRegistrationOpenId] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (window.Razorpay) return;
-    const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
-    script.async = true;
-    document.body.appendChild(script);
-  }, []);
-
-  async function handleRegister(workshop: WorkshopItem) {
+  function handleRegisterClick(workshop: WorkshopItem) {
     if (status !== "authenticated") {
       router.push("/login");
       return;
     }
 
-    setLoadingId(workshop.id);
-    try {
-      const res = await fetch("/api/payment/create-order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ eventId: workshop.id })
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || "Failed to create order");
-      }
-
-      const options = {
-        key: data.key,
-        amount: data.amount,
-        currency: data.currency,
-        name: "Inter-College Events",
-        description: workshop.title,
-        order_id: data.orderId,
-        prefill: {
-          email: session?.user?.email ?? undefined,
-          name: session?.user?.name ?? undefined
-        },
-        theme: {
-          color: "#a855f7"
-        },
-        handler: async (response: any) => {
-          const verifyRes = await fetch("/api/payment/verify", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_signature: response.razorpay_signature,
-              eventId: workshop.id,
-              amount: data.amount
-            })
-          });
-          const verifyData = await verifyRes.json();
-          if (!verifyRes.ok) {
-            alert(verifyData.error || "Payment verification failed");
-          } else {
-            alert("Workshop registration successful!");
-            router.push("/dashboard");
-          }
-        }
-      };
-
-      if (!window.Razorpay) {
-        throw new Error("Razorpay SDK not loaded");
-      }
-
-      const rzp = new window.Razorpay(options);
-      rzp.open();
-    } catch (err: any) {
-      console.error(err);
-      alert(err.message || "Unable to initiate payment");
-    } finally {
-      setLoadingId(null);
-    }
+    setRegistrationOpenId((current) => (current === workshop.id ? null : workshop.id));
   }
 
   return (
@@ -129,17 +56,26 @@ export function WorkshopsClient({ workshops }: Props) {
                   {isOpen ? "Hide details" : "More details"}
                 </button>
                 <button
-                  onClick={() => handleRegister(workshop)}
-                  disabled={loadingId === workshop.id || status === "loading"}
+                  onClick={() => handleRegisterClick(workshop)}
+                  disabled={status === "loading"}
                   className="rounded-md bg-purple-500 px-3 py-1.5 text-xs font-semibold text-white hover:bg-purple-400 disabled:opacity-60"
                 >
-                  {loadingId === workshop.id ? "Processing..." : "Register"}
+                  {registrationOpenId === workshop.id ? "Close Registration" : "Register"}
                 </button>
               </div>
             </div>
 
             <p className="mt-2 text-sm text-purple-200">{workshop.time}</p>
             <p className="mt-2 text-sm text-slate-300">{workshop.fee}</p>
+
+            {registrationOpenId === workshop.id && (
+              <TeamRegistrationForm
+                eventId={workshop.id}
+                eventTitle={workshop.title}
+                teamSizeText="1"
+                onSuccess={() => router.push("/dashboard")}
+              />
+            )}
 
             {isOpen && (
               <div className="mt-4 overflow-hidden rounded-xl border border-purple-300/20 bg-black/20 p-2">

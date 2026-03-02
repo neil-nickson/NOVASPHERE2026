@@ -3,12 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-
-declare global {
-  interface Window {
-    Razorpay: any;
-  }
-}
+import { TeamRegistrationForm } from "@/components/team-registration-form";
 
 interface EventDto {
   id: string;
@@ -33,36 +28,6 @@ interface Props {
 
 const CATEGORY_BY_INDEX = ["TECH", "DEBATE", "DESIGN", "CHALLENGE", "DEBUG"];
 
-let razorpayLoaderPromise: Promise<void> | null = null;
-
-function loadRazorpaySdk() {
-  if (typeof window === "undefined") {
-    return Promise.reject(new Error("Unable to load payment SDK"));
-  }
-
-  if (window.Razorpay) {
-    return Promise.resolve();
-  }
-
-  if (razorpayLoaderPromise) {
-    return razorpayLoaderPromise;
-  }
-
-  razorpayLoaderPromise = new Promise<void>((resolve, reject) => {
-    const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
-    script.async = true;
-    script.onload = () => resolve();
-    script.onerror = () => {
-      razorpayLoaderPromise = null;
-      reject(new Error("Payment SDK failed to load"));
-    };
-    document.body.appendChild(script);
-  });
-
-  return razorpayLoaderPromise;
-}
-
 function getCleanTitle(title: string) {
   const parts = title.trim().split(" ");
   if (parts.length > 1 && /\d/.test(parts[0])) {
@@ -74,77 +39,16 @@ function getCleanTitle(title: string) {
 export function EventsClient({ events }: Props) {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [loadingId, setLoadingId] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [registrationOpenId, setRegistrationOpenId] = useState<string | null>(null);
 
-  async function handleRegister(event: EventDto) {
+  async function handleRegisterClick(event: EventDto) {
     if (status !== "authenticated") {
       router.push("/login");
       return;
     }
 
-    setLoadingId(event.id);
-    try {
-      await loadRazorpaySdk();
-
-      const res = await fetch("/api/payment/create-order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ eventId: event.id })
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || "Failed to create order");
-      }
-
-      const options = {
-        key: data.key,
-        amount: data.amount,
-        currency: data.currency,
-        name: "Inter-College Events",
-        description: event.title,
-        order_id: data.orderId,
-        prefill: {
-          email: session?.user?.email ?? undefined,
-          name: session?.user?.name ?? undefined
-        },
-        theme: {
-          color: "#a855f7"
-        },
-        handler: async (response: any) => {
-          const verifyRes = await fetch("/api/payment/verify", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_signature: response.razorpay_signature,
-              eventId: event.id,
-              amount: data.amount
-            })
-          });
-          const verifyData = await verifyRes.json();
-          if (!verifyRes.ok) {
-            alert(verifyData.error || "Payment verification failed");
-          } else {
-            alert("Registration successful!");
-            router.push("/dashboard");
-          }
-        }
-      };
-
-      if (!window.Razorpay) {
-        throw new Error("Razorpay SDK not loaded");
-      }
-
-      const rzp = new window.Razorpay(options);
-      rzp.open();
-    } catch (err: any) {
-      console.error(err);
-      alert(err.message || "Unable to initiate payment");
-    } finally {
-      setLoadingId(null);
-    }
+    setRegistrationOpenId((current) => (current === event.id ? null : event.id));
   }
 
   return (
@@ -198,11 +102,11 @@ export function EventsClient({ events }: Props) {
 
             <div className="relative z-10 mt-5 grid gap-3 sm:grid-cols-2">
               <button
-                onClick={() => handleRegister(event)}
-                disabled={loadingId === event.id || status === "loading"}
+                onClick={() => handleRegisterClick(event)}
+                disabled={status === "loading"}
                 className="rounded-xl bg-purple-500 px-4 py-3 text-sm font-semibold uppercase tracking-wider text-white transition-all hover:bg-purple-400 disabled:opacity-60"
               >
-                {loadingId === event.id ? "Processing..." : "Register Now"}
+                {registrationOpenId === event.id ? "Close Registration" : "Register Now"}
               </button>
               <button
                 onClick={() =>
@@ -246,6 +150,15 @@ export function EventsClient({ events }: Props) {
                   </div>
                 )}
               </div>
+            )}
+
+            {registrationOpenId === event.id && (
+              <TeamRegistrationForm
+                eventId={event.id}
+                eventTitle={title}
+                teamSizeText={event.teamSize}
+                onSuccess={() => router.push("/dashboard")}
+              />
             )}
           </article>
         );

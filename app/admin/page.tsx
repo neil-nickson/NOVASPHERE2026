@@ -9,6 +9,9 @@ export const dynamic = "force-dynamic";
 
 type RegistrationView = {
   _id: string;
+  teamName?: string;
+  teamLeaderName?: string;
+  participantCount?: number;
   studentName?: string;
   studentEmail?: string;
   mobileNumber?: string;
@@ -17,6 +20,7 @@ type RegistrationView = {
   year?: string;
   amount?: number;
   paymentId?: string;
+  paymentUpiId?: string;
   status?: string;
   createdAt?: Date;
   eventTitle?: string;
@@ -88,7 +92,7 @@ export default async function AdminPage() {
               <div className="mb-3 flex items-center justify-between gap-2">
                 <h2 className="text-lg font-semibold text-purple-200 md:text-xl">{eventTitle}</h2>
                 <span className="rounded-full border border-purple-300/35 bg-purple-500/10 px-3 py-1 text-xs font-semibold text-purple-100">
-                  {rows.length} students
+                  {rows.length} teams
                 </span>
               </div>
 
@@ -96,6 +100,8 @@ export default async function AdminPage() {
                 <table className="min-w-full text-left text-xs text-white/80 md:text-sm">
                   <thead>
                     <tr className="border-b border-white/10 text-purple-200">
+                      <th className="px-2 py-2">Team</th>
+                      <th className="px-2 py-2">Team Size</th>
                       <th className="px-2 py-2">Name</th>
                       <th className="px-2 py-2">Email</th>
                       <th className="px-2 py-2">Mobile</th>
@@ -103,7 +109,8 @@ export default async function AdminPage() {
                       <th className="px-2 py-2">Course</th>
                       <th className="px-2 py-2">Year</th>
                       <th className="px-2 py-2">Amount</th>
-                      <th className="px-2 py-2">Payment ID</th>
+                      <th className="px-2 py-2">Transaction ID</th>
+                      <th className="px-2 py-2">UPI ID</th>
                       <th className="px-2 py-2">Time</th>
                     </tr>
                   </thead>
@@ -118,10 +125,15 @@ export default async function AdminPage() {
                       const college = row.college || fallbackUser?.college || "-";
                       const course = row.course || fallbackUser?.course || "-";
                       const year = row.year || fallbackUser?.year || "-";
+                      const teamName = row.teamName || "-";
+                      const teamSize = row.participantCount || 1;
+                      const leaderName = row.teamLeaderName || name;
 
                       return (
                         <tr key={row._id} className="border-b border-white/5 align-top">
-                          <td className="px-2 py-2">{name}</td>
+                          <td className="px-2 py-2">{teamName}</td>
+                          <td className="px-2 py-2">{teamSize}</td>
+                          <td className="px-2 py-2">{leaderName}</td>
                           <td className="px-2 py-2">{email}</td>
                           <td className="px-2 py-2">{mobile}</td>
                           <td className="px-2 py-2">{college}</td>
@@ -129,6 +141,7 @@ export default async function AdminPage() {
                           <td className="px-2 py-2">{year}</td>
                           <td className="px-2 py-2">₹{((row.amount || 0) / 100).toFixed(0)}</td>
                           <td className="max-w-[180px] truncate px-2 py-2 font-mono text-[11px]">{row.paymentId || "-"}</td>
+                          <td className="max-w-[180px] truncate px-2 py-2 font-mono text-[11px]">{row.paymentUpiId || "-"}</td>
                           <td className="px-2 py-2">{row.createdAt ? new Date(row.createdAt).toLocaleString() : "-"}</td>
                         </tr>
                       );
