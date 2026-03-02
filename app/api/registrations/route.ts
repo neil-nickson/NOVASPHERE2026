@@ -24,7 +24,7 @@ const memberSchema = z.object({
 const schema = z.object({
   eventId: z.string().trim(),
   eventTitle: z.string().trim().min(2),
-  teamName: z.string().trim().min(2),
+  teamName: z.string().trim().min(2).optional(),
   members: z.array(memberSchema),
   transactionId: z.string().trim().min(4),
   paymentUpiId: z.string().trim().min(3)
@@ -148,6 +148,12 @@ export async function POST(req: Request) {
 
     const constraints = getTeamConstraintsFromTitle(eventTitle || event.title);
     const participantCount = members.length + 1;
+    const resolvedTeamName =
+      teamName && teamName.trim().length > 0 ? teamName.trim() : `${user.name} Registration`;
+
+    if (constraints.max > 1 && !teamName) {
+      return NextResponse.json({ error: "Team name is required for team events" }, { status: 400 });
+    }
 
     if (participantCount < constraints.min || participantCount > constraints.max) {
       return NextResponse.json(
@@ -176,7 +182,7 @@ export async function POST(req: Request) {
       orderId: manualOrderId,
       transactionId,
       paymentUpiId,
-      teamName,
+      teamName: resolvedTeamName,
       teamLeaderName: user.name,
       participantCount,
       teamMembers: members,

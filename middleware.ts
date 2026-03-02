@@ -18,6 +18,18 @@ export async function middleware(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
   if (!token || (token as any).emailVerified !== true) {
+    if (pathname.startsWith("/api/")) {
+      return NextResponse.json(
+        {
+          error:
+            token && (token as any).emailVerified !== true
+              ? "Please verify your email before continuing"
+              : "Unauthorized"
+        },
+        { status: 401 }
+      );
+    }
+
     const loginUrl = new URL("/login", req.url);
     loginUrl.searchParams.set("callbackUrl", req.nextUrl.pathname);
     if (token && (token as any).emailVerified !== true) {

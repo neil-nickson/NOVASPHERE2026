@@ -119,7 +119,7 @@ export default function SchedulePage() {
         <aside className="h-fit rounded-2xl border border-white/10 bg-black/35 p-6 lg:sticky lg:top-24">
           <h3 className="text-2xl font-semibold text-amber-400">📍 Venue Info</h3>
           <div className="mt-6 space-y-2 text-white/75">
-            <p>Soundrabai Auditorium</p>
+            <p>T.M.T Soundrabai Auditorium</p>
             <p>Sathyabama Institute of Science and Technology</p>
             <p>Chennai, Tamil Nadu</p>
           </div>

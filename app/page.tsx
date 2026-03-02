@@ -62,7 +62,7 @@ export default function HomePage() {
           <div className="ml-auto flex max-w-sm flex-col gap-4 rounded-2xl border border-white/10 bg-black/60 p-5 text-xs text-white/70">
             <div className="flex items-center justify-between">
               <span className="text-white/60">Venue</span>
-              <span className="font-medium text-white">Soundrabai Auditorium, SIST</span>
+              <span className="font-medium text-white">T.M.T Soundrabai Auditorium, SIST</span>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-white/60">Date</span>
