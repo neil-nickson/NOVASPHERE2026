@@ -12,6 +12,14 @@ type RegistrationView = {
   teamName?: string;
   teamLeaderName?: string;
   participantCount?: number;
+  teamMembers?: Array<{
+    name?: string;
+    email?: string;
+    mobileNumber?: string;
+    college?: string;
+    course?: string;
+    year?: string;
+  }>;
   studentName?: string;
   studentEmail?: string;
   mobileNumber?: string;
@@ -89,20 +97,33 @@ export default async function AdminPage() {
               key={eventTitle}
               className="rounded-2xl border border-purple-500/30 bg-black/45 p-4 md:p-5"
             >
+              {(() => {
+                const totalStudents = rows.reduce(
+                  (sum, row) => sum + Math.max(1, row.participantCount || 1),
+                  0
+                );
+
+                return (
               <div className="mb-3 flex items-center justify-between gap-2">
                 <h2 className="text-lg font-semibold text-purple-200 md:text-xl">{eventTitle}</h2>
-                <span className="rounded-full border border-purple-300/35 bg-purple-500/10 px-3 py-1 text-xs font-semibold text-purple-100">
-                  {rows.length} teams
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="rounded-full border border-purple-300/35 bg-purple-500/10 px-3 py-1 text-xs font-semibold text-purple-100">
+                    {rows.length} teams
+                  </span>
+                  <span className="rounded-full border border-cyan-300/35 bg-cyan-500/10 px-3 py-1 text-xs font-semibold text-cyan-100">
+                    {totalStudents} students
+                  </span>
+                </div>
               </div>
+                );
+              })()}
 
               <div className="overflow-x-auto">
                 <table className="min-w-full text-left text-xs text-white/80 md:text-sm">
                   <thead>
                     <tr className="border-b border-white/10 text-purple-200">
                       <th className="px-2 py-2">Team</th>
-                      <th className="px-2 py-2">Team Size</th>
-                      <th className="px-2 py-2">Name</th>
+                      <th className="px-2 py-2">Participants</th>
                       <th className="px-2 py-2">Email</th>
                       <th className="px-2 py-2">Mobile</th>
                       <th className="px-2 py-2">College</th>
@@ -126,14 +147,22 @@ export default async function AdminPage() {
                       const course = row.course || fallbackUser?.course || "-";
                       const year = row.year || fallbackUser?.year || "-";
                       const teamName = row.teamName || "-";
-                      const teamSize = row.participantCount || 1;
                       const leaderName = row.teamLeaderName || name;
+                      const teammateNames = (row.teamMembers || [])
+                        .map((member) => member.name)
+                        .filter(Boolean) as string[];
+                      const participants = [leaderName, ...teammateNames];
 
                       return (
                         <tr key={row._id} className="border-b border-white/5 align-top">
                           <td className="px-2 py-2">{teamName}</td>
-                          <td className="px-2 py-2">{teamSize}</td>
-                          <td className="px-2 py-2">{leaderName}</td>
+                          <td className="px-2 py-2">
+                            <div className="space-y-1">
+                              {participants.map((participant, idx) => (
+                                <div key={`${row._id}-participant-${idx}`}>{participant}</div>
+                              ))}
+                            </div>
+                          </td>
                           <td className="px-2 py-2">{email}</td>
                           <td className="px-2 py-2">{mobile}</td>
                           <td className="px-2 py-2">{college}</td>

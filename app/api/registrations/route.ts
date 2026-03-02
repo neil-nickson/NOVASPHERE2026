@@ -25,14 +25,6 @@ const schema = z.object({
   eventId: z.string().trim(),
   eventTitle: z.string().trim().min(2),
   teamName: z.string().trim().min(2),
-  teamLeaderName: z.string().trim().min(2),
-  leader: z.object({
-    email: z.string().trim().email(),
-    mobileNumber: z.string().trim().regex(/^[0-9]{10,15}$/),
-    college: z.string().trim().min(2),
-    course: z.string().trim().min(2),
-    year: z.enum(["1st", "2nd", "3rd", "4th"])
-  }),
   members: z.array(memberSchema),
   transactionId: z.string().trim().min(4),
   paymentUpiId: z.string().trim().min(3)
@@ -106,8 +98,6 @@ export async function POST(req: Request) {
       eventId,
       eventTitle,
       teamName,
-      teamLeaderName,
-      leader,
       members,
       transactionId,
       paymentUpiId
@@ -127,6 +117,13 @@ export async function POST(req: Request) {
     const user = await User.findById(userId).lean().exec();
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    if (!user.email || !user.mobileNumber || !user.college || !user.course || !user.year) {
+      return NextResponse.json(
+        { error: "Your account profile is incomplete. Please update profile details first." },
+        { status: 400 }
+      );
     }
 
     const alreadyRegistered = await Registration.findOne({
@@ -167,12 +164,12 @@ export async function POST(req: Request) {
     const registration = await Registration.create({
       userId,
       eventId,
-      studentName: teamLeaderName,
-      studentEmail: leader.email,
-      mobileNumber: leader.mobileNumber,
-      college: leader.college,
-      course: leader.course,
-      year: leader.year,
+      studentName: user.name,
+      studentEmail: user.email,
+      mobileNumber: user.mobileNumber,
+      college: user.college,
+      course: user.course,
+      year: user.year,
       eventTitle: event.title,
       eventPrice: PRICE_PER_PARTICIPANT,
       paymentId: transactionId,
@@ -180,7 +177,7 @@ export async function POST(req: Request) {
       transactionId,
       paymentUpiId,
       teamName,
-      teamLeaderName,
+      teamLeaderName: user.name,
       participantCount,
       teamMembers: members,
       amount,
@@ -197,8 +194,8 @@ export async function POST(req: Request) {
 
     try {
       await sendRegistrationConfirmationEmail({
-        email: leader.email,
-        studentName: teamLeaderName,
+        email: user.email,
+        studentName: user.name,
         eventTitle: event.title,
         eventPrice: PRICE_PER_PARTICIPANT,
         amountPaise: amount,

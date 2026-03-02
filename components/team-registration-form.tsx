@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
+import { useSession } from "next-auth/react";
 
 type StudyYear = "1st" | "2nd" | "3rd" | "4th";
 
@@ -66,17 +67,12 @@ export function TeamRegistrationForm({
   teamSizeText,
   onSuccess
 }: TeamRegistrationFormProps) {
+  const { data: session } = useSession();
   const { min, max } = useMemo(() => parseTeamSize(teamSizeText), [teamSizeText]);
   const requiredTeammates = Math.max(0, min - 1);
   const maxTeammates = Math.max(0, max - 1);
 
   const [teamName, setTeamName] = useState("");
-  const [teamLeaderName, setTeamLeaderName] = useState("");
-  const [leaderEmail, setLeaderEmail] = useState("");
-  const [leaderMobile, setLeaderMobile] = useState("");
-  const [leaderCollege, setLeaderCollege] = useState("");
-  const [leaderCourse, setLeaderCourse] = useState("");
-  const [leaderYear, setLeaderYear] = useState<StudyYear>("1st");
   const [members, setMembers] = useState<MemberDetails[]>(
     Array.from({ length: requiredTeammates }, () => createEmptyMember())
   );
@@ -88,6 +84,12 @@ export function TeamRegistrationForm({
 
   const participantCount = 1 + members.length;
   const totalAmount = participantCount * PRICE_PER_PARTICIPANT;
+  const leaderName = session?.user?.name ?? "";
+  const leaderEmail = (session?.user as any)?.email ?? "";
+  const leaderMobile = (session?.user as any)?.mobileNumber ?? "";
+  const leaderCollege = (session?.user as any)?.college ?? "";
+  const leaderCourse = (session?.user as any)?.course ?? "";
+  const leaderYear = ((session?.user as any)?.year as StudyYear | undefined) ?? "1st";
 
   function updateMember(index: number, field: keyof MemberDetails, value: string) {
     setMembers((current) =>
@@ -126,6 +128,11 @@ export function TeamRegistrationForm({
       return;
     }
 
+    if (!leaderName || !leaderEmail || !leaderMobile || !leaderCollege || !leaderCourse) {
+      setError("Your account profile is incomplete. Please update your account details and try again.");
+      return;
+    }
+
     setSubmitting(true);
 
     try {
@@ -136,14 +143,6 @@ export function TeamRegistrationForm({
           eventId,
           eventTitle,
           teamName,
-          teamLeaderName,
-          leader: {
-            email: leaderEmail,
-            mobileNumber: leaderMobile,
-            college: leaderCollege,
-            course: leaderCourse,
-            year: leaderYear
-          },
           members,
           transactionId,
           paymentUpiId
@@ -191,12 +190,11 @@ export function TeamRegistrationForm({
           />
         </div>
         <div>
-          <label className="mb-1 block text-xs text-white/80">Team Leader Name</label>
+          <label className="mb-1 block text-xs text-white/80">Team Leader Name (from account)</label>
           <input
-            required
-            value={teamLeaderName}
-            onChange={(e) => setTeamLeaderName(e.target.value)}
-            className="w-full rounded-md border border-white/15 bg-black/40 px-3 py-2 text-sm outline-none focus:border-purple-400"
+            readOnly
+            value={leaderName}
+            className="w-full rounded-md border border-white/15 bg-black/25 px-3 py-2 text-sm text-white/85 outline-none"
           />
         </div>
       </div>
@@ -205,45 +203,30 @@ export function TeamRegistrationForm({
         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-purple-200">Leader Details</p>
         <div className="mt-3 grid gap-3 sm:grid-cols-2">
           <input
-            required
-            type="email"
-            placeholder="Leader email"
+            readOnly
             value={leaderEmail}
-            onChange={(e) => setLeaderEmail(e.target.value)}
-            className="rounded-md border border-white/15 bg-black/40 px-3 py-2 text-sm outline-none focus:border-purple-400"
+            className="rounded-md border border-white/15 bg-black/25 px-3 py-2 text-sm text-white/85 outline-none"
           />
           <input
-            required
-            placeholder="Leader mobile number"
+            readOnly
             value={leaderMobile}
-            onChange={(e) => setLeaderMobile(e.target.value)}
-            className="rounded-md border border-white/15 bg-black/40 px-3 py-2 text-sm outline-none focus:border-purple-400"
+            className="rounded-md border border-white/15 bg-black/25 px-3 py-2 text-sm text-white/85 outline-none"
           />
           <input
-            required
-            placeholder="College"
+            readOnly
             value={leaderCollege}
-            onChange={(e) => setLeaderCollege(e.target.value)}
-            className="rounded-md border border-white/15 bg-black/40 px-3 py-2 text-sm outline-none focus:border-purple-400"
+            className="rounded-md border border-white/15 bg-black/25 px-3 py-2 text-sm text-white/85 outline-none"
           />
           <input
-            required
-            placeholder="Branch / Course"
+            readOnly
             value={leaderCourse}
-            onChange={(e) => setLeaderCourse(e.target.value)}
-            className="rounded-md border border-white/15 bg-black/40 px-3 py-2 text-sm outline-none focus:border-purple-400"
+            className="rounded-md border border-white/15 bg-black/25 px-3 py-2 text-sm text-white/85 outline-none"
           />
-          <select
-            value={leaderYear}
-            onChange={(e) => setLeaderYear(e.target.value as StudyYear)}
-            className="rounded-md border border-white/15 bg-black/40 px-3 py-2 text-sm outline-none focus:border-purple-400"
-          >
-            {YEARS.map((year) => (
-              <option key={year} value={year}>
-                {year} Year
-              </option>
-            ))}
-          </select>
+          <input
+            readOnly
+            value={`${leaderYear} Year`}
+            className="rounded-md border border-white/15 bg-black/25 px-3 py-2 text-sm text-white/85 outline-none"
+          />
         </div>
       </div>
 

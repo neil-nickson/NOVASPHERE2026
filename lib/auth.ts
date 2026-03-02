@@ -44,6 +44,10 @@ export const authOptions: NextAuthOptions = {
           id: String(user._id),
           name: user.name,
           email: user.email,
+          mobileNumber: user.mobileNumber,
+          college: user.college,
+          course: user.course,
+          year: user.year,
           emailVerified: user.emailVerified
         };
       }
@@ -53,6 +57,10 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = (user as any).id;
+        token.mobileNumber = (user as any).mobileNumber;
+        token.college = (user as any).college;
+        token.course = (user as any).course;
+        token.year = (user as any).year;
         token.emailVerified = (user as any).emailVerified;
       }
       return token;
@@ -60,6 +68,10 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (token && session.user) {
         (session.user as any).id = token.id;
+        (session.user as any).mobileNumber = token.mobileNumber;
+        (session.user as any).college = token.college;
+        (session.user as any).course = token.course;
+        (session.user as any).year = token.year;
         (session.user as any).emailVerified = token.emailVerified;
       }
       return session;
