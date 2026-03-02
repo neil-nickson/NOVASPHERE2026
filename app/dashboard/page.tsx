@@ -4,6 +4,7 @@ import { authOptions } from "@/lib/auth";
 import { connectDB } from "@/lib/db";
 import { User } from "@/models/User";
 import { Registration } from "@/models/Registration";
+import mongoose from "mongoose";
 
 export const dynamic = "force-dynamic";
 
@@ -13,15 +14,32 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
-  await connectDB();
+  const userId = (session.user as any).id as string | undefined;
+  if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+    redirect("/login");
+  }
 
-  const user = await User.findById((session.user as any).id).lean().exec();
+  let user: any = null;
+  let registrations: any[] = [];
 
-  const registrations = await Registration.find({ userId: (session.user as any).id })
-    .populate("eventId")
-    .sort({ createdAt: -1 })
-    .lean()
-    .exec();
+  try {
+    await connectDB();
+
+    user = await User.findById(userId).lean().exec();
+
+    registrations = await Registration.find({ userId })
+      .populate("eventId")
+      .sort({ createdAt: -1 })
+      .lean()
+      .exec();
+  } catch (error) {
+    console.error("Failed to load dashboard data", error);
+    return (
+      <div className="rounded-2xl border border-red-500/30 bg-red-500/10 p-5 text-sm text-red-200">
+        Failed to load dashboard right now. Please refresh and try again.
+      </div>
+    );
+  }
 
   const paidRegistrations = registrations.filter((registration) => registration.status === "paid");
 
