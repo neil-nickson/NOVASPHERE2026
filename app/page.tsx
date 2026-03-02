@@ -14,7 +14,7 @@ const HomeEventsSpotlight = dynamic(
   }
 );
 
-const EVENT_DATE = "2026-03-18T09:00:00+05:30";
+const EVENT_DATE = "2026-03-16T09:00:00+05:30";
 
 export default function HomePage() {
   return (
@@ -66,7 +66,7 @@ export default function HomePage() {
             </div>
             <div className="flex items-center justify-between">
               <span className="text-white/60">Date</span>
-              <span className="font-medium text-white">18 Mar, 2026 • 9:00 AM</span>
+              <span className="font-medium text-white">16 Mar, 2026 • 9:00 AM</span>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-white/60">Time</span>
