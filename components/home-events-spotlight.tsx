@@ -27,7 +27,7 @@ const HOME_EVENTS: HomeEventCard[] = [
     title: "Logic Arena:Tech X Debate",
     category: "DEBATE",
     time: "10:00 AM – 12:30 PM",
-    fee: "₹130 per person"
+    fee: "₹150 per person"
   },
   {
     id: "quantum-canvas",
@@ -35,7 +35,7 @@ const HOME_EVENTS: HomeEventCard[] = [
     title: "Quantum Canvas",
     category: "DESIGN",
     time: "10:00 AM – 12:30 PM",
-    fee: "₹100 per person"
+    fee: "₹150 per person"
   },
   {
     id: "tech-escape",
@@ -43,7 +43,7 @@ const HOME_EVENTS: HomeEventCard[] = [
     title: "Tech Escape Challenge",
     category: "CHALLENGE",
     time: "1:30 PM – 2:30 PM",
-    fee: "₹140 per person"
+    fee: "₹150 per person"
   },
   {
     id: "debug-dominion",
@@ -51,7 +51,7 @@ const HOME_EVENTS: HomeEventCard[] = [
     title: "Debug Dominion",
     category: "DEBUG",
     time: "1:30 PM – 2:30 PM",
-    fee: "₹100 per person"
+    fee: "₹150 per person"
   },
   {
     id: "antigravity-workshop",

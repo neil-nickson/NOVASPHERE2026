@@ -5,6 +5,8 @@ import { WorkshopsClient } from "@/components/workshops-client";
 
 export const dynamic = "force-dynamic";
 
+const EVENT_PRICE = 150;
+
 const eventContent = [
   {
     title: "1️⃣ NeuralForge Ideathon",
@@ -64,7 +66,7 @@ const eventContent = [
     time: "🕒 10:00 AM – 12:30 PM",
     finals: "🏁 Finals: 2:30 PM – 3:00 PM",
     teamSize: "👥 Team Size: 3",
-    fee: "💰 Fee: ₹130 per person",
+    fee: "💰 Fee: ₹150 per person",
     brief:
       "A tech-focused debate inspired by MUN format. Teams discuss future technology policies, AI ethics, and tech-related global issues.",
     rounds: [
@@ -101,7 +103,7 @@ const eventContent = [
     title: "3️⃣ Quantum Canvas (Tech Poster)",
     time: "🕒 10:00 AM – 12:30 PM",
     teamSize: "👥 Team Size: 2–3",
-    fee: "💰 Fee: ₹100 per person",
+    fee: "💰 Fee: ₹150 per person",
     brief:
       "Teams creatively visualize technology ideas through posters that communicate innovation clearly and attractively.",
     rounds: [
@@ -136,7 +138,7 @@ const eventContent = [
     title: "4️⃣ Tech Escape Challenge",
     time: "🕒 1:30 PM – 2:30 PM",
     teamSize: "👥 Team Size: 3",
-    fee: "💰 Fee: ₹140 per person",
+    fee: "💰 Fee: ₹150 per person",
     brief:
       "A fast-paced multi-level challenge where teams solve tech puzzles, logic tasks, and mini challenges to unlock final solutions.",
     rounds: [
@@ -167,7 +169,7 @@ const eventContent = [
     title: "5️⃣ Debug Dominion",
     time: "🕒 1:30 PM – 2:30 PM",
     teamSize: "👥 Team Size: 2",
-    fee: "💰 Fee: ₹100 per person",
+    fee: "💰 Fee: ₹150 per person",
     brief:
       "Teams identify and fix errors in provided code. Focus is on debugging skills, accuracy, and speed.",
     rounds: [
@@ -202,7 +204,7 @@ const workshops = [
     title: "1️⃣ ANTIGRAVITY TOOL (WORKSHOP)",
     time: "🕒 10:00 AM – 12:30 PM",
     fee: "💰 Fee: ₹150 per person",
-    price: 150,
+    price: EVENT_PRICE,
     brochureImage: "/antigravity.jpeg"
   },
   {
@@ -210,13 +212,14 @@ const workshops = [
     title: "2️⃣ WEB DEVELOPMENT (WORKSHOP)",
     time: "🕒 1:00 PM – 3:15 PM",
     fee: "💰 Fee: ₹150 per person",
-    price: 150,
+    price: EVENT_PRICE,
     brochureImage: "/web development.jpeg"
   }
 ];
 
 export default async function EventsPage() {
   await connectDB();
+  await Event.updateMany({}, { $set: { price: EVENT_PRICE } }).exec();
   const dbEvents = await Event.find().sort({ createdAt: 1 }).lean().exec();
 
   const workshopTitles = workshops.map((workshop) => workshop.dbTitle);
@@ -250,7 +253,7 @@ export default async function EventsPage() {
       id: dbEvent ? String(dbEvent._id) : `event-${index + 1}`,
       title: event.title,
       description: event.brief,
-      price: Number(event.fee.match(/₹(\d+)/)?.[1] ?? 0),
+      price: Number(dbEvent?.price ?? EVENT_PRICE),
       time: event.time,
       teamSize: event.teamSize,
       finals: event.finals,

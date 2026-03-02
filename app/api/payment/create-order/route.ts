@@ -20,6 +20,8 @@ const razorpay = new Razorpay({
   key_secret: keySecret
 });
 
+const FIXED_EVENT_PRICE = 150;
+
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
   if (!session || !session.user) {
@@ -79,7 +81,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const amount = event.price * 100;
+    const amount = FIXED_EVENT_PRICE * 100;
 
     const order = await razorpay.orders.create({
       amount,
@@ -100,7 +102,7 @@ export async function POST(req: Request) {
       event: {
         id: String(event._id),
         title: event.title,
-        price: event.price
+        price: FIXED_EVENT_PRICE
       }
     });
   } catch (error) {

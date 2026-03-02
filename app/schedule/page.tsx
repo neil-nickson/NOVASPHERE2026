@@ -53,14 +53,14 @@ export default function SchedulePage() {
             <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-purple-400 md:-left-[39px]" />
             <p className="text-sm font-semibold text-purple-300">10:00 AM</p>
             <h3 className="mt-2 text-lg font-semibold text-white">3️⃣ Quantum Canvas (Tech Poster)</h3>
-            <p className="mt-3 text-sm text-white/75">Entry Fee: ₹100 per person</p>
+            <p className="mt-3 text-sm text-white/75">Entry Fee: ₹150 per person</p>
           </article>
 
           <article className="relative rounded-2xl border border-white/10 bg-black/35 p-5">
             <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-purple-400 md:-left-[39px]" />
             <p className="text-sm font-semibold text-purple-300">10:00 AM</p>
             <h3 className="mt-2 text-lg font-semibold text-white">4️⃣ Logic Arena:Tech X Debate</h3>
-            <p className="mt-3 text-sm text-white/75">Entry Fee: ₹130 per person</p>
+            <p className="mt-3 text-sm text-white/75">Entry Fee: ₹150 per person</p>
           </article>
 
           <article className="relative rounded-2xl border border-white/10 bg-black/35 p-5">
@@ -82,14 +82,14 @@ export default function SchedulePage() {
             <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-purple-400 md:-left-[39px]" />
             <p className="text-sm font-semibold text-purple-300">1:30 AM</p>
             <h3 className="mt-2 text-lg font-semibold text-white">6️⃣ TECH ESCAPE</h3>
-            <p className="mt-3 text-sm text-white/75">Entry Fee: ₹140 per person</p>
+            <p className="mt-3 text-sm text-white/75">Entry Fee: ₹150 per person</p>
           </article>
 
           <article className="relative rounded-2xl border border-white/10 bg-black/35 p-5">
             <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-purple-400 md:-left-[39px]" />
             <p className="text-sm font-semibold text-purple-300">1:30 PM</p>
             <h3 className="mt-2 text-lg font-semibold text-white">7️⃣ Debug Dominion</h3>
-            <p className="mt-3 text-sm text-white/75">Entry Fee: ₹100 per person</p>
+            <p className="mt-3 text-sm text-white/75">Entry Fee: ₹150 per person</p>
           </article>
 
           <article className="relative rounded-2xl border border-white/10 bg-black/35 p-5">
@@ -119,7 +119,7 @@ export default function SchedulePage() {
         <aside className="h-fit rounded-2xl border border-white/10 bg-black/35 p-6 lg:sticky lg:top-24">
           <h3 className="text-2xl font-semibold text-amber-400">📍 Venue Info</h3>
           <div className="mt-6 space-y-2 text-white/75">
-            <p>Remibai Auditorium</p>
+            <p>Soundrabai Auditorium</p>
             <p>Sathyabama Institute of Science and Technology</p>
             <p>Chennai, Tamil Nadu</p>
           </div>

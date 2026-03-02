@@ -55,7 +55,7 @@ const faqItems = [
   {
     question: "1️⃣2️⃣ What is the registration fee?",
     answer:
-      "Registration fee ranges from ₹100 – ₹150 per person per event, depending on the event."
+      "Registration fee is ₹150 per person per event."
   },
   {
     question: "1️⃣3️⃣ What happens if a participant arrives late?",
