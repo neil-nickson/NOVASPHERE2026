@@ -155,7 +155,7 @@ export function EventsClient({ events }: Props) {
             {registrationOpenId === event.id && (
               <TeamRegistrationForm
                 eventId={event.id}
-                eventTitle={title}
+                eventTitle={event.title}
                 teamSizeText={event.teamSize}
                 onSuccess={() => router.push("/dashboard")}
               />

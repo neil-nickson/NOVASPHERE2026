@@ -220,7 +220,30 @@ const workshops = [
 export default async function EventsPage() {
   await connectDB();
   await Event.updateMany({}, { $set: { price: EVENT_PRICE } }).exec();
-  const dbEvents = await Event.find().sort({ createdAt: 1 }).lean().exec();
+
+  const competitiveTitles = eventContent.map((event) => event.title);
+  const existingCompetitiveEvents = await Event.find({ title: { $in: competitiveTitles } })
+    .lean()
+    .exec();
+  const existingCompetitiveTitleSet = new Set(existingCompetitiveEvents.map((event) => event.title));
+  const missingCompetitiveEvents = eventContent.filter(
+    (event) => !existingCompetitiveTitleSet.has(event.title)
+  );
+
+  if (missingCompetitiveEvents.length > 0) {
+    await Event.insertMany(
+      missingCompetitiveEvents.map((event) => ({
+        title: event.title,
+        description: event.brief,
+        price: EVENT_PRICE
+      }))
+    );
+  }
+
+  const competitiveEventDocs = await Event.find({ title: { $in: competitiveTitles } })
+    .lean()
+    .exec();
+  const competitiveEventMap = new Map(competitiveEventDocs.map((event) => [event.title, event]));
 
   const workshopTitles = workshops.map((workshop) => workshop.dbTitle);
   const existingWorkshopEvents = await Event.find({ title: { $in: workshopTitles } })
@@ -248,7 +271,7 @@ export default async function EventsPage() {
   );
 
   const eventCards = eventContent.map((event, index) => {
-    const dbEvent = dbEvents[index];
+    const dbEvent = competitiveEventMap.get(event.title);
     return {
       id: dbEvent ? String(dbEvent._id) : `event-${index + 1}`,
       title: event.title,

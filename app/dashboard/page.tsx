@@ -15,17 +15,33 @@ export default async function DashboardPage() {
 
   await connectDB();
 
-  const user = await User.findById((session.user as any).id)
-    .populate("registeredEvents")
-    .lean()
-    .exec();
+  const user = await User.findById((session.user as any).id).lean().exec();
 
-  const registeredEvents = user?.registeredEvents ? (user.registeredEvents as any[]) : [];
   const registrations = await Registration.find({ userId: (session.user as any).id })
     .populate("eventId")
     .sort({ createdAt: -1 })
     .lean()
     .exec();
+
+  const paidRegistrations = registrations.filter((registration) => registration.status === "paid");
+
+  const registeredEvents = Array.from(
+    new Map(
+      paidRegistrations.map((registration) => {
+        const populatedEventTitle =
+          typeof registration.eventId === "object" && registration.eventId
+            ? (registration.eventId as any).title
+            : undefined;
+        const title = registration.eventTitle || populatedEventTitle || "Unknown Event";
+        return [title, registration];
+      })
+    ).entries()
+  ).map(([title, registration]) => ({
+    title,
+    amount: (registration.amount || 0) / 100,
+    teamName: registration.teamName || "-",
+    participantCount: registration.participantCount || 1
+  }));
 
   return (
     <div className="space-y-8">
@@ -63,11 +79,16 @@ export default async function DashboardPage() {
             {registeredEvents.length > 0 ? (
               registeredEvents.map((ev) => (
                 <div
-                  key={String(ev._id)}
-                  className="flex items-center justify-between rounded-lg border border-white/10 bg-black/40 px-3 py-2"
+                  key={`${ev.title}-${ev.teamName}`}
+                  className="rounded-lg border border-white/10 bg-black/40 px-3 py-2"
                 >
-                  <span>{ev.title}</span>
-                  <span className="text-blue-300">₹{ev.price}</span>
+                  <div className="flex items-center justify-between gap-2">
+                    <span>{ev.title}</span>
+                    <span className="text-blue-300">₹{ev.amount.toFixed(0)}</span>
+                  </div>
+                  <div className="mt-1 text-[11px] text-white/60">
+                    Team: {ev.teamName} • Participants: {ev.participantCount}
+                  </div>
                 </div>
               ))
             ) : (
@@ -81,15 +102,14 @@ export default async function DashboardPage() {
           <div className="mt-3 space-y-1 text-xs text-white/75">
             <div>
               <span className="text-white/60">Total events registered:</span>{" "}
-              <span className="font-medium">{registeredEvents.length}</span>
+              <span className="font-medium">{paidRegistrations.length}</span>
             </div>
             <div>
               <span className="text-white/60">Total amount paid:</span>{" "}
               <span className="font-medium">
                 ₹
-                {registrations
-                  .filter((r) => r.status === "paid")
-                  .reduce((sum, r) => sum + (r.amount || 0), 0) / 100}
+                {paidRegistrations.reduce((sum, registration) => sum + (registration.amount || 0), 0) /
+                  100}
               </span>
             </div>
           </div>
@@ -124,8 +144,13 @@ export default async function DashboardPage() {
                   <div className="font-medium text-emerald-300">{reg.status}</div>
                 </div>
                 <div className="truncate">
-                  <div className="text-white/60">Payment ID</div>
-                  <div className="font-mono text-[11px] text-white/70">{reg.paymentId}</div>
+                  <div className="text-white/60">Transaction / UPI</div>
+                  <div className="font-mono text-[11px] text-white/70">
+                    {reg.paymentId || "-"} / {reg.paymentUpiId || "-"}
+                  </div>
+                  <div className="mt-1 text-[11px] text-white/60">
+                    Team: {reg.teamName || "-"} • Participants: {reg.participantCount || 1}
+                  </div>
                 </div>
               </div>
             ))

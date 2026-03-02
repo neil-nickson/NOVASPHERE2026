@@ -56,7 +56,7 @@ export default async function AdminPage() {
 
   await connectDB();
 
-  const registrationsRaw = (await Registration.find({ status: "paid" })
+  const registrationsRaw = (await Registration.find({})
     .populate("eventId", "title")
     .populate("userId", "name email mobileNumber college course year")
     .sort({ createdAt: -1 })
@@ -93,30 +93,18 @@ export default async function AdminPage() {
       ) : (
         <div className="space-y-6">
           {groups.map(([eventTitle, rows]) => (
-            <article
-              key={eventTitle}
-              className="rounded-2xl border border-purple-500/30 bg-black/45 p-4 md:p-5"
-            >
-              {(() => {
-                const totalStudents = rows.reduce(
-                  (sum, row) => sum + Math.max(1, row.participantCount || 1),
-                  0
-                );
-
-                return (
+            <article key={eventTitle} className="rounded-2xl border border-purple-500/30 bg-black/45 p-4 md:p-5">
               <div className="mb-3 flex items-center justify-between gap-2">
                 <h2 className="text-lg font-semibold text-purple-200 md:text-xl">{eventTitle}</h2>
                 <div className="flex items-center gap-2">
                   <span className="rounded-full border border-purple-300/35 bg-purple-500/10 px-3 py-1 text-xs font-semibold text-purple-100">
-                    {rows.length} teams
+                    {rows.length} registrations
                   </span>
                   <span className="rounded-full border border-cyan-300/35 bg-cyan-500/10 px-3 py-1 text-xs font-semibold text-cyan-100">
-                    {totalStudents} students
+                    {rows.reduce((sum, row) => sum + Math.max(1, row.participantCount || 1), 0)} students
                   </span>
                 </div>
               </div>
-                );
-              })()}
 
               <div className="overflow-x-auto">
                 <table className="min-w-full text-left text-xs text-white/80 md:text-sm">
@@ -130,6 +118,7 @@ export default async function AdminPage() {
                       <th className="px-2 py-2">Course</th>
                       <th className="px-2 py-2">Year</th>
                       <th className="px-2 py-2">Amount</th>
+                      <th className="px-2 py-2">Status</th>
                       <th className="px-2 py-2">Transaction ID</th>
                       <th className="px-2 py-2">UPI ID</th>
                       <th className="px-2 py-2">Time</th>
@@ -169,6 +158,7 @@ export default async function AdminPage() {
                           <td className="px-2 py-2">{course}</td>
                           <td className="px-2 py-2">{year}</td>
                           <td className="px-2 py-2">₹{((row.amount || 0) / 100).toFixed(0)}</td>
+                          <td className="px-2 py-2">{row.status || "-"}</td>
                           <td className="max-w-[180px] truncate px-2 py-2 font-mono text-[11px]">{row.paymentId || "-"}</td>
                           <td className="max-w-[180px] truncate px-2 py-2 font-mono text-[11px]">{row.paymentUpiId || "-"}</td>
                           <td className="px-2 py-2">{row.createdAt ? new Date(row.createdAt).toLocaleString() : "-"}</td>
