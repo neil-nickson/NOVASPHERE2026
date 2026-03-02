@@ -139,6 +139,7 @@ export function TeamRegistrationForm({
       const res = await fetch("/api/registrations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        redirect: "follow",
         body: JSON.stringify({
           eventId,
           eventTitle,
@@ -149,11 +150,20 @@ export function TeamRegistrationForm({
         })
       });
 
-      const raw = await res.text();
+      const contentType = res.headers.get("content-type") || "";
+
+      if (res.redirected && res.url.includes("/login")) {
+        throw new Error("Your session expired. Please login again.");
+      }
+
       let data: any = {};
-      if (raw) {
+
+      if (contentType.includes("application/json")) {
+        data = await res.json();
+      } else {
+        const raw = await res.text();
         try {
-          data = JSON.parse(raw);
+          data = raw ? JSON.parse(raw) : {};
         } catch {
           data = {};
         }
