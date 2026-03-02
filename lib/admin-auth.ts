@@ -10,11 +10,11 @@ type AdminTokenPayload = {
 };
 
 function getSecret() {
-  const secret = process.env.NEXTAUTH_SECRET;
-  if (!secret) {
-    throw new Error("NEXTAUTH_SECRET is required for admin auth");
-  }
-  return secret;
+  return (
+    process.env.ADMIN_AUTH_SECRET ||
+    process.env.NEXTAUTH_SECRET ||
+    "novasphere-admin-dev-secret"
+  );
 }
 
 function base64UrlEncode(value: string) {

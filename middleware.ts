@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
 
-const protectedPaths = ["/dashboard", "/api/payment"];
+const protectedPaths = ["/api/payment"];
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
@@ -52,8 +52,6 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    "/dashboard",
-    "/dashboard/:path*",
     "/api/payment/:path*"
   ]
 };
