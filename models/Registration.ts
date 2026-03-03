@@ -99,6 +99,7 @@ const RegistrationSchema = new Schema<IRegistration>(
 );
 
 RegistrationSchema.index({ userId: 1, eventId: 1 }, { unique: true });
+RegistrationSchema.index({ eventId: 1, status: 1 });
 RegistrationSchema.index({ orderId: 1 }, { unique: true });
 RegistrationSchema.index({ paymentId: 1 }, { unique: true });
 

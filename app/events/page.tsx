@@ -221,73 +221,71 @@ const workshops = [
 export default async function EventsPage() {
   await connectDB();
   const competitiveTitles = eventContent.map((event) => event.title);
-  await Event.updateMany({ title: { $in: competitiveTitles } }, { $set: { price: COMPETITIVE_EVENT_PRICE } }).exec();
-  const existingCompetitiveEvents = await Event.find({ title: { $in: competitiveTitles } })
-    .lean()
-    .exec();
-  const existingCompetitiveTitleSet = new Set(existingCompetitiveEvents.map((event) => event.title));
-  const missingCompetitiveEvents = eventContent.filter(
-    (event) => !existingCompetitiveTitleSet.has(event.title)
+  await Event.bulkWrite(
+    eventContent.map((event) => ({
+      updateOne: {
+        filter: { title: event.title },
+        update: {
+          $set: {
+            description: event.brief,
+            price: COMPETITIVE_EVENT_PRICE
+          },
+          $setOnInsert: {
+            title: event.title
+          }
+        },
+        upsert: true
+      }
+    }))
   );
-
-  if (missingCompetitiveEvents.length > 0) {
-    await Event.insertMany(
-      missingCompetitiveEvents.map((event) => ({
-        title: event.title,
-        description: event.brief,
-        price: COMPETITIVE_EVENT_PRICE
-      }))
-    );
-  }
-
-  const competitiveEventDocs = await Event.find({ title: { $in: competitiveTitles } })
-    .lean()
-    .exec();
-  const competitiveEventMap = new Map(competitiveEventDocs.map((event) => [event.title, event]));
 
   const workshopTitles = workshops.map((workshop) => workshop.dbTitle);
-  await Event.updateMany({ title: { $in: workshopTitles } }, { $set: { price: WORKSHOP_PRICE } }).exec();
-  const existingWorkshopEvents = await Event.find({ title: { $in: workshopTitles } })
-    .lean()
-    .exec();
-
-  const existingWorkshopTitleSet = new Set(existingWorkshopEvents.map((event) => event.title));
-  const missingWorkshops = workshops.filter(
-    (workshop) => !existingWorkshopTitleSet.has(workshop.dbTitle)
+  await Event.bulkWrite(
+    workshops.map((workshop) => ({
+      updateOne: {
+        filter: { title: workshop.dbTitle },
+        update: {
+          $set: {
+            description: `${workshop.dbTitle} registration`,
+            price: WORKSHOP_PRICE
+          },
+          $setOnInsert: {
+            title: workshop.dbTitle
+          }
+        },
+        upsert: true
+      }
+    }))
   );
 
-  if (missingWorkshops.length > 0) {
-    await Event.insertMany(
-      missingWorkshops.map((workshop) => ({
-        title: workshop.dbTitle,
-        description: `${workshop.dbTitle} registration`,
-        price: workshop.price
-      }))
-    );
-  }
+  const [competitiveEventDocs, workshopEventDocs] = await Promise.all([
+    Event.find({ title: { $in: competitiveTitles } }).lean().exec(),
+    Event.find({ title: { $in: workshopTitles } }).lean().exec()
+  ]);
 
-  const workshopEventDocs = await Event.find({ title: { $in: workshopTitles } }).lean().exec();
+  const competitiveEventMap = new Map(competitiveEventDocs.map((event) => [event.title, event]));
   const workshopEventMap = new Map(
     workshopEventDocs.map((event) => [event.title, event])
   );
 
   const workshopEventIds = workshopEventDocs.map((event) => event._id);
-  const workshopRegistrations = await Registration.aggregate<
-    Array<{ _id: unknown; total: number }>
-  >([
-    {
-      $match: {
-        eventId: { $in: workshopEventIds },
-        status: "paid"
-      }
-    },
-    {
-      $group: {
-        _id: "$eventId",
-        total: { $sum: { $ifNull: ["$participantCount", 1] } }
-      }
-    }
-  ]);
+  const workshopRegistrations =
+    workshopEventIds.length > 0
+      ? await Registration.aggregate<Array<{ _id: unknown; total: number }>>([
+          {
+            $match: {
+              eventId: { $in: workshopEventIds },
+              status: "paid"
+            }
+          },
+          {
+            $group: {
+              _id: "$eventId",
+              total: { $sum: { $ifNull: ["$participantCount", 1] } }
+            }
+          }
+        ])
+      : [];
 
   const workshopRegisteredCountById = new Map(
     workshopRegistrations.map((entry) => [String(entry._id), entry.total])
