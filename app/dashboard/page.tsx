@@ -4,12 +4,20 @@ import { authOptions } from "@/lib/auth";
 import { connectDB } from "@/lib/db";
 import { User } from "@/models/User";
 import { Registration } from "@/models/Registration";
+import { Event } from "@/models/Event";
 import mongoose from "mongoose";
 
 export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
-  const session = await getServerSession(authOptions);
+  let session: any = null;
+  try {
+    session = await getServerSession(authOptions);
+  } catch (error) {
+    console.error("Failed to resolve session for dashboard", error);
+    redirect("/login");
+  }
+
   if (!session || !session.user) {
     redirect("/login");
   }
@@ -21,17 +29,23 @@ export default async function DashboardPage() {
 
   let user: any = null;
   let registrations: any[] = [];
+  let eventTitleMap = new Map<string, string>();
 
   try {
     await connectDB();
 
     user = await User.findById(userId).lean().exec();
 
-    registrations = await Registration.find({ userId })
-      .populate("eventId")
-      .sort({ createdAt: -1 })
-      .lean()
-      .exec();
+    registrations = await Registration.find({ userId }).sort({ createdAt: -1 }).lean().exec();
+
+    const eventIds = registrations
+      .map((registration) => registration.eventId)
+      .filter((eventId) => mongoose.Types.ObjectId.isValid(String(eventId)));
+
+    if (eventIds.length > 0) {
+      const events = await Event.find({ _id: { $in: eventIds } }).lean().exec();
+      eventTitleMap = new Map(events.map((event) => [String(event._id), event.title]));
+    }
   } catch (error) {
     console.error("Failed to load dashboard data", error);
     return (
@@ -46,11 +60,8 @@ export default async function DashboardPage() {
   const registeredEvents = Array.from(
     new Map(
       paidRegistrations.map((registration) => {
-        const populatedEventTitle =
-          typeof registration.eventId === "object" && registration.eventId
-            ? (registration.eventId as any).title
-            : undefined;
-        const title = registration.eventTitle || populatedEventTitle || "Unknown Event";
+        const eventTitleFromMap = eventTitleMap.get(String(registration.eventId));
+        const title = registration.eventTitle || eventTitleFromMap || "Unknown Event";
         return [title, registration];
       })
     ).entries()
@@ -153,7 +164,7 @@ export default async function DashboardPage() {
                 <div>
                   <div className="text-white">
                     {reg.eventTitle ||
-                      (typeof reg.eventId === "object" && (reg.eventId as any).title) ||
+                      eventTitleMap.get(String(reg.eventId)) ||
                       "Unknown Event"}
                   </div>
                   <div className="text-[11px] text-white/60">
