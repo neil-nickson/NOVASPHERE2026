@@ -72,15 +72,15 @@ export default function SchedulePage() {
 
           <article className="relative rounded-2xl border border-white/10 bg-black/35 p-5">
             <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-purple-400 md:-left-[39px]" />
-            <p className="text-sm font-semibold text-purple-300">1:00 PM – 2:00 PM</p>
-            <h3 className="mt-2 text-lg font-semibold text-white">6️⃣ Debug Dominion</h3>
-            <p className="mt-3 text-sm text-white/75">Entry Fee: ₹145 per person</p>
+            <p className="text-sm font-semibold text-amber-300">12:00 PM – 1:00 PM</p>
+            <h3 className="mt-2 text-lg font-semibold text-white">🍽️ Lunch Break</h3>
           </article>
 
           <article className="relative rounded-2xl border border-white/10 bg-black/35 p-5">
-            <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-amber-300 md:-left-[39px]" />
-            <p className="text-sm font-semibold text-amber-300">12:00 PM – 1:00 PM</p>
-            <h3 className="mt-2 text-lg font-semibold text-white">🍽️ Lunch Break</h3>
+            <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-purple-400 md:-left-[39px]" />
+            <p className="text-sm font-semibold text-purple-300">1:00 PM – 2:00 PM</p>
+            <h3 className="mt-2 text-lg font-semibold text-white">6️⃣ Debug Dominion</h3>
+            <p className="mt-3 text-sm text-white/75">Entry Fee: ₹145 per person</p>
           </article>
 
           <article className="relative rounded-2xl border border-purple-500/30 bg-black/35 p-5">
@@ -103,7 +103,7 @@ export default function SchedulePage() {
         <aside className="h-fit rounded-2xl border border-white/10 bg-black/35 p-6 lg:sticky lg:top-24">
           <h3 className="text-2xl font-semibold text-amber-400">📍 Venue Info</h3>
           <div className="mt-6 space-y-2 text-white/75">
-            <p>SCAS Block , SIST.</p>
+            <p>SCAS Block , SIST,</p>
             <p>Sathyabama Institute of Science and Technology</p>
             <p>Chennai, Tamil Nadu</p>
           </div>
