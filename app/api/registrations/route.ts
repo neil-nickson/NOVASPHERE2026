@@ -230,6 +230,14 @@ export async function POST(req: Request) {
       paymentUpiId,
       teamName: resolvedTeamName,
       teamLeaderName: user.name,
+      teamLeaderDetails: {
+        name: user.name,
+        email: user.email,
+        mobileNumber: user.mobileNumber,
+        college: user.college,
+        course: user.course,
+        year: user.year
+      },
       participantCount,
       teamMembers: members,
       amount,

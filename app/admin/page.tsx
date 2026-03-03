@@ -11,6 +11,14 @@ type RegistrationView = {
   _id: string;
   teamName?: string;
   teamLeaderName?: string;
+  teamLeaderDetails?: {
+    name?: string;
+    email?: string;
+    mobileNumber?: string;
+    college?: string;
+    course?: string;
+    year?: string;
+  };
   participantCount?: number;
   teamMembers?: Array<{
     name?: string;
@@ -112,6 +120,7 @@ export default async function AdminPage() {
                     <tr className="border-b border-white/10 text-purple-200">
                       <th className="px-2 py-2">Team</th>
                       <th className="px-2 py-2">Participants</th>
+                      <th className="px-2 py-2">Team Member Details</th>
                       <th className="px-2 py-2">Email</th>
                       <th className="px-2 py-2">Mobile</th>
                       <th className="px-2 py-2">College</th>
@@ -136,11 +145,34 @@ export default async function AdminPage() {
                       const course = row.course || fallbackUser?.course || "-";
                       const year = row.year || fallbackUser?.year || "-";
                       const teamName = row.teamName || "-";
-                      const leaderName = row.teamLeaderName || name;
+                      const leaderName = row.teamLeaderName || row.teamLeaderDetails?.name || name;
                       const teammateNames = (row.teamMembers || [])
                         .map((member) => member.name)
                         .filter(Boolean) as string[];
                       const participants = [leaderName, ...teammateNames];
+                      const leaderDetails = {
+                        name: row.teamLeaderDetails?.name || name,
+                        email: row.teamLeaderDetails?.email || email,
+                        mobileNumber: row.teamLeaderDetails?.mobileNumber || mobile,
+                        college: row.teamLeaderDetails?.college || college,
+                        course: row.teamLeaderDetails?.course || course,
+                        year: row.teamLeaderDetails?.year || year
+                      };
+                      const memberDetails = [
+                        {
+                          role: "Leader",
+                          ...leaderDetails
+                        },
+                        ...(row.teamMembers || []).map((member) => ({
+                          role: "Member",
+                          name: member.name || "-",
+                          email: member.email || "-",
+                          mobileNumber: member.mobileNumber || "-",
+                          college: member.college || "-",
+                          course: member.course || "-",
+                          year: member.year || "-"
+                        }))
+                      ];
 
                       return (
                         <tr key={row._id} className="border-b border-white/5 align-top">
@@ -149,6 +181,29 @@ export default async function AdminPage() {
                             <div className="space-y-1">
                               {participants.map((participant, idx) => (
                                 <div key={`${row._id}-participant-${idx}`}>{participant}</div>
+                              ))}
+                            </div>
+                          </td>
+                          <td className="px-2 py-2">
+                            <div className="space-y-2">
+                              {memberDetails.map((member, idx) => (
+                                <div
+                                  key={`${row._id}-member-detail-${idx}`}
+                                  className="rounded-md border border-white/10 bg-black/30 p-2"
+                                >
+                                  <div className="font-semibold text-purple-200">
+                                    {member.role}: {member.name}
+                                  </div>
+                                  <div className="text-[11px] leading-5 text-white/75">
+                                    {member.email} | {member.mobileNumber}
+                                  </div>
+                                  <div className="text-[11px] leading-5 text-white/75">
+                                    {member.college}
+                                  </div>
+                                  <div className="text-[11px] leading-5 text-white/75">
+                                    {member.course} | {member.year}
+                                  </div>
+                                </div>
                               ))}
                             </div>
                           </td>

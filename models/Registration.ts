@@ -11,6 +11,15 @@ type TeamMember = {
   year: Year;
 };
 
+type TeamLeaderDetails = {
+  name: string;
+  email: string;
+  mobileNumber: string;
+  college: string;
+  course: string;
+  year: Year;
+};
+
 export interface IRegistration extends Document {
   userId: mongoose.Types.ObjectId;
   eventId: mongoose.Types.ObjectId;
@@ -27,6 +36,7 @@ export interface IRegistration extends Document {
   orderId: string;
   teamName?: string;
   teamLeaderName?: string;
+  teamLeaderDetails?: TeamLeaderDetails;
   participantCount?: number;
   teamMembers?: TeamMember[];
   paymentUpiId?: string;
@@ -37,6 +47,18 @@ export interface IRegistration extends Document {
 }
 
 const TeamMemberSchema = new Schema<TeamMember>(
+  {
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    mobileNumber: { type: String, required: true },
+    college: { type: String, required: true },
+    course: { type: String, required: true },
+    year: { type: String, required: true, enum: ["1st", "2nd", "3rd", "4th"] }
+  },
+  { _id: false }
+);
+
+const TeamLeaderDetailsSchema = new Schema<TeamLeaderDetails>(
   {
     name: { type: String, required: true },
     email: { type: String, required: true },
@@ -65,6 +87,7 @@ const RegistrationSchema = new Schema<IRegistration>(
     orderId: { type: String, required: true },
     teamName: { type: String },
     teamLeaderName: { type: String },
+    teamLeaderDetails: { type: TeamLeaderDetailsSchema },
     participantCount: { type: Number },
     teamMembers: { type: [TeamMemberSchema], default: [] },
     paymentUpiId: { type: String },

@@ -277,7 +277,6 @@ export default async function EventsPage() {
       price: Number(dbEvent?.price ?? EVENT_PRICE),
       time: event.time,
       teamSize: event.teamSize,
-      finals: event.finals,
       brief: event.brief,
       rounds: event.rounds,
       judging: event.judging
