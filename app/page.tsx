@@ -31,9 +31,9 @@ export default function HomePage() {
           <source src="/event-hero.mp4" type="video/mp4" />
         </video>
 
-        <div className="relative z-10 flex flex-col gap-8 bg-gradient-to-t from-black/80 via-black/40 to-black/10 px-8 py-16 md:flex-row md:items-center md:px-12 md:py-20">
+        <div className="relative z-10 flex flex-col gap-8 bg-gradient-to-t from-black/80 via-black/40 to-black/10 px-5 py-12 md:flex-row md:items-center md:px-12 md:py-20">
           <div className="max-w-xl">
-            <p className="text-center text-2xl font-black uppercase tracking-[0.34em] text-purple-400 md:text-4xl">
+            <p className="text-center text-xl font-black uppercase tracking-[0.18em] text-purple-400 md:text-4xl md:tracking-[0.34em]">
               NOVASPHERE 2026
             </p>
             <h1 className="mt-3 text-center text-lg font-semibold tracking-tight md:text-2xl">
@@ -319,6 +319,17 @@ export default function HomePage() {
             <p>Dr. Mariazeena Johnson, Chancellor</p>
             <p>Dr. Maria Johnson, President</p>
             <p>Ms. Maria Catherine Johnson, Vice President</p>
+          </div>
+        </article>
+
+        <article className="rounded-2xl border border-cyan-500/40 bg-gradient-to-r from-cyan-950/50 to-indigo-950/60 p-6 text-center">
+          <h3 className="text-lg font-semibold uppercase tracking-wide text-cyan-100">
+            Convenors
+          </h3>
+          <div className="mt-3 space-y-1 text-sm text-white/90 md:text-base">
+            <p>Dr. L. Lakshmanan, Dean, School of Computing</p>
+            <p>Dr. P. Ajitha, HOD (AI, BCT, CS, IOT)</p>
+            <p>Dr. Senduru Srinivasulu, HOD (AIML, AI&amp;R, DS)</p>
           </div>
         </article>
 

@@ -12,9 +12,9 @@ export function SiteFooter() {
 
         <div className="relative z-10 grid gap-8 md:grid-cols-3">
           <div className="space-y-4">
-            <h2 className="text-3xl font-semibold text-purple-400">NOVASPHERE 2026</h2>
-            <p className="text-xl text-white/80">Inter-College Event</p>
-            <p className="text-xl text-white/80">
+            <h2 className="text-2xl font-semibold text-purple-400 md:text-3xl">NOVASPHERE 2026</h2>
+            <p className="text-base text-white/80 md:text-xl">Inter-College Event</p>
+            <p className="text-base text-white/80 md:text-xl">
               Sathyabama Institute of Science and Technology, Chennai
             </p>
           </div>

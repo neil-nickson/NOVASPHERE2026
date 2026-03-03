@@ -402,8 +402,13 @@ export async function POST(req: Request) {
     ).exec();
 
     try {
+      const confirmationRecipients = [
+        user.email,
+        ...members.map((member) => member.email)
+      ];
+
       await sendRegistrationConfirmationEmail({
-        email: user.email,
+        emails: confirmationRecipients,
         studentName: user.name,
         eventTitle: event.title,
         eventPrice: resolvedEventPrice,

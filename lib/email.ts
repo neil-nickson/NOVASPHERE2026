@@ -51,7 +51,7 @@ export async function sendVerificationEmail(email: string, otpCode: string) {
 }
 
 type RegistrationConfirmationPayload = {
-  email: string;
+  emails: string[];
   studentName: string;
   eventTitle: string;
   eventPrice: number;
@@ -101,7 +101,7 @@ function getEventWhatsAppGroupLink(eventTitle: string) {
 }
 
 export async function sendRegistrationConfirmationEmail({
-  email,
+  emails,
   studentName,
   eventTitle,
   eventPrice,
@@ -110,6 +110,18 @@ export async function sendRegistrationConfirmationEmail({
   orderId,
   registrationId
 }: RegistrationConfirmationPayload) {
+  const recipientList = Array.from(
+    new Set(
+      emails
+        .map((email) => email.trim().toLowerCase())
+        .filter((email) => email.length > 0)
+    )
+  );
+
+  if (recipientList.length === 0) {
+    throw new Error("No recipient email addresses provided for registration confirmation");
+  }
+
   if (!transporter) {
     if (process.env.NODE_ENV === "production") {
       throw new Error("Email environment variables are not fully configured");
@@ -127,7 +139,7 @@ export async function sendRegistrationConfirmationEmail({
 
   await transporter.sendMail({
     from: EMAIL_FROM,
-    to: email,
+    to: recipientList.join(","),
     subject: "Registration Confirmed - NOVASPHERE 2026",
     html: `
       <p>Hi ${studentName},</p>

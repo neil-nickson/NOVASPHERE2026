@@ -34,8 +34,8 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-black/30 backdrop-blur">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-3">
-        <div className="flex items-center gap-3">
+      <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-2 px-4 py-3 md:flex-nowrap md:justify-between">
+        <div className="flex min-w-0 items-center gap-2 sm:gap-3">
           <a
             href="https://www.sathyabama.ac.in/"
             target="_blank"
@@ -70,15 +70,17 @@ export function Navbar() {
             </div>
           </Link>
         </div>
-        <nav className="flex items-center gap-1">
-          <NavLink href="/">Home</NavLink>
-          <NavLink href="/events">Events</NavLink>
-          <NavLink href="/schedule">Schedule</NavLink>
-          <NavLink href="/leaderboard">Leaderboard</NavLink>
-          <NavLink href="/faq">FAQ</NavLink>
-          <NavLink href="/dashboard">Dashboard</NavLink>
+        <nav className="order-3 w-full overflow-x-auto pt-1 md:order-none md:w-auto md:pt-0">
+          <div className="flex min-w-max items-center gap-1">
+            <NavLink href="/">Home</NavLink>
+            <NavLink href="/events">Events</NavLink>
+            <NavLink href="/schedule">Schedule</NavLink>
+            <NavLink href="/leaderboard">Leaderboard</NavLink>
+            <NavLink href="/faq">FAQ</NavLink>
+            <NavLink href="/dashboard">Dashboard</NavLink>
+          </div>
         </nav>
-        <div className="flex items-center gap-2">
+        <div className="ml-auto flex items-center gap-2">
           {status === "loading" ? (
             <div className="h-9 w-24 animate-pulse rounded-md bg-white/10" />
           ) : session?.user ? (
