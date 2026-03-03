@@ -11,45 +11,44 @@ const eventContent = [
   {
     title: "1️⃣ NeuralForge Ideathon",
     time: "🕒 9:45 AM – 12:15 PM",
-    finals: "🏁 Finals: 2:30 PM – 3:00 PM",
     teamSize: "👥 Team Size: 3–4",
     fee: "💰 Fee: ₹150 per person",
     brief:
       "Teams innovate solutions for real-world problems using technology. They design ideas, system flow, and possible implementation strategy, then pitch to judges.",
     rounds: [
       {
-        name: "🔹 Round 1 — Problem Briefing & Ideation",
+        name: "🔹 Round 1 — Briefing & Problem Release",
         time: "9:45 – 10:00",
         points: [
-          "Problem statements announced.",
-          "Rules explained.",
-          "Teams understand challenge scope."
+          "Welcome & rules explanation.",
+          "Problem statements revealed.",
+          "Judging criteria explained."
         ]
       },
       {
-        name: "🔹 Round 2 — Solution Development",
-        time: "10:00 – 11:30",
+        name: "🔹 Round 2 — Ideation & Development",
+        time: "10:00 – 11:15",
         points: [
-          "Teams brainstorm ideas.",
-          "Build concept, architecture, workflow.",
-          "Prepare presentation (PPT / diagrams)."
+          "Teams brainstorm solutions.",
+          "Create system flow & architecture.",
+          "Prepare PPT / prototype."
         ]
       },
       {
-        name: "🔹 Round 3 — Preliminary Pitch",
-        time: "11:30 – 12:15",
+        name: "🔹 Round 3 — Preliminary Screening",
+        time: "11:15 – 11:45",
         points: [
-          "Teams give short pitches.",
-          "Judges evaluate and shortlist finalists."
+          "Short 2–3 minute pitches.",
+          "Judges shortlist finalists."
         ]
       },
       {
-        name: "🔹 Final Round — Grand Pitch",
-        time: "2:30 – 3:00",
+        name: "🔹 Round 4 — Final Pitch",
+        time: "11:45 AM – 12:15 PM",
         points: [
-          "Finalists present complete idea.",
-          "Q&A by judges.",
-          "Winners selected."
+          "Finalists present full idea.",
+          "Q&A session with judges.",
+          "Scores finalized."
         ]
       }
     ],
@@ -62,9 +61,8 @@ const eventContent = [
     ]
   },
   {
-    title: "2️⃣ MUN X Tech",
+    title: "2️⃣ Logic Arena: MUN X Tech",
     time: "🕒 10:00 AM – 12:00 PM",
-    finals: "🏁 Finals: 2:30 PM – 3:00 PM",
     teamSize: "👥 Team Size: 3",
     fee: "💰 Fee: ₹150 per person",
     brief:
@@ -72,23 +70,23 @@ const eventContent = [
     rounds: [
       {
         name: "🔹 Round 1 — Topic Allocation",
-        time: "10:00 – 10:15",
-        points: ["Teams receive debate topic.", "Preparation time given."]
+        time: "10:00 – 10:20",
+        points: ["Topic distribution.", "Preparation time."]
       },
       {
-        name: "🔹 Round 2 — Opening Debate",
-        time: "10:15 – 11:00",
-        points: ["Each team presents main arguments.", "Structured speaking turns."]
+        name: "🔹 Round 2 — Opening Statements",
+        time: "10:20 – 11:00",
+        points: ["Structured team arguments.", "Equal speaking time."]
       },
       {
         name: "🔹 Round 3 — Rebuttal Round",
         time: "11:00 – 11:30",
-        points: ["Teams counter opposing ideas.", "Critical thinking tested."]
+        points: ["Counter-arguments.", "Critical discussion."]
       },
       {
-        name: "🔹 Round 4 — Final Statements",
-        time: "11:30 – 12:00",
-        points: ["Closing arguments.", "Judges finalize scores."]
+        name: "🔹 Round 4 — Closing Statements",
+        time: "11:30 AM – 12:00 PM",
+        points: ["Final remarks.", "Judges evaluate & finalize scores."]
       }
     ],
     judging: [
@@ -109,21 +107,21 @@ const eventContent = [
     rounds: [
       {
         name: "🔹 Round 1 — Theme Announcement",
-        time: "9:45 – 9:55",
-        points: ["Tech theme revealed.", "Instructions provided."]
+        time: "9:45 – 10:00",
+        points: ["Theme revealed.", "Instructions given."]
       },
       {
-        name: "🔹 Round 2 — Design Creation",
-        time: "9:55 – 11:45",
+        name: "🔹 Round 2 — Poster Creation",
+        time: "10:00 – 11:45",
         points: [
-          "Teams create poster using manual or digital tools.",
-          "Concept development + design execution."
+          "Teams design poster.",
+          "Concept building & execution."
         ]
       },
       {
-        name: "🔹 Round 3 — Display & Evaluation",
-        time: "11:45 – 12:15",
-        points: ["Posters submitted.", "Judges evaluate displays."]
+        name: "🔹 Round 3 — Submission & Evaluation",
+        time: "11:45 AM – 12:15 PM",
+        points: ["Poster display.", "Judges walk-through & scoring."]
       }
     ],
     judging: [
@@ -144,18 +142,18 @@ const eventContent = [
     rounds: [
       {
         name: "🔹 Round 1 — Warm-Up Puzzle",
-        time: "10:30 – 10:50",
-        points: ["Basic logic problems.", "Tests teamwork and speed."]
+        time: "10:30 – 10:45",
+        points: ["Basic logic challenges."]
       },
       {
-        name: "🔹 Round 2 — Technical Challenge",
-        time: "10:50 – 11:30",
-        points: ["Algorithm-based puzzles.", "Pattern recognition & reasoning."]
+        name: "🔹 Round 2 — Technical Puzzle Round",
+        time: "10:45 – 11:30",
+        points: ["Algorithm & reasoning problems."]
       },
       {
-        name: "🔹 Round 3 — Final Unlock Round",
+        name: "🔹 Round 3 — Final Unlock Challenge",
         time: "11:30 – 12:00",
-        points: ["Complex challenge.", "Teams race to final answer."]
+        points: ["Complex final puzzle.", "Final scoring & winner selection."]
       }
     ],
     judging: [
@@ -174,19 +172,19 @@ const eventContent = [
       "Teams identify and fix errors in provided code. Focus is on debugging skills, accuracy, and speed.",
     rounds: [
       {
-        name: "🔹 Round 1 — Beginner Bugs",
-        time: "10:30 – 10:50",
-        points: ["Simple syntax errors.", "Warm-up phase."]
+        name: "🔹 Round 1 — Beginner Debug",
+        time: "10:30 – 10:45",
+        points: ["Basic syntax issues."]
       },
       {
-        name: "🔹 Round 2 — Logic Errors",
-        time: "10:50 – 11:30",
-        points: ["Algorithm or logic mistakes.", "Deeper understanding required."]
+        name: "🔹 Round 2 — Logic Debug",
+        time: "10:45 – 11:30",
+        points: ["Intermediate logic errors."]
       },
       {
         name: "🔹 Round 3 — Advanced Debug",
         time: "11:30 – 12:00",
-        points: ["Complex debugging challenge.", "Final scoring based on output."]
+        points: ["Complex bug fixing.", "Final submission & scoring."]
       }
     ],
     judging: [

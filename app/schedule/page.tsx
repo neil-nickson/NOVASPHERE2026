@@ -59,7 +59,7 @@ export default function SchedulePage() {
           <article className="relative rounded-2xl border border-white/10 bg-black/35 p-5">
             <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-purple-400 md:-left-[39px]" />
             <p className="text-sm font-semibold text-purple-300">10:00 AM</p>
-            <h3 className="mt-2 text-lg font-semibold text-white">4️⃣ MUN X Tech</h3>
+            <h3 className="mt-2 text-lg font-semibold text-white">4️⃣ Logic Arena: MUN X Tech</h3>
             <p className="mt-3 text-sm text-white/75">Entry Fee: ₹150 per person</p>
           </article>
 
@@ -104,7 +104,7 @@ export default function SchedulePage() {
             <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-purple-400 md:-left-[39px]" />
             <p className="text-sm font-semibold text-purple-300">2:30 PM – 3:00 PM</p>
             <h3 className="mt-2 text-lg font-semibold text-white">
-              MUN X Tech Finals
+              Logic Arena: MUN X Tech Finals
             </h3>
           </article>
 
