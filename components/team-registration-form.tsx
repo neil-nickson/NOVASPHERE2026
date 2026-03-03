@@ -18,6 +18,7 @@ type MemberDetails = {
 type TeamRegistrationFormProps = {
   eventId: string;
   eventTitle: string;
+  eventTime?: string;
   teamSizeText?: string;
   onSuccess?: () => void;
 };
@@ -64,6 +65,7 @@ function createEmptyMember(): MemberDetails {
 export function TeamRegistrationForm({
   eventId,
   eventTitle,
+  eventTime,
   teamSizeText,
   onSuccess
 }: TeamRegistrationFormProps) {
@@ -144,6 +146,7 @@ export function TeamRegistrationForm({
         body: JSON.stringify({
           eventId,
           eventTitle,
+          eventTime,
           teamName: isSingleParticipant ? `${leaderName} Registration` : teamName,
           members,
           transactionId,
@@ -318,8 +321,12 @@ export function TeamRegistrationForm({
                   <input
                     required
                     placeholder="Mobile Number"
+                    inputMode="numeric"
+                    pattern="[0-9]{10,15}"
                     value={member.mobileNumber}
-                    onChange={(e) => updateMember(index, "mobileNumber", e.target.value)}
+                    onChange={(e) =>
+                      updateMember(index, "mobileNumber", e.target.value.replace(/\D/g, ""))
+                    }
                     className="rounded-md border border-white/15 bg-black/40 px-3 py-2 text-sm outline-none focus:border-purple-400"
                   />
                   <input

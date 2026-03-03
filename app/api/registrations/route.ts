@@ -14,8 +14,11 @@ const PRICE_PER_PARTICIPANT = 150;
 
 const memberSchema = z.object({
   name: z.string().trim().min(2),
-  email: z.string().trim().email(),
-  mobileNumber: z.string().trim().regex(/^[0-9]{10,15}$/),
+  email: z.string().trim().email("Member email must be valid"),
+  mobileNumber: z
+    .string()
+    .trim()
+    .regex(/^[0-9]{10,15}$/, "Member mobile number must be 10 to 15 digits"),
   college: z.string().trim().min(2),
   course: z.string().trim().min(2),
   year: z.enum(["1st", "2nd", "3rd", "4th"])
@@ -24,10 +27,11 @@ const memberSchema = z.object({
 const schema = z.object({
   eventId: z.string().trim(),
   eventTitle: z.string().trim().min(2),
+  eventTime: z.string().trim().min(1).optional(),
   teamName: z.string().trim().min(2).optional(),
   members: z.array(memberSchema),
-  transactionId: z.string().trim().min(4),
-  paymentUpiId: z.string().trim().min(3)
+  transactionId: z.string().trim().min(4, "Transaction ID must be at least 4 characters"),
+  paymentUpiId: z.string().trim().min(3, "UPI ID must be at least 3 characters")
 });
 
 function getTeamConstraintsFromTitle(title: string) {
@@ -37,7 +41,11 @@ function getTeamConstraintsFromTitle(title: string) {
     return { min: 3, max: 4 };
   }
 
-  if (normalized.includes("logic arena") || normalized.includes("debate")) {
+  if (
+    normalized.includes("logic arena") ||
+    normalized.includes("debate") ||
+    normalized.includes("mun x tech")
+  ) {
     return { min: 3, max: 3 };
   }
 
@@ -53,7 +61,7 @@ function getTeamConstraintsFromTitle(title: string) {
     return { min: 2, max: 2 };
   }
 
-  if (normalized.includes("workshop") || normalized.includes("antigravity") || normalized.includes("web development")) {
+  if (normalized.includes("workshop") || normalized.includes("web development") || normalized.includes("ai tools")) {
     return { min: 1, max: 1 };
   }
 
@@ -91,12 +99,19 @@ export async function POST(req: Request) {
     const parsed = schema.safeParse(body);
 
     if (!parsed.success) {
-      return NextResponse.json({ error: "Invalid registration input" }, { status: 400 });
+      const firstIssue = parsed.error.issues[0];
+      const fieldPath = firstIssue?.path?.join(".") || "input";
+      const message = firstIssue?.message || "Invalid registration input";
+      return NextResponse.json(
+        { error: `Invalid ${fieldPath}: ${message}` },
+        { status: 400 }
+      );
     }
 
     const {
       eventId,
       eventTitle,
+      eventTime,
       teamName,
       members,
       transactionId,
@@ -146,22 +161,26 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "You are already registered for this event" }, { status: 409 });
     }
 
-    const existingOtherEventRegistration = await Registration.findOne({
-      userId,
-      status: "paid",
-      eventId: { $ne: eventDoc._id }
-    })
-      .lean()
-      .exec();
+    const normalizedEventTime = eventTime?.trim();
+    if (normalizedEventTime) {
+      const existingSameTimeRegistration = await Registration.findOne({
+        userId,
+        status: "paid",
+        eventId: { $ne: eventDoc._id },
+        eventTime: normalizedEventTime
+      })
+        .lean()
+        .exec();
 
-    if (existingOtherEventRegistration) {
-      return NextResponse.json(
-        {
-          error:
-            "You have already registered for another event. Multiple event registrations are not allowed from the same account."
-        },
-        { status: 409 }
-      );
+      if (existingSameTimeRegistration) {
+        return NextResponse.json(
+          {
+            error:
+              "You already registered for another event at the same time slot. Please choose a non-overlapping event."
+          },
+          { status: 409 }
+        );
+      }
     }
 
     const transactionTaken = await Registration.findOne({ paymentId: transactionId })
@@ -203,6 +222,7 @@ export async function POST(req: Request) {
       course: user.course,
       year: user.year,
       eventTitle: event.title,
+      eventTime: normalizedEventTime,
       eventPrice: PRICE_PER_PARTICIPANT,
       paymentId: transactionId,
       orderId: manualOrderId,

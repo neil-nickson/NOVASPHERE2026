@@ -59,12 +59,30 @@ export function SiteFooter() {
 
       <div className="mt-4 flex flex-col items-center justify-between gap-2 text-xs text-white/55 md:flex-row">
         <p>© 2026 NOVASPHERE. All rights reserved.</p>
-        <Link
-          href="/admin/login"
-          className="font-semibold text-purple-300 transition hover:text-purple-200"
-        >
-          Admin Login
-        </Link>
+        <div className="flex flex-wrap items-center justify-center gap-3 md:justify-end">
+          <Link
+            href="/code-of-conduct"
+            target="_blank"
+            rel="noreferrer"
+            className="font-semibold text-purple-300 transition hover:text-purple-200"
+          >
+            NovaSphere Code of Conduct
+          </Link>
+          <Link
+            href="/legal-privacy-policy"
+            target="_blank"
+            rel="noreferrer"
+            className="font-semibold text-purple-300 transition hover:text-purple-200"
+          >
+            NovaSphere Legal &amp; Privacy Policy
+          </Link>
+          <Link
+            href="/admin/login"
+            className="font-semibold text-purple-300 transition hover:text-purple-200"
+          >
+            Admin Login
+          </Link>
+        </div>
       </div>
     </footer>
   );

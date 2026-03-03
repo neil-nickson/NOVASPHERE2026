@@ -72,6 +72,7 @@ export function WorkshopsClient({ workshops }: Props) {
               <TeamRegistrationForm
                 eventId={workshop.id}
                 eventTitle={workshop.title}
+                eventTime={workshop.time}
                 teamSizeText="1"
                 onSuccess={() => router.push("/dashboard")}
               />

@@ -156,6 +156,7 @@ export function EventsClient({ events }: Props) {
               <TeamRegistrationForm
                 eventId={event.id}
                 eventTitle={event.title}
+                eventTime={event.time}
                 teamSizeText={event.teamSize}
                 onSuccess={() => router.push("/dashboard")}
               />

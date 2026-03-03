@@ -10,7 +10,7 @@ const EVENT_PRICE = 150;
 const eventContent = [
   {
     title: "1️⃣ NeuralForge Ideathon",
-    time: "🕒 10:00 AM – 12:30 PM",
+    time: "🕒 9:45 AM – 12:15 PM",
     finals: "🏁 Finals: 2:30 PM – 3:00 PM",
     teamSize: "👥 Team Size: 3–4",
     fee: "💰 Fee: ₹150 per person",
@@ -19,7 +19,7 @@ const eventContent = [
     rounds: [
       {
         name: "🔹 Round 1 — Problem Briefing & Ideation",
-        time: "10:00 – 10:15",
+        time: "9:45 – 10:00",
         points: [
           "Problem statements announced.",
           "Rules explained.",
@@ -28,7 +28,7 @@ const eventContent = [
       },
       {
         name: "🔹 Round 2 — Solution Development",
-        time: "10:15 – 11:45",
+        time: "10:00 – 11:30",
         points: [
           "Teams brainstorm ideas.",
           "Build concept, architecture, workflow.",
@@ -37,7 +37,7 @@ const eventContent = [
       },
       {
         name: "🔹 Round 3 — Preliminary Pitch",
-        time: "11:45 – 12:30",
+        time: "11:30 – 12:15",
         points: [
           "Teams give short pitches.",
           "Judges evaluate and shortlist finalists."
@@ -62,8 +62,8 @@ const eventContent = [
     ]
   },
   {
-    title: "2️⃣ Logic Arena:Tech X Debate",
-    time: "🕒 10:00 AM – 12:30 PM",
+    title: "2️⃣ MUN X Tech",
+    time: "🕒 10:00 AM – 12:00 PM",
     finals: "🏁 Finals: 2:30 PM – 3:00 PM",
     teamSize: "👥 Team Size: 3",
     fee: "💰 Fee: ₹150 per person",
@@ -72,22 +72,22 @@ const eventContent = [
     rounds: [
       {
         name: "🔹 Round 1 — Topic Allocation",
-        time: "10:30 – 10:45",
+        time: "10:00 – 10:15",
         points: ["Teams receive debate topic.", "Preparation time given."]
       },
       {
         name: "🔹 Round 2 — Opening Debate",
-        time: "10:45 – 11:30",
+        time: "10:15 – 11:00",
         points: ["Each team presents main arguments.", "Structured speaking turns."]
       },
       {
         name: "🔹 Round 3 — Rebuttal Round",
-        time: "11:30 – 12:00",
+        time: "11:00 – 11:30",
         points: ["Teams counter opposing ideas.", "Critical thinking tested."]
       },
       {
         name: "🔹 Round 4 — Final Statements",
-        time: "12:00 – 12:30",
+        time: "11:30 – 12:00",
         points: ["Closing arguments.", "Judges finalize scores."]
       }
     ],
@@ -101,7 +101,7 @@ const eventContent = [
   },
   {
     title: "3️⃣ Quantum Canvas (Tech Poster)",
-    time: "🕒 10:00 AM – 12:30 PM",
+    time: "🕒 9:45 AM – 12:15 PM",
     teamSize: "👥 Team Size: 2–3",
     fee: "💰 Fee: ₹150 per person",
     brief:
@@ -109,12 +109,12 @@ const eventContent = [
     rounds: [
       {
         name: "🔹 Round 1 — Theme Announcement",
-        time: "10:30 – 10:40",
+        time: "9:45 – 9:55",
         points: ["Tech theme revealed.", "Instructions provided."]
       },
       {
         name: "🔹 Round 2 — Design Creation",
-        time: "10:40 – 12:00",
+        time: "9:55 – 11:45",
         points: [
           "Teams create poster using manual or digital tools.",
           "Concept development + design execution."
@@ -122,7 +122,7 @@ const eventContent = [
       },
       {
         name: "🔹 Round 3 — Display & Evaluation",
-        time: "12:00 – 12:30",
+        time: "11:45 – 12:15",
         points: ["Posters submitted.", "Judges evaluate displays."]
       }
     ],
@@ -136,7 +136,7 @@ const eventContent = [
   },
   {
     title: "4️⃣ Tech Escape Challenge",
-    time: "🕒 1:30 PM – 2:30 PM",
+    time: "🕒 10:30 AM – 12:00 PM",
     teamSize: "👥 Team Size: 3",
     fee: "💰 Fee: ₹150 per person",
     brief:
@@ -144,17 +144,17 @@ const eventContent = [
     rounds: [
       {
         name: "🔹 Round 1 — Warm-Up Puzzle",
-        time: "1:30 – 1:45",
+        time: "10:30 – 10:50",
         points: ["Basic logic problems.", "Tests teamwork and speed."]
       },
       {
         name: "🔹 Round 2 — Technical Challenge",
-        time: "1:45 – 2:10",
+        time: "10:50 – 11:30",
         points: ["Algorithm-based puzzles.", "Pattern recognition & reasoning."]
       },
       {
         name: "🔹 Round 3 — Final Unlock Round",
-        time: "2:10 – 2:30",
+        time: "11:30 – 12:00",
         points: ["Complex challenge.", "Teams race to final answer."]
       }
     ],
@@ -167,7 +167,7 @@ const eventContent = [
   },
   {
     title: "5️⃣ Debug Dominion",
-    time: "🕒 1:30 PM – 2:30 PM",
+    time: "🕒 10:30 AM – 12:00 PM",
     teamSize: "👥 Team Size: 2",
     fee: "💰 Fee: ₹150 per person",
     brief:
@@ -175,17 +175,17 @@ const eventContent = [
     rounds: [
       {
         name: "🔹 Round 1 — Beginner Bugs",
-        time: "1:30 – 1:45",
+        time: "10:30 – 10:50",
         points: ["Simple syntax errors.", "Warm-up phase."]
       },
       {
         name: "🔹 Round 2 — Logic Errors",
-        time: "1:45 – 2:10",
+        time: "10:50 – 11:30",
         points: ["Algorithm or logic mistakes.", "Deeper understanding required."]
       },
       {
         name: "🔹 Round 3 — Advanced Debug",
-        time: "2:10 – 2:30",
+        time: "11:30 – 12:00",
         points: ["Complex debugging challenge.", "Final scoring based on output."]
       }
     ],
@@ -200,17 +200,17 @@ const eventContent = [
 
 const workshops = [
   {
-    dbTitle: "ANTIGRAVITY TOOL (WORKSHOP)",
-    title: "1️⃣ ANTIGRAVITY TOOL (WORKSHOP)",
-    time: "🕒 10:00 AM – 12:30 PM",
+    dbTitle: "WEB DEVELOPMENT (WORKSHOP)",
+    title: "1️⃣ WEB DEVELOPMENT (WORKSHOP)",
+    time: "🕒 9:30 AM – 12:30 PM",
     fee: "💰 Fee: ₹150 per person",
     price: EVENT_PRICE,
     brochureImage: "/antigravity.jpeg"
   },
   {
-    dbTitle: "WEB DEVELOPMENT (WORKSHOP)",
-    title: "2️⃣ WEB DEVELOPMENT (WORKSHOP)",
-    time: "🕒 1:00 PM – 3:15 PM",
+    dbTitle: "AI TOOLS (WORKSHOP)",
+    title: "2️⃣ AI TOOLS (WORKSHOP)",
+    time: "🕒 1:00 PM – 3:00 PM",
     fee: "💰 Fee: ₹150 per person",
     price: EVENT_PRICE,
     brochureImage: "/web development.jpeg"

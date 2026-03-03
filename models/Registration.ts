@@ -21,6 +21,7 @@ export interface IRegistration extends Document {
   course: string;
   year: "1st" | "2nd" | "3rd" | "4th";
   eventTitle: string;
+  eventTime?: string;
   eventPrice: number;
   paymentId: string;
   orderId: string;
@@ -58,6 +59,7 @@ const RegistrationSchema = new Schema<IRegistration>(
     course: { type: String, required: true },
     year: { type: String, required: true, enum: ["1st", "2nd", "3rd", "4th"] },
     eventTitle: { type: String, required: true },
+    eventTime: { type: String },
     eventPrice: { type: Number, required: true },
     paymentId: { type: String, required: true },
     orderId: { type: String, required: true },
