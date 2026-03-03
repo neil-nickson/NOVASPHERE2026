@@ -61,6 +61,45 @@ type RegistrationConfirmationPayload = {
   registrationId: string;
 };
 
+function getEventWhatsAppGroupLink(eventTitle: string) {
+  const normalized = eventTitle.toLowerCase();
+
+  if (normalized.includes("ideathon")) {
+    return "https://chat.whatsapp.com/D4sDxSWpvDs8ivchFZfdQj?mode=gi_t";
+  }
+
+  if (
+    normalized.includes("mun x tech") ||
+    normalized.includes("logic arena") ||
+    normalized.includes("tech x debate") ||
+    normalized.includes("debate")
+  ) {
+    return "https://chat.whatsapp.com/HPC5CKQpOjt9AuP4H5wUwp?mode=gi_t";
+  }
+
+  if (normalized.includes("quantum canvas")) {
+    return "https://chat.whatsapp.com/FJBGepT9zSXLa6U9n3LhHu?mode=gi_t";
+  }
+
+  if (normalized.includes("debug dominion") || normalized.includes("debug")) {
+    return "https://chat.whatsapp.com/LXSkTdzb5ar5pg7l3eCZi5?mode=gi_t";
+  }
+
+  if (normalized.includes("tech escape")) {
+    return "https://chat.whatsapp.com/CBGvWI2dO9gKlYKJZhFRql?mode=gi_t";
+  }
+
+  if (
+    normalized.includes("workshop") ||
+    normalized.includes("web development") ||
+    normalized.includes("ai tools")
+  ) {
+    return "https://chat.whatsapp.com/KWZqQ7yOgNJGPNnycV6GKN?mode=gi_t";
+  }
+
+  return null;
+}
+
 export async function sendRegistrationConfirmationEmail({
   email,
   studentName,
@@ -81,6 +120,10 @@ export async function sendRegistrationConfirmationEmail({
   }
 
   const paidAmount = (amountPaise / 100).toFixed(2);
+  const whatsappGroupLink = getEventWhatsAppGroupLink(eventTitle);
+  const whatsappSection = whatsappGroupLink
+    ? `<p><strong>WhatsApp Group:</strong> <a href="${whatsappGroupLink}" target="_blank" rel="noreferrer">Join Event Group</a></p>`
+    : "";
 
   await transporter.sendMail({
     from: EMAIL_FROM,
@@ -95,6 +138,7 @@ export async function sendRegistrationConfirmationEmail({
       <p><strong>Payment ID:</strong> ${paymentId}</p>
       <p><strong>Order ID:</strong> ${orderId}</p>
       <p><strong>Registration ID:</strong> ${registrationId}</p>
+      ${whatsappSection}
       <p>Please keep this email for your records.</p>
       <p>Regards,<br/>NOVASPHERE 2026 Team</p>
     `

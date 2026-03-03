@@ -62,36 +62,6 @@ function createEmptyMember(): MemberDetails {
   };
 }
 
-function getWhatsAppGroupLink(eventTitle: string) {
-  const normalized = eventTitle.toLowerCase();
-
-  if (normalized.includes("ideathon")) {
-    return "https://chat.whatsapp.com/D4sDxSWpvDs8ivchFZfdQj?mode=gi_t";
-  }
-
-  if (
-    normalized.includes("mun x tech") ||
-    normalized.includes("logic arena") ||
-    normalized.includes("debate")
-  ) {
-    return "https://chat.whatsapp.com/HPC5CKQpOjt9AuP4H5wUwp?mode=gi_t";
-  }
-
-  if (normalized.includes("quantum canvas")) {
-    return "https://chat.whatsapp.com/FJBGepT9zSXLa6U9n3LhHu?mode=gi_t";
-  }
-
-  if (normalized.includes("debug dominion") || normalized.includes("debug")) {
-    return "https://chat.whatsapp.com/LXSkTdzb5ar5pg7l3eCZi5?mode=gi_t";
-  }
-
-  if (normalized.includes("tech escape")) {
-    return "https://chat.whatsapp.com/CBGvWI2dO9gKlYKJZhFRql?mode=gi_t";
-  }
-
-  return null;
-}
-
 function isWorkshopEvent(eventTitle: string) {
   const normalized = eventTitle.toLowerCase();
   return (
@@ -117,7 +87,6 @@ export function TeamRegistrationForm({
   const requiredTeammates = Math.max(0, min - 1);
   const maxTeammates = Math.max(0, max - 1);
   const isSingleParticipant = min === 1 && max === 1;
-  const whatsAppGroupLink = useMemo(() => getWhatsAppGroupLink(eventTitle), [eventTitle]);
   const isWorkshop = useMemo(() => isWorkshopEvent(eventTitle), [eventTitle]);
 
   const [teamName, setTeamName] = useState("");
@@ -450,16 +419,9 @@ export function TeamRegistrationForm({
         </div>
       )}
 
-      {whatsAppGroupLink && (
-        <a
-          href={whatsAppGroupLink}
-          target="_blank"
-          rel="noreferrer"
-          className="block w-full rounded-lg border border-purple-300/40 bg-purple-500/15 px-4 py-2 text-center text-sm font-semibold text-purple-100 transition hover:bg-purple-500/25"
-        >
-          Join {eventTitle.replace(/^\d+️⃣\s*/, "")} WhatsApp Group
-        </a>
-      )}
+      <div className="rounded-md border border-purple-300/35 bg-purple-500/10 px-3 py-2 text-sm text-purple-100">
+        Check confirmation mail for more details.
+      </div>
 
       {isWorkshop && (
         <div className="rounded-md border border-cyan-400/35 bg-cyan-500/10 px-3 py-3 text-sm text-cyan-100">
