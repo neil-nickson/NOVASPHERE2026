@@ -13,7 +13,7 @@ const WORKSHOP_CAPACITY = 180;
 const eventContent = [
   {
     title: "1️⃣ NeuralForge Ideathon",
-    time: "🕒 9:45 AM – 12:15 PM",
+    time: "🕒 10:00 AM – 12:00 PM & 1:00 PM – 2:00 PM",
     teamSize: "👥 Team Size: 3–4",
     fee: "💰 Fee: ₹145 per person",
     brief:
@@ -21,7 +21,7 @@ const eventContent = [
     rounds: [
       {
         name: "🔹 Round 1 — Briefing & Problem Release",
-        time: "9:45 – 10:00",
+        time: "10:00 – 10:15",
         points: [
           "Welcome & rules explanation.",
           "Problem statements revealed.",
@@ -30,7 +30,7 @@ const eventContent = [
       },
       {
         name: "🔹 Round 2 — Ideation & Development",
-        time: "10:00 – 11:15",
+        time: "10:15 – 11:30",
         points: [
           "Teams brainstorm solutions.",
           "Create system flow & architecture.",
@@ -38,20 +38,29 @@ const eventContent = [
         ]
       },
       {
-        name: "🔹 Round 3 — Preliminary Screening",
-        time: "11:15 – 11:45",
+        name: "🔹 Round 3 — Mid Review",
+        time: "11:30 – 12:00",
         points: [
-          "Short 2–3 minute pitches.",
-          "Judges shortlist finalists."
+          "Teams present progress updates.",
+          "Judges provide feedback.",
+          "Refinement suggestions shared."
         ]
       },
       {
         name: "🔹 Round 4 — Final Pitch",
-        time: "11:45 AM – 12:15 PM",
+        time: "1:00 – 1:45",
         points: [
           "Finalists present full idea.",
-          "Q&A session with judges.",
-          "Scores finalized."
+          "Live explanation of workflow.",
+          "Q&A session with judges."
+        ]
+      },
+      {
+        name: "🔹 Round 5 — Deliberation & Result Finalization",
+        time: "1:45 – 2:00",
+        points: [
+          "Judges finalize scores.",
+          "Winners decided."
         ]
       }
     ],
@@ -64,45 +73,50 @@ const eventContent = [
     ]
   },
   {
-    title: "2️⃣ Logic Arena: Tech X Debate",
-    time: "🕒 10:00 AM – 12:00 PM",
+    title: "2️⃣ Logic Arena: MUN X Tech",
+    time: "🕒 10:00 AM – 12:00 PM & 1:00 PM – 2:00 PM",
     teamSize: "👥 Team Size: 3",
     fee: "💰 Fee: ₹145 per person",
     brief:
       "A tech-focused debate inspired by MUN format. Teams discuss future technology policies, AI ethics, and tech-related global issues.",
     rounds: [
       {
-        name: "🔹 Round 1 — Topic Allocation",
+        name: "🔹 Round 1 — Topic Allocation & Research",
         time: "10:00 – 10:20",
-        points: ["Topic distribution.", "Preparation time."]
+        points: ["Topics distributed.", "Teams prepare structured arguments."]
       },
       {
-        name: "🔹 Round 2 — Opening Statements",
-        time: "10:20 – 11:00",
-        points: ["Structured team arguments.", "Equal speaking time."]
+        name: "🔹 Round 2 — Opening Debate",
+        time: "10:20 – 11:20",
+        points: ["Structured arguments presented.", "Equal speaking time enforced."]
       },
       {
         name: "🔹 Round 3 — Rebuttal Round",
-        time: "11:00 – 11:30",
-        points: ["Counter-arguments.", "Critical discussion."]
+        time: "11:20 – 12:00",
+        points: ["Counter-arguments presented.", "Cross-questioning allowed."]
       },
       {
-        name: "🔹 Round 4 — Closing Statements",
-        time: "11:30 AM – 12:00 PM",
-        points: ["Final remarks.", "Judges evaluate & finalize scores."]
+        name: "🔹 Round 4 — Final Statements",
+        time: "1:00 – 1:40",
+        points: ["Closing arguments delivered.", "Final defense of position."]
+      },
+      {
+        name: "🔹 Round 5 — Judge Discussion & Results",
+        time: "1:40 – 2:00",
+        points: ["Judges evaluate performance.", "Final scores declared."]
       }
     ],
     judging: [
       "Argument strength",
       "Technical awareness",
-      "Communication skills",
-      "Confidence & clarity",
+      "Clarity & confidence",
+      "Logical reasoning",
       "Team coordination"
     ]
   },
   {
     title: "3️⃣ Quantum Canvas (Tech Poster)",
-    time: "🕒 9:45 AM – 12:15 PM",
+    time: "🕒 10:00 AM – 11:00 AM",
     teamSize: "👥 Team Size: 2–3",
     fee: "💰 Fee: ₹145 per person",
     brief:
@@ -110,20 +124,20 @@ const eventContent = [
     rounds: [
       {
         name: "🔹 Round 1 — Theme Announcement",
-        time: "9:45 – 10:00",
-        points: ["Theme revealed.", "Instructions given."]
+        time: "10:00 – 10:10",
+        points: ["Theme revealed.", "Guidelines explained."]
       },
       {
         name: "🔹 Round 2 — Poster Creation",
-        time: "10:00 – 11:45",
+        time: "10:10 – 10:50",
         points: [
-          "Teams design poster.",
-          "Concept building & execution."
+          "Concept development.",
+          "Design & creative execution."
         ]
       },
       {
         name: "🔹 Round 3 — Submission & Evaluation",
-        time: "11:45 AM – 12:15 PM",
+        time: "10:50 – 11:00",
         points: ["Poster display.", "Judges walk-through & scoring."]
       }
     ],
@@ -137,57 +151,57 @@ const eventContent = [
   },
   {
     title: "4️⃣ Tech Escape Challenge",
-    time: "🕒 10:30 AM – 12:00 PM",
+    time: "🕒 11:00 AM – 12:00 PM",
     teamSize: "👥 Team Size: 3",
     fee: "💰 Fee: ₹145 per person",
     brief:
       "A fast-paced multi-level challenge where teams solve tech puzzles, logic tasks, and mini challenges to unlock final solutions.",
     rounds: [
       {
-        name: "🔹 Round 1 — Warm-Up Puzzle",
-        time: "10:30 – 10:45",
-        points: ["Basic logic challenges."]
+        name: "🔹 Round 1 — Instructions & Warm-Up",
+        time: "11:00 – 11:10",
+        points: ["Rules explained.", "Sample puzzle demonstrated."]
       },
       {
         name: "🔹 Round 2 — Technical Puzzle Round",
-        time: "10:45 – 11:30",
-        points: ["Algorithm & reasoning problems."]
+        time: "11:10 – 11:50",
+        points: ["Logic-based challenges solved.", "Algorithm & reasoning tasks completed."]
       },
       {
         name: "🔹 Round 3 — Final Unlock Challenge",
-        time: "11:30 – 12:00",
-        points: ["Complex final puzzle.", "Final scoring & winner selection."]
+        time: "11:50 – 12:00",
+        points: ["High-difficulty final task.", "Scores finalized."]
       }
     ],
     judging: [
       "Accuracy of solutions",
-      "Speed of completion",
-      "Problem-solving ability",
+      "Speed",
+      "Logical thinking",
       "Team collaboration"
     ]
   },
   {
     title: "5️⃣ Debug Dominion",
-    time: "🕒 10:30 AM – 12:00 PM",
+    time: "🕒 1:00 PM – 2:00 PM",
     teamSize: "👥 Team Size: 2",
     fee: "💰 Fee: ₹145 per person",
     brief:
       "Teams identify and fix errors in provided code. Focus is on debugging skills, accuracy, and speed.",
     rounds: [
       {
-        name: "🔹 Round 1 — Beginner Debug",
-        time: "10:30 – 10:45",
-        points: ["Basic syntax issues."]
+        name: "🔹 Round 1 — Code Distribution & Briefing",
+        time: "1:00 – 1:10",
+        points: ["Buggy code files shared.", "Rules clarified."]
       },
       {
-        name: "🔹 Round 2 — Logic Debug",
-        time: "10:45 – 11:30",
-        points: ["Intermediate logic errors."]
+        name: "🔹 Round 2 — Debugging Phase",
+        time: "1:10 – 1:50",
+        points: ["Identify syntax errors.", "Fix logical mistakes.", "Ensure correct output."]
       },
       {
-        name: "🔹 Round 3 — Advanced Debug",
-        time: "11:30 – 12:00",
-        points: ["Complex bug fixing.", "Final submission & scoring."]
+        name: "🔹 Round 3 — Submission & Evaluation",
+        time: "1:50 – 2:00",
+        points: ["Final code submission.", "Judges evaluate correctness."]
       }
     ],
     judging: [
@@ -269,9 +283,9 @@ export default async function EventsPage() {
   );
 
   const workshopEventIds = workshopEventDocs.map((event) => event._id);
-  const workshopRegistrations =
+  const workshopRegistrations: Array<{ _id: unknown; total: number }> =
     workshopEventIds.length > 0
-      ? await Registration.aggregate<Array<{ _id: unknown; total: number }>>([
+      ? await Registration.aggregate<{ _id: unknown; total: number }>([
           {
             $match: {
               eventId: { $in: workshopEventIds },

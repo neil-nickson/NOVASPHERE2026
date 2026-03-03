@@ -91,6 +91,36 @@ function isWorkshopTitle(title: string) {
   );
 }
 
+function getCompetitiveCapacityLimits(title: string) {
+  const normalized = title.toLowerCase();
+
+  if (normalized.includes("ideathon")) {
+    return { maxTeams: 16, maxParticipants: 65 };
+  }
+
+  if (
+    normalized.includes("logic arena") ||
+    normalized.includes("debate") ||
+    normalized.includes("mun x tech")
+  ) {
+    return { maxTeams: 18, maxParticipants: 54 };
+  }
+
+  if (normalized.includes("quantum canvas") || normalized.includes("poster")) {
+    return { maxTeams: 16, maxParticipants: 32 };
+  }
+
+  if (normalized.includes("debug dominion")) {
+    return { maxTeams: 14, maxParticipants: 28 };
+  }
+
+  if (normalized.includes("tech escape")) {
+    return { maxTeams: 11, maxParticipants: 33 };
+  }
+
+  return null;
+}
+
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
   if (!session || !session.user) {
@@ -239,6 +269,53 @@ export async function POST(req: Request) {
         },
         { status: 400 }
       );
+    }
+
+    if (!isWorkshopTitle(event.title)) {
+      const limits = getCompetitiveCapacityLimits(event.title);
+
+      if (limits) {
+        const competitiveStats = await Registration.aggregate<{ teams: number; participants: number }>([
+          {
+            $match: {
+              eventId: eventDoc._id,
+              status: "paid"
+            }
+          },
+          {
+            $group: {
+              _id: null,
+              teams: { $sum: 1 },
+              participants: { $sum: { $ifNull: ["$participantCount", 1] } }
+            }
+          }
+        ]);
+
+        const registeredTeams = competitiveStats[0]?.teams ?? 0;
+        const registeredParticipants = competitiveStats[0]?.participants ?? 0;
+
+        if (registeredTeams >= limits.maxTeams) {
+          return NextResponse.json(
+            {
+              error: "Registration closed for this event: maximum number of teams has been reached."
+            },
+            { status: 409 }
+          );
+        }
+
+        if (registeredParticipants + participantCount > limits.maxParticipants) {
+          const seatsLeft = Math.max(0, limits.maxParticipants - registeredParticipants);
+          return NextResponse.json(
+            {
+              error:
+                seatsLeft > 0
+                  ? `Only ${seatsLeft} participant seat${seatsLeft > 1 ? "s" : ""} left for this event.`
+                  : "Registration closed for this event: participant capacity reached."
+            },
+            { status: 409 }
+          );
+        }
+      }
     }
 
     if (isWorkshopTitle(event.title)) {
