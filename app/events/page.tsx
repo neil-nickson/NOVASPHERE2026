@@ -5,14 +5,15 @@ import { WorkshopsClient } from "@/components/workshops-client";
 
 export const dynamic = "force-dynamic";
 
-const EVENT_PRICE = 150;
+const COMPETITIVE_EVENT_PRICE = 145;
+const WORKSHOP_PRICE = 149;
 
 const eventContent = [
   {
     title: "1️⃣ NeuralForge Ideathon",
     time: "🕒 9:45 AM – 12:15 PM",
     teamSize: "👥 Team Size: 3–4",
-    fee: "💰 Fee: ₹150 per person",
+    fee: "💰 Fee: ₹145 per person",
     brief:
       "Teams innovate solutions for real-world problems using technology. They design ideas, system flow, and possible implementation strategy, then pitch to judges.",
     rounds: [
@@ -64,7 +65,7 @@ const eventContent = [
     title: "2️⃣ Logic Arena: Tech X Debate",
     time: "🕒 10:00 AM – 12:00 PM",
     teamSize: "👥 Team Size: 3",
-    fee: "💰 Fee: ₹150 per person",
+    fee: "💰 Fee: ₹145 per person",
     brief:
       "A tech-focused debate inspired by MUN format. Teams discuss future technology policies, AI ethics, and tech-related global issues.",
     rounds: [
@@ -101,7 +102,7 @@ const eventContent = [
     title: "3️⃣ Quantum Canvas (Tech Poster)",
     time: "🕒 9:45 AM – 12:15 PM",
     teamSize: "👥 Team Size: 2–3",
-    fee: "💰 Fee: ₹150 per person",
+    fee: "💰 Fee: ₹145 per person",
     brief:
       "Teams creatively visualize technology ideas through posters that communicate innovation clearly and attractively.",
     rounds: [
@@ -136,7 +137,7 @@ const eventContent = [
     title: "4️⃣ Tech Escape Challenge",
     time: "🕒 10:30 AM – 12:00 PM",
     teamSize: "👥 Team Size: 3",
-    fee: "💰 Fee: ₹150 per person",
+    fee: "💰 Fee: ₹145 per person",
     brief:
       "A fast-paced multi-level challenge where teams solve tech puzzles, logic tasks, and mini challenges to unlock final solutions.",
     rounds: [
@@ -167,7 +168,7 @@ const eventContent = [
     title: "5️⃣ Debug Dominion",
     time: "🕒 10:30 AM – 12:00 PM",
     teamSize: "👥 Team Size: 2",
-    fee: "💰 Fee: ₹150 per person",
+    fee: "💰 Fee: ₹145 per person",
     brief:
       "Teams identify and fix errors in provided code. Focus is on debugging skills, accuracy, and speed.",
     rounds: [
@@ -201,25 +202,24 @@ const workshops = [
     dbTitle: "WEB DEVELOPMENT (WORKSHOP)",
     title: "1️⃣ WEB DEVELOPMENT (WORKSHOP)",
     time: "🕒 9:30 AM – 12:30 PM",
-    fee: "💰 Fee: ₹150 per person",
-    price: EVENT_PRICE,
+    fee: "💰 Fee: ₹149 per person",
+    price: WORKSHOP_PRICE,
     brochureImage: "/antigravity.jpeg"
   },
   {
     dbTitle: "AI TOOLS (WORKSHOP)",
     title: "2️⃣ AI TOOLS (WORKSHOP)",
     time: "🕒 1:00 PM – 3:00 PM",
-    fee: "💰 Fee: ₹150 per person",
-    price: EVENT_PRICE,
+    fee: "💰 Fee: ₹149 per person",
+    price: WORKSHOP_PRICE,
     brochureImage: "/web development.jpeg"
   }
 ];
 
 export default async function EventsPage() {
   await connectDB();
-  await Event.updateMany({}, { $set: { price: EVENT_PRICE } }).exec();
-
   const competitiveTitles = eventContent.map((event) => event.title);
+  await Event.updateMany({ title: { $in: competitiveTitles } }, { $set: { price: COMPETITIVE_EVENT_PRICE } }).exec();
   const existingCompetitiveEvents = await Event.find({ title: { $in: competitiveTitles } })
     .lean()
     .exec();
@@ -233,7 +233,7 @@ export default async function EventsPage() {
       missingCompetitiveEvents.map((event) => ({
         title: event.title,
         description: event.brief,
-        price: EVENT_PRICE
+        price: COMPETITIVE_EVENT_PRICE
       }))
     );
   }
@@ -244,6 +244,7 @@ export default async function EventsPage() {
   const competitiveEventMap = new Map(competitiveEventDocs.map((event) => [event.title, event]));
 
   const workshopTitles = workshops.map((workshop) => workshop.dbTitle);
+  await Event.updateMany({ title: { $in: workshopTitles } }, { $set: { price: WORKSHOP_PRICE } }).exec();
   const existingWorkshopEvents = await Event.find({ title: { $in: workshopTitles } })
     .lean()
     .exec();
@@ -274,7 +275,7 @@ export default async function EventsPage() {
       id: dbEvent ? String(dbEvent._id) : `event-${index + 1}`,
       title: event.title,
       description: event.brief,
-      price: Number(dbEvent?.price ?? EVENT_PRICE),
+      price: Number(dbEvent?.price ?? COMPETITIVE_EVENT_PRICE),
       time: event.time,
       teamSize: event.teamSize,
       brief: event.brief,

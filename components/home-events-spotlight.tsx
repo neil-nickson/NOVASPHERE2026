@@ -19,7 +19,7 @@ const HOME_EVENTS: HomeEventCard[] = [
     title: "NeuralForge Ideathon",
     category: "TECH",
     time: "9:45 AM – 12:15 PM",
-    fee: "₹150 per person"
+    fee: "₹145 per person"
   },
   {
     id: "logic-arena",
@@ -27,7 +27,7 @@ const HOME_EVENTS: HomeEventCard[] = [
     title: "Logic Arena: Tech X Debate",
     category: "DEBATE",
     time: "10:00 AM – 12:00 PM",
-    fee: "₹150 per person"
+    fee: "₹145 per person"
   },
   {
     id: "quantum-canvas",
@@ -35,7 +35,7 @@ const HOME_EVENTS: HomeEventCard[] = [
     title: "Quantum Canvas",
     category: "DESIGN",
     time: "9:45 AM – 12:15 PM",
-    fee: "₹150 per person"
+    fee: "₹145 per person"
   },
   {
     id: "tech-escape",
@@ -43,7 +43,7 @@ const HOME_EVENTS: HomeEventCard[] = [
     title: "Tech Escape Challenge",
     category: "CHALLENGE",
     time: "10:30 AM – 12:00 PM",
-    fee: "₹150 per person"
+    fee: "₹145 per person"
   },
   {
     id: "debug-dominion",
@@ -51,7 +51,7 @@ const HOME_EVENTS: HomeEventCard[] = [
     title: "Debug Dominion",
     category: "DEBUG",
     time: "10:30 AM – 12:00 PM",
-    fee: "₹150 per person"
+    fee: "₹145 per person"
   },
   {
     id: "webdev-workshop-morning",
@@ -59,7 +59,7 @@ const HOME_EVENTS: HomeEventCard[] = [
     title: "Web Development Workshop",
     category: "WORKSHOP",
     time: "9:30 AM – 12:30 PM",
-    fee: "₹150 per person"
+    fee: "₹149 per person"
   },
   {
     id: "ai-tools-workshop",
@@ -67,7 +67,7 @@ const HOME_EVENTS: HomeEventCard[] = [
     title: "AI Tools Workshop",
     category: "WORKSHOP",
     time: "1:00 PM – 3:00 PM",
-    fee: "₹150 per person"
+    fee: "₹149 per person"
   }
 ];
 
