@@ -1,5 +1,6 @@
 import { connectDB } from "@/lib/db";
 import { Event } from "@/models/Event";
+import { Registration } from "@/models/Registration";
 import { EventsClient } from "@/components/events-client";
 import { WorkshopsClient } from "@/components/workshops-client";
 
@@ -7,6 +8,7 @@ export const dynamic = "force-dynamic";
 
 const COMPETITIVE_EVENT_PRICE = 145;
 const WORKSHOP_PRICE = 149;
+const WORKSHOP_CAPACITY = 180;
 
 const eventContent = [
   {
@@ -204,7 +206,7 @@ const workshops = [
     time: "🕒 9:30 AM – 12:30 PM",
     fee: "💰 Fee: ₹149 per person",
     price: WORKSHOP_PRICE,
-    brochureImage: "/antigravity.jpeg"
+    brochureImage: "/workshop.png"
   },
   {
     dbTitle: "AI TOOLS (WORKSHOP)",
@@ -212,7 +214,7 @@ const workshops = [
     time: "🕒 1:00 PM – 3:00 PM",
     fee: "💰 Fee: ₹149 per person",
     price: WORKSHOP_PRICE,
-    brochureImage: "/web development.jpeg"
+    brochureImage: "/workshop.png"
   }
 ];
 
@@ -269,6 +271,28 @@ export default async function EventsPage() {
     workshopEventDocs.map((event) => [event.title, event])
   );
 
+  const workshopEventIds = workshopEventDocs.map((event) => event._id);
+  const workshopRegistrations = await Registration.aggregate<
+    Array<{ _id: unknown; total: number }>
+  >([
+    {
+      $match: {
+        eventId: { $in: workshopEventIds },
+        status: "paid"
+      }
+    },
+    {
+      $group: {
+        _id: "$eventId",
+        total: { $sum: { $ifNull: ["$participantCount", 1] } }
+      }
+    }
+  ]);
+
+  const workshopRegisteredCountById = new Map(
+    workshopRegistrations.map((entry) => [String(entry._id), entry.total])
+  );
+
   const eventCards = eventContent.map((event, index) => {
     const dbEvent = competitiveEventMap.get(event.title);
     return {
@@ -295,7 +319,11 @@ export default async function EventsPage() {
         time: workshop.time,
         fee: workshop.fee,
         price: Number(dbEvent.price),
-        brochureImage: workshop.brochureImage
+        brochureImage: workshop.brochureImage,
+        seatsLeft: Math.max(
+          0,
+          WORKSHOP_CAPACITY - (workshopRegisteredCountById.get(String(dbEvent._id)) ?? 0)
+        )
       };
     })
     .filter((item): item is NonNullable<typeof item> => Boolean(item));

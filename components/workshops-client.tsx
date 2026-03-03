@@ -13,6 +13,7 @@ interface WorkshopItem {
   fee: string;
   price: number;
   brochureImage: string;
+  seatsLeft?: number;
 }
 
 interface Props {
@@ -38,6 +39,8 @@ export function WorkshopsClient({ workshops }: Props) {
     <div className="grid gap-4 md:grid-cols-2">
       {workshops.map((workshop, index) => {
         const isOpen = expandedIndex === index;
+        const seatsLeft = workshop.seatsLeft ?? 0;
+        const isSoldOut = seatsLeft <= 0;
 
         return (
           <article
@@ -57,16 +60,25 @@ export function WorkshopsClient({ workshops }: Props) {
                 </button>
                 <button
                   onClick={() => handleRegisterClick(workshop)}
-                  disabled={status === "loading"}
+                  disabled={status === "loading" || isSoldOut}
                   className="rounded-md bg-purple-500 px-3 py-1.5 text-xs font-semibold text-white hover:bg-purple-400 disabled:opacity-60"
                 >
-                  {registrationOpenId === workshop.id ? "Close Registration" : "Register"}
+                  {isSoldOut
+                    ? "Seats Full"
+                    : registrationOpenId === workshop.id
+                      ? "Close Registration"
+                      : "Register"}
                 </button>
               </div>
             </div>
 
             <p className="mt-2 text-sm text-purple-200">{workshop.time}</p>
             <p className="mt-2 text-sm text-slate-300">{workshop.fee}</p>
+            <p className="mt-1 text-xs text-white/70">
+              {isSoldOut
+                ? "Seats not available for this workshop."
+                : `Seats left: ${seatsLeft} / 180`}
+            </p>
 
             {registrationOpenId === workshop.id && (
               <TeamRegistrationForm

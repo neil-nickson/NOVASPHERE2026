@@ -12,6 +12,7 @@ import { sendRegistrationConfirmationEmail } from "@/lib/email";
 
 const COMPETITIVE_EVENT_PRICE = 145;
 const WORKSHOP_PRICE = 149;
+const WORKSHOP_CAPACITY = 180;
 
 const memberSchema = z.object({
   name: z.string().trim().min(2),
@@ -79,6 +80,15 @@ function getPricePerParticipant(title: string) {
     return WORKSHOP_PRICE;
   }
   return COMPETITIVE_EVENT_PRICE;
+}
+
+function isWorkshopTitle(title: string) {
+  const normalized = title.toLowerCase();
+  return (
+    normalized.includes("workshop") ||
+    normalized.includes("web development") ||
+    normalized.includes("ai tools")
+  );
 }
 
 export async function POST(req: Request) {
@@ -229,6 +239,37 @@ export async function POST(req: Request) {
         },
         { status: 400 }
       );
+    }
+
+    if (isWorkshopTitle(event.title)) {
+      const workshopStats = await Registration.aggregate<{ total: number }>([
+        {
+          $match: {
+            eventId: eventDoc._id,
+            status: "paid"
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            total: { $sum: { $ifNull: ["$participantCount", 1] } }
+          }
+        }
+      ]);
+
+      const registeredCount = workshopStats[0]?.total ?? 0;
+      if (registeredCount + participantCount > WORKSHOP_CAPACITY) {
+        const seatsLeft = Math.max(0, WORKSHOP_CAPACITY - registeredCount);
+        return NextResponse.json(
+          {
+            error:
+              seatsLeft > 0
+                ? `Only ${seatsLeft} seat${seatsLeft > 1 ? "s" : ""} left for this workshop.`
+                : "Seats are full for this workshop. Registration is no longer available."
+          },
+          { status: 409 }
+        );
+      }
     }
 
     const amount = participantCount * resolvedEventPrice * 100;
