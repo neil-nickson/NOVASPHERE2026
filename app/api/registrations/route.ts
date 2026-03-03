@@ -146,6 +146,24 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "You are already registered for this event" }, { status: 409 });
     }
 
+    const existingOtherEventRegistration = await Registration.findOne({
+      userId,
+      status: "paid",
+      eventId: { $ne: eventDoc._id }
+    })
+      .lean()
+      .exec();
+
+    if (existingOtherEventRegistration) {
+      return NextResponse.json(
+        {
+          error:
+            "You have already registered for another event. Multiple event registrations are not allowed from the same account."
+        },
+        { status: 409 }
+      );
+    }
+
     const transactionTaken = await Registration.findOne({ paymentId: transactionId })
       .lean()
       .exec();

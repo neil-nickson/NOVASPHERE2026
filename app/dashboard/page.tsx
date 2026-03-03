@@ -61,12 +61,17 @@ export default async function DashboardPage() {
     participantCount: registration.participantCount || 1
   }));
 
+  const uniquePaidEventCount = new Set(registeredEvents.map((event) => event.title)).size;
+
   return (
     <div className="space-y-8">
       <div>
         <h1 className="text-3xl font-semibold tracking-tight">Dashboard</h1>
         <p className="mt-2 text-sm text-white/70">
           View your profile, registered events, and payment history.
+        </p>
+        <p className="mt-2 text-xs text-amber-200/90">
+          Single-event policy: one account can register for only one event.
         </p>
       </div>
 
@@ -120,7 +125,7 @@ export default async function DashboardPage() {
           <div className="mt-3 space-y-1 text-xs text-white/75">
             <div>
               <span className="text-white/60">Total events registered:</span>{" "}
-              <span className="font-medium">{paidRegistrations.length}</span>
+              <span className="font-medium">{uniquePaidEventCount}</span>
             </div>
             <div>
               <span className="text-white/60">Total amount paid:</span>{" "}
@@ -147,7 +152,9 @@ export default async function DashboardPage() {
               >
                 <div>
                   <div className="text-white">
-                    {typeof reg.eventId === "object" && (reg.eventId as any).title}
+                    {reg.eventTitle ||
+                      (typeof reg.eventId === "object" && (reg.eventId as any).title) ||
+                      "Unknown Event"}
                   </div>
                   <div className="text-[11px] text-white/60">
                     {new Date(reg.createdAt).toLocaleString()}
