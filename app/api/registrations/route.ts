@@ -10,7 +10,8 @@ import { User } from "@/models/User";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 import { sendRegistrationConfirmationEmail } from "@/lib/email";
 
-const PRICE_PER_PARTICIPANT = 150;
+const COMPETITIVE_EVENT_PRICE = 145;
+const WORKSHOP_PRICE = 149;
 
 const memberSchema = z.object({
   name: z.string().trim().min(2),
@@ -66,6 +67,18 @@ function getTeamConstraintsFromTitle(title: string) {
   }
 
   return { min: 1, max: 1 };
+}
+
+function getPricePerParticipant(title: string) {
+  const normalized = title.toLowerCase();
+  if (
+    normalized.includes("workshop") ||
+    normalized.includes("web development") ||
+    normalized.includes("ai tools")
+  ) {
+    return WORKSHOP_PRICE;
+  }
+  return COMPETITIVE_EVENT_PRICE;
 }
 
 export async function POST(req: Request) {
@@ -127,12 +140,21 @@ export async function POST(req: Request) {
       eventDoc = await Event.findOne({ title: eventTitle.trim() }).exec();
     }
 
+    const fallbackTitleForPrice = eventTitle.trim();
+    const expectedPrice = getPricePerParticipant(fallbackTitleForPrice);
+
     if (!eventDoc) {
       eventDoc = await Event.create({
-        title: eventTitle.trim(),
-        description: `${eventTitle.trim()} registration`,
-        price: PRICE_PER_PARTICIPANT
+        title: fallbackTitleForPrice,
+        description: `${fallbackTitleForPrice} registration`,
+        price: expectedPrice
       });
+    }
+
+    const resolvedEventPrice = getPricePerParticipant(eventDoc.title || fallbackTitleForPrice);
+    if (eventDoc.price !== resolvedEventPrice) {
+      eventDoc.price = resolvedEventPrice;
+      await eventDoc.save();
     }
 
     const event = eventDoc.toObject();
@@ -209,7 +231,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const amount = participantCount * PRICE_PER_PARTICIPANT * 100;
+    const amount = participantCount * resolvedEventPrice * 100;
     const manualOrderId = `manual_${transactionId}`;
 
     const registration = await Registration.create({
@@ -223,7 +245,7 @@ export async function POST(req: Request) {
       year: user.year,
       eventTitle: event.title,
       eventTime: normalizedEventTime,
-      eventPrice: PRICE_PER_PARTICIPANT,
+      eventPrice: resolvedEventPrice,
       paymentId: transactionId,
       orderId: manualOrderId,
       transactionId,
@@ -257,7 +279,7 @@ export async function POST(req: Request) {
         email: user.email,
         studentName: user.name,
         eventTitle: event.title,
-        eventPrice: PRICE_PER_PARTICIPANT,
+        eventPrice: resolvedEventPrice,
         amountPaise: amount,
         paymentId: transactionId,
         orderId: manualOrderId,

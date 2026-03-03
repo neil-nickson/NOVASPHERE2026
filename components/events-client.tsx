@@ -152,6 +152,7 @@ export function EventsClient({ events }: Props) {
                 eventId={event.id}
                 eventTitle={event.title}
                 eventTime={event.time}
+                eventPrice={event.price}
                 teamSizeText={event.teamSize}
                 onSuccess={() => router.push("/dashboard")}
               />

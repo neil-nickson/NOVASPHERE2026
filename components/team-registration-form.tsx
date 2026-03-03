@@ -19,11 +19,11 @@ type TeamRegistrationFormProps = {
   eventId: string;
   eventTitle: string;
   eventTime?: string;
+  eventPrice: number;
   teamSizeText?: string;
   onSuccess?: () => void;
 };
 
-const PRICE_PER_PARTICIPANT = 150;
 const YEARS: StudyYear[] = ["1st", "2nd", "3rd", "4th"];
 
 function parseTeamSize(teamSizeText?: string) {
@@ -66,6 +66,7 @@ export function TeamRegistrationForm({
   eventId,
   eventTitle,
   eventTime,
+  eventPrice,
   teamSizeText,
   onSuccess
 }: TeamRegistrationFormProps) {
@@ -86,7 +87,7 @@ export function TeamRegistrationForm({
   const [success, setSuccess] = useState<string | null>(null);
 
   const participantCount = 1 + members.length;
-  const totalAmount = participantCount * PRICE_PER_PARTICIPANT;
+  const totalAmount = participantCount * eventPrice;
   const leaderName = session?.user?.name ?? "";
   const leaderEmail = (session?.user as any)?.email ?? "";
   const leaderMobile = (session?.user as any)?.mobileNumber ?? "";
@@ -383,7 +384,7 @@ export function TeamRegistrationForm({
       </div>
 
       <div className="rounded-md border border-emerald-500/35 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-200">
-        Amount to pay: ₹{totalAmount} ({participantCount} participant{participantCount > 1 ? "s" : ""} × ₹{PRICE_PER_PARTICIPANT})
+        Amount to pay: ₹{totalAmount} ({participantCount} participant{participantCount > 1 ? "s" : ""} × ₹{eventPrice})
       </div>
 
       {error && (
