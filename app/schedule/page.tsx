@@ -13,7 +13,7 @@ export default function SchedulePage() {
           </h1>
 
           <p className="max-w-3xl text-base text-white/65 md:text-xl">
-            Full day schedule from 9:00 AM to 3:30 PM
+            Full day schedule from 9:00 AM to 3:00 PM
           </p>
 
           <div className="mt-8 space-y-6 border-l border-purple-500/35 pl-5 md:pl-7">
@@ -35,7 +35,7 @@ export default function SchedulePage() {
 
           <article className="relative rounded-2xl border border-purple-500/30 bg-black/35 p-5">
             <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-purple-400 md:-left-[39px]" />
-            <p className="text-sm font-semibold text-purple-300">9:30 AM</p>
+            <p className="text-sm font-semibold text-purple-300">9:30 AM – 12:30 PM</p>
             <h3 className="mt-2 text-lg font-semibold text-white">
               <span className="text-purple-300">1️⃣</span> WEB DEVELOPMENT (WORKSHOP)
             </h3>
@@ -44,35 +44,35 @@ export default function SchedulePage() {
 
           <article className="relative rounded-2xl border border-white/10 bg-black/35 p-5">
             <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-purple-400 md:-left-[39px]" />
-            <p className="text-sm font-semibold text-purple-300">9:45 AM</p>
+            <p className="text-sm font-semibold text-purple-300">9:45 AM – 12:15 PM</p>
             <h3 className="mt-2 text-lg font-semibold text-white">2️⃣ NeuralForge Ideathon</h3>
             <p className="mt-3 text-sm text-white/75">Entry Fee: ₹150 per person</p>
           </article>
 
           <article className="relative rounded-2xl border border-white/10 bg-black/35 p-5">
             <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-purple-400 md:-left-[39px]" />
-            <p className="text-sm font-semibold text-purple-300">9:45 AM</p>
+            <p className="text-sm font-semibold text-purple-300">9:45 AM – 12:15 PM</p>
             <h3 className="mt-2 text-lg font-semibold text-white">3️⃣ Quantum Canvas (Tech Poster)</h3>
             <p className="mt-3 text-sm text-white/75">Entry Fee: ₹150 per person</p>
           </article>
 
           <article className="relative rounded-2xl border border-white/10 bg-black/35 p-5">
             <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-purple-400 md:-left-[39px]" />
-            <p className="text-sm font-semibold text-purple-300">10:00 AM</p>
-            <h3 className="mt-2 text-lg font-semibold text-white">4️⃣ Logic Arena: MUN X Tech</h3>
+            <p className="text-sm font-semibold text-purple-300">10:00 AM – 12:00 PM</p>
+            <h3 className="mt-2 text-lg font-semibold text-white">4️⃣ Logic Arena: Tech X Debate</h3>
             <p className="mt-3 text-sm text-white/75">Entry Fee: ₹150 per person</p>
           </article>
 
           <article className="relative rounded-2xl border border-white/10 bg-black/35 p-5">
             <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-purple-400 md:-left-[39px]" />
-            <p className="text-sm font-semibold text-purple-300">10:30 AM</p>
-            <h3 className="mt-2 text-lg font-semibold text-white">5️⃣ TECH ESCAPE</h3>
+            <p className="text-sm font-semibold text-purple-300">10:30 AM – 12:00 PM</p>
+            <h3 className="mt-2 text-lg font-semibold text-white">5️⃣ Tech Escape Challenge</h3>
             <p className="mt-3 text-sm text-white/75">Entry Fee: ₹150 per person</p>
           </article>
 
           <article className="relative rounded-2xl border border-white/10 bg-black/35 p-5">
             <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-purple-400 md:-left-[39px]" />
-            <p className="text-sm font-semibold text-purple-300">10:30 AM</p>
+            <p className="text-sm font-semibold text-purple-300">10:30 AM – 12:00 PM</p>
             <h3 className="mt-2 text-lg font-semibold text-white">6️⃣ Debug Dominion</h3>
             <p className="mt-3 text-sm text-white/75">Entry Fee: ₹150 per person</p>
           </article>
@@ -85,7 +85,7 @@ export default function SchedulePage() {
 
           <article className="relative rounded-2xl border border-purple-500/30 bg-black/35 p-5">
             <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-purple-400 md:-left-[39px]" />
-            <p className="text-sm font-semibold text-purple-300">1:00 PM</p>
+            <p className="text-sm font-semibold text-purple-300">1:00 PM – 3:00 PM</p>
             <h3 className="mt-2 text-lg font-semibold text-white">
               <span className="text-purple-300">7️⃣</span> AI TOOLS (WORKSHOP)
             </h3>
@@ -94,23 +94,7 @@ export default function SchedulePage() {
 
           <article className="relative rounded-2xl border border-white/10 bg-black/35 p-5">
             <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-purple-400 md:-left-[39px]" />
-            <p className="text-sm font-semibold text-purple-300">2:30 PM</p>
-            <h3 className="mt-2 text-lg font-semibold text-white">
-              NeuralForge Ideathon Final Presentations
-            </h3>
-          </article>
-
-          <article className="relative rounded-2xl border border-white/10 bg-black/35 p-5">
-            <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-purple-400 md:-left-[39px]" />
-            <p className="text-sm font-semibold text-purple-300">2:30 PM – 3:00 PM</p>
-            <h3 className="mt-2 text-lg font-semibold text-white">
-              Logic Arena: MUN X Tech Finals
-            </h3>
-          </article>
-
-          <article className="relative rounded-2xl border border-white/10 bg-black/35 p-5">
-            <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-purple-400 md:-left-[39px]" />
-            <p className="text-sm font-semibold text-purple-300">3:15 PM</p>
+            <p className="text-sm font-semibold text-purple-300">3:00 PM</p>
             <h3 className="mt-2 text-lg font-semibold text-white">✅ Event Concludes</h3>
           </article>
           </div>

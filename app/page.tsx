@@ -138,29 +138,81 @@ export default function HomePage() {
             The Learning Experience
           </h2>
           <p className="mt-4 text-sm leading-7 text-white/75 md:text-base">
-            Beyond competition, NOVASPHERE 2026 also hosts two exclusive hands-on
-            workshops designed to elevate your technical edge:
+            At NovaSphere 2026, learning goes beyond listening — it&apos;s about building. Both
+            workshops are fully hands-on, meaning participants won&apos;t just watch demonstrations;
+            they will actively create, experiment, and develop real working outputs during the
+            session. These workshops are structured to ensure every participant leaves with
+            practical experience and tangible results.
           </p>
         </div>
 
         <div className="mt-8 grid gap-6 md:grid-cols-2">
           <article className="rounded-2xl border border-cyan-500/30 bg-black/45 p-6 text-sm leading-7 text-white/75">
             <h3 className="text-lg font-semibold text-purple-400 md:text-xl">
-              Antigravity Tool Workshop
+              🤖 AI Tools Workshop
             </h3>
+            <p className="mt-2 text-xs uppercase tracking-[0.12em] text-cyan-200/80">
+              Hands-On Innovation with No-Code &amp; AI Platforms
+            </p>
             <p className="mt-3">
-              Explore the power of cutting-edge no-code/low-code innovation tools and
-              learn how to rapidly transform ideas into digital solutions.
+              The AI Tools Workshop is a practical, build-focused session where participants will
+              actively create AI-powered solutions using modern no-code and low-code platforms.
+              With a special focus on tools like Antigravity and similar rapid-development
+              ecosystems, this workshop empowers participants to transform ideas into working
+              digital solutions — live during the session.
+            </p>
+            <p className="mt-3">
+              Instead of theory-heavy explanations, the session follows a guided build format.
+              Participants will be given a real-world problem and will step-by-step construct a
+              solution using AI-assisted tools. From designing workflows to integrating automation
+              and smart features, every attendee will work directly on their own system.
+            </p>
+            <p className="mt-3 font-semibold text-white/85">During the workshop, participants will:</p>
+            <ul className="mt-2 list-disc space-y-1 pl-5">
+              <li>Build a functional AI-powered mini application.</li>
+              <li>Use drag-and-drop interfaces to create workflows.</li>
+              <li>Implement automation without writing complex code.</li>
+              <li>Integrate AI-generated content or logic.</li>
+              <li>Test and refine their digital solution in real time.</li>
+            </ul>
+            <p className="mt-3">
+              By the end of the session, participants will have a working prototype and a clear
+              understanding of how modern AI platforms accelerate innovation. The focus is on
+              execution, experimentation, and rapid creation — giving attendees a real builder&apos;s
+              mindset.
             </p>
           </article>
 
           <article className="rounded-2xl border border-cyan-500/30 bg-black/45 p-6 text-sm leading-7 text-white/75">
             <h3 className="text-lg font-semibold text-purple-400 md:text-xl">
-              Web Development Workshop
+              🌐 Web Development Workshop
             </h3>
+            <p className="mt-2 text-xs uppercase tracking-[0.12em] text-cyan-200/80">
+              Hands-On Web App Development from Scratch
+            </p>
             <p className="mt-3">
-              Master the fundamentals of modern web development and discover how to
-              build responsive, impactful web applications from scratch.
+              The Web Development Workshop is designed as an interactive coding session where
+              participants build a responsive web application step-by-step. This is not a passive
+              lecture — attendees will code along in real time, gaining direct experience in
+              structuring, styling, and making a website functional.
+            </p>
+            <p className="mt-3">
+              Participants will start with a blank project and progressively develop a complete,
+              responsive web page. The session focuses on clarity, structure, and modern practices
+              while ensuring that every concept is immediately applied through hands-on coding.
+            </p>
+            <p className="mt-3 font-semibold text-white/85">During the workshop, participants will:</p>
+            <ul className="mt-2 list-disc space-y-1 pl-5">
+              <li>Write and structure HTML content.</li>
+              <li>Design layouts using CSS.</li>
+              <li>Add interactivity using JavaScript basics.</li>
+              <li>Implement responsive design principles.</li>
+              <li>Test and preview their live web application.</li>
+            </ul>
+            <p className="mt-3">
+              By the end of the session, every participant will have built their own working web
+              project and understood the workflow of front-end development. The emphasis is on
+              practical skill-building, not just theoretical knowledge.
             </p>
           </article>
         </div>
