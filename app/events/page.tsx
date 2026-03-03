@@ -73,7 +73,7 @@ const eventContent = [
     ]
   },
   {
-    title: "2️⃣ Logic Arena: MUN X Tech",
+    title: "2️⃣ Logic Arena: Tech X Debate",
     time: "🕒 10:00 AM – 12:00 PM & 1:00 PM – 2:00 PM",
     teamSize: "👥 Team Size: 3",
     fee: "💰 Fee: ₹145 per person",

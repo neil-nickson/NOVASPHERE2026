@@ -24,7 +24,7 @@ const HOME_EVENTS: HomeEventCard[] = [
   {
     id: "logic-arena",
     code: "002",
-    title: "Logic Arena: MUN X Tech",
+    title: "Logic Arena: Tech X Debate",
     category: "DEBATE",
     time: "10:00 AM – 12:00 PM & 1:00 PM – 2:00 PM",
     fee: "₹145 per person"
