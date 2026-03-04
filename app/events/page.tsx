@@ -349,7 +349,7 @@ export default async function EventsPage() {
           NOVASPHERE 2026.
         </p>
         <p className="mt-3 inline-flex rounded-full border border-emerald-300/35 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-200">
-          Highlights: Trophy's🏆 and Physical Certificates 🪪 will be awarded for Winners and Runners.
+          Highlights: Trophy's and Physical Certificates  will be awarded for Winners and Runners.
         </p>
       </div>
 
