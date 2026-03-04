@@ -1,6 +1,5 @@
 import { connectDB } from "@/lib/db";
 import { Event } from "@/models/Event";
-import { Registration } from "@/models/Registration";
 import { EventsClient } from "@/components/events-client";
 import { WorkshopsClient } from "@/components/workshops-client";
 
@@ -8,7 +7,6 @@ export const dynamic = "force-dynamic";
 
 const COMPETITIVE_EVENT_PRICE = 145;
 const WORKSHOP_PRICE = 149;
-const WORKSHOP_CAPACITY = 180;
 
 const eventContent = [
   {
@@ -220,7 +218,8 @@ const workshops = [
     time: "🕒 9:30 AM – 12:30 PM",
     fee: "💰 Fee: ₹149 per person",
     price: WORKSHOP_PRICE,
-    brochureImage: "/workshop.png"
+    brochureImage: "/workshop.png",
+    formLink: "https://forms.gle/tJfpyFyZGUU9M5tW9"
   },
   {
     dbTitle: "AI TOOLS (WORKSHOP)",
@@ -228,7 +227,8 @@ const workshops = [
     time: "🕒 1:00 PM – 3:00 PM",
     fee: "💰 Fee: ₹149 per person",
     price: WORKSHOP_PRICE,
-    brochureImage: "/workshop.png"
+    brochureImage: "/workshop.png",
+    formLink: "https://forms.gle/2v2bV1CSv99Qf62c8"
   }
 ];
 
@@ -282,29 +282,6 @@ export default async function EventsPage() {
     workshopEventDocs.map((event) => [event.title, event])
   );
 
-  const workshopEventIds = workshopEventDocs.map((event) => event._id);
-  const workshopRegistrations: Array<{ _id: unknown; total: number }> =
-    workshopEventIds.length > 0
-      ? await Registration.aggregate<{ _id: unknown; total: number }>([
-          {
-            $match: {
-              eventId: { $in: workshopEventIds },
-              status: "paid"
-            }
-          },
-          {
-            $group: {
-              _id: "$eventId",
-              total: { $sum: { $ifNull: ["$participantCount", 1] } }
-            }
-          }
-        ])
-      : [];
-
-  const workshopRegisteredCountById = new Map(
-    workshopRegistrations.map((entry) => [String(entry._id), entry.total])
-  );
-
   const eventCards = eventContent.map((event, index) => {
     const dbEvent = competitiveEventMap.get(event.title);
     return {
@@ -332,10 +309,7 @@ export default async function EventsPage() {
         fee: workshop.fee,
         price: Number(dbEvent.price),
         brochureImage: workshop.brochureImage,
-        seatsLeft: Math.max(
-          0,
-          WORKSHOP_CAPACITY - (workshopRegisteredCountById.get(String(dbEvent._id)) ?? 0)
-        )
+        formLink: workshop.formLink
       };
     })
     .filter((item): item is NonNullable<typeof item> => Boolean(item));

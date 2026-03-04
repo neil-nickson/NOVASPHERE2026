@@ -1,19 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { TeamRegistrationForm } from "@/components/team-registration-form";
 
 interface WorkshopItem {
   id: string;
   title: string;
   time: string;
   fee: string;
-  price: number;
   brochureImage: string;
-  seatsLeft?: number;
+  formLink: string;
 }
 
 interface Props {
@@ -21,26 +17,12 @@ interface Props {
 }
 
 export function WorkshopsClient({ workshops }: Props) {
-  const { status } = useSession();
-  const router = useRouter();
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
-  const [registrationOpenId, setRegistrationOpenId] = useState<string | null>(null);
-
-  function handleRegisterClick(workshop: WorkshopItem) {
-    if (status !== "authenticated") {
-      router.push("/login");
-      return;
-    }
-
-    setRegistrationOpenId((current) => (current === workshop.id ? null : workshop.id));
-  }
 
   return (
     <div className="grid gap-4 md:grid-cols-2">
       {workshops.map((workshop, index) => {
         const isOpen = expandedIndex === index;
-        const seatsLeft = workshop.seatsLeft ?? 0;
-        const isSoldOut = seatsLeft <= 0;
 
         return (
           <article
@@ -58,38 +40,19 @@ export function WorkshopsClient({ workshops }: Props) {
                 >
                   {isOpen ? "Hide details" : "More details"}
                 </button>
-                <button
-                  onClick={() => handleRegisterClick(workshop)}
-                  disabled={status === "loading" || isSoldOut}
-                  className="rounded-md bg-purple-500 px-3 py-1.5 text-xs font-semibold text-white hover:bg-purple-400 disabled:opacity-60"
+                <a
+                  href={workshop.formLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-md bg-purple-500 px-3 py-1.5 text-xs font-semibold text-white hover:bg-purple-400"
                 >
-                  {isSoldOut
-                    ? "Seats Full"
-                    : registrationOpenId === workshop.id
-                      ? "Close Registration"
-                      : "Register"}
-                </button>
+                  Register (Google Form)
+                </a>
               </div>
             </div>
 
             <p className="mt-2 text-sm text-purple-200">{workshop.time}</p>
             <p className="mt-2 text-sm text-slate-300">{workshop.fee}</p>
-            <p className="mt-1 text-xs text-white/70">
-              {isSoldOut
-                ? "Seats not available for this workshop."
-                : `Seats left: ${seatsLeft} / 180`}
-            </p>
-
-            {registrationOpenId === workshop.id && (
-              <TeamRegistrationForm
-                eventId={workshop.id}
-                eventTitle={workshop.title}
-                eventTime={workshop.time}
-                eventPrice={workshop.price}
-                teamSizeText="1"
-                onSuccess={() => router.push("/dashboard")}
-              />
-            )}
 
             {isOpen && (
               <div className="mt-4 overflow-hidden rounded-xl border border-purple-300/20 bg-black/20 p-2">
