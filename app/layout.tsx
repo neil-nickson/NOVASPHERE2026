@@ -9,9 +9,9 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://novasphere-2026.vercel.app"),
-  title: "Novasphere 2026 | Official Tech Event Website",
+  title: "Novasphere 2026 | Official Symposium Website",
   description:
-    "NovaSphere 2026 is an inter-college event at Sathyabama Institute of Science and Technology featuring Ideathon, Tech X Debate, Quantum Canvas, Tech Escape, Debug Dominion, and hands-on workshops.",
+    "Novasphere 2026 is a national-level technical symposium featuring workshops, hackathons, and competitions.",
   keywords: [
     "NovaSphere 2026",
     "inter-college event",
@@ -28,9 +28,9 @@ export const metadata: Metadata = {
     canonical: "/"
   },
   openGraph: {
-    title: "Novasphere 2026 | Official Tech Event Website",
+    title: "Novasphere 2026 | Official Symposium Website",
     description:
-      "Register for NovaSphere 2026 events and workshops at Sathyabama Institute of Science and Technology.",
+      "Novasphere 2026 is a national-level technical symposium featuring workshops, hackathons, and competitions.",
     url: "https://novasphere-2026.vercel.app",
     siteName: "NovaSphere 2026",
     type: "website"

@@ -218,7 +218,7 @@ const workshops = [
     time: "🕒 9:30 AM – 12:30 PM",
     fee: "💰 Fee: ₹149 per person",
     price: WORKSHOP_PRICE,
-    brochureImage: "/workshop.png",
+    brochureImage: "/workshop.jpeg",
     formLink: "https://forms.gle/tJfpyFyZGUU9M5tW9"
   },
   {
@@ -227,7 +227,7 @@ const workshops = [
     time: "🕒 1:00 PM – 3:00 PM",
     fee: "💰 Fee: ₹149 per person",
     price: WORKSHOP_PRICE,
-    brochureImage: "/workshop.png",
+    brochureImage: "/workshop.jpeg",
     formLink: "https://forms.gle/2v2bV1CSv99Qf62c8"
   }
 ];
