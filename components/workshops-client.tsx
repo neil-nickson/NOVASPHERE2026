@@ -59,11 +59,6 @@ export function WorkshopsClient({ workshops }: Props) {
 
             <p className="mt-2 text-sm text-purple-200">{workshop.time}</p>
             <p className="mt-2 text-sm text-slate-300">{workshop.fee}</p>
-            <p className="mt-1 text-xs text-white/70">
-              {isSoldOut
-                ? "Seats not available for this workshop."
-                : `Seats left: ${seatsLeft} / 180`}
-            </p>
 
             {isOpen && (
               <div className="mt-4 overflow-hidden rounded-xl border border-purple-300/20 bg-black/20 p-2">
