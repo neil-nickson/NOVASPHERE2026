@@ -348,6 +348,9 @@ export default async function EventsPage() {
           Explore all event categories and detailed round-wise structure for
           NOVASPHERE 2026.
         </p>
+        <p className="mt-3 inline-flex rounded-full border border-emerald-300/35 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-200">
+          Highlights: E-certificates will be provided to all participants and winners.
+        </p>
       </div>
 
       <section className="space-y-6">
