@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://novasphere-2026.vercel.app"),
   title: "Novasphere 2026 | Official Tech Event Website",
   description:
-    "NovaSphere 2026 is an inter-college event at Sathyabama Institute of Science and Technology featuring Ideathon, Tech X Debate, Quantum Canvas, Tech Escape, Debug Dominion, and hands-on workshops.",
+    "NovaSphere 2026 is an inter-college event at Sathyabama Institute of Science and Technology featuring Ideathon, Tech X Debate, Quantum Canvas, and hands-on workshops.",
   keywords: [
     "NovaSphere 2026",
     "inter-college event",
@@ -19,8 +19,6 @@ export const metadata: Metadata = {
     "Ideathon",
     "Tech X Debate",
     "Quantum Canvas",
-    "Tech Escape",
-    "Debug Dominion",
     "AI tools workshop",
     "web development workshop"
   ],

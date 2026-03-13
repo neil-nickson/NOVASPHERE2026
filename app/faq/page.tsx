@@ -2,7 +2,7 @@ const faqItems = [
   {
     question: "1️⃣ What is NOVASPHERE 2026?",
     answer:
-      "NOVASPHERE 2026 is an inter-college innovation summit featuring Ideathon, poster design, tech debate, debugging competition, and two hands-on technical workshops."
+      "NOVASPHERE 2026 is an inter-college innovation summit featuring Ideathon, poster design, tech debate, and two hands-on technical workshops."
   },
   {
     question: "2️⃣ Who can participate?",
@@ -31,7 +31,7 @@ const faqItems = [
   },
   {
     question: "7️⃣ What do I need to bring for the event?",
-    answer: "Participants should bring: Valid College ID and Laptop (for Debug Domain & Workshops)."
+    answer: "Participants should bring: Valid College ID and Laptop (for events and workshops)."
   },
   {
     question: "8️⃣ Will certificates be provided?",
@@ -55,20 +55,13 @@ const faqItems = [
   {
     question: "1️⃣2️⃣ What is the registration fee?",
     answer:
-      "Registration fee is ₹150 per person per event."
+      "Competitive events are ₹145 per team. Workshops are ₹149 per person."
   },
   {
     question: "1️⃣3️⃣ What happens if a participant arrives late?",
     answer: "Late entry may not be allowed once briefing or rounds have started."
   },
-  {
-    question: "1️⃣4️⃣ Is coding required in Tech Escape Challenge?",
-    answer: "No full coding is required; it focuses on logic and puzzle solving."
-  },
-  {
-    question: "1️⃣5️⃣ What programming languages are allowed in Debug Dominion?",
-    answer: "Any language specified by organizers for the provided problem files."
-  }
+  
 ];
 
 export default function FaqPage() {

@@ -55,14 +55,6 @@ function getTeamConstraintsFromTitle(title: string) {
     return { min: 2, max: 3 };
   }
 
-  if (normalized.includes("tech escape")) {
-    return { min: 3, max: 3 };
-  }
-
-  if (normalized.includes("debug dominion")) {
-    return { min: 2, max: 2 };
-  }
-
   if (normalized.includes("workshop") || normalized.includes("web development") || normalized.includes("ai tools")) {
     return { min: 1, max: 1 };
   }
@@ -108,14 +100,6 @@ function getCompetitiveCapacityLimits(title: string) {
 
   if (normalized.includes("quantum canvas") || normalized.includes("poster")) {
     return { maxTeams: 16, maxParticipants: 32 };
-  }
-
-  if (normalized.includes("debug dominion")) {
-    return { maxTeams: 14, maxParticipants: 28 };
-  }
-
-  if (normalized.includes("tech escape")) {
-    return { maxTeams: 11, maxParticipants: 33 };
   }
 
   return null;

@@ -101,14 +101,13 @@ export default function HomePage() {
               NOVASPHERE 2026 is a dynamic inter-college innovation summit designed
               to ignite bold thinking and breakthrough ideas. It brings together the
               brightest young minds to pitch visionary concepts, design compelling
-              visual solutions, engage in high-impact tech debates, and conquer
-              real-time debugging battles.
+              visual solutions, engage in high-impact tech debates, and showcase
+              collaborative problem-solving.
             </p>
             <p className="mt-4">
-              Across four flagship events — Ideathon, Quantum Canvas, TechX Debate,
-              Tech Escape Challenge and Debug Domain — participants will test their
-              creativity, analytical thinking, technical knowledge, and presentation
-              mastery in a celebration of ideas over execution.
+              Across three flagship events — Ideathon, Quantum Canvas, and TechX Debate —
+              participants will test their creativity, analytical thinking, technical
+              knowledge, and presentation mastery in a celebration of ideas over execution.
             </p>
           </article>
 
