@@ -22,7 +22,7 @@ export function SiteFooter() {
           <div className="space-y-5">
             <h3 className="text-2xl font-semibold text-purple-400">Contact Us</h3>
             <div className="space-y-4 text-white/80">
-              <p className="text-base md:text-lg">novasphere.sist@gmail.com</p>
+              <p className="text-base md:text-lg">neilnickson2007@gmail.com</p>
               <p className="text-base md:text-lg">
                 +91 9123579371
                 <br />

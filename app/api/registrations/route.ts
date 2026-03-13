@@ -51,8 +51,8 @@ function getTeamConstraintsFromTitle(title: string) {
     return { min: 3, max: 3 };
   }
 
-  if (normalized.includes("quantum canvas") || normalized.includes("poster")) {
-    return { min: 2, max: 3 };
+  if (normalized.includes("tech escape")) {
+    return { min: 3, max: 3 };
   }
 
   if (normalized.includes("workshop") || normalized.includes("web development") || normalized.includes("ai tools")) {
@@ -87,7 +87,7 @@ function getCompetitiveCapacityLimits(title: string) {
   const normalized = title.toLowerCase();
 
   if (normalized.includes("ideathon")) {
-    return { maxTeams: 16, maxParticipants: 65 };
+    return { maxTeams: 15, maxParticipants: 55 };
   }
 
   if (
@@ -95,11 +95,11 @@ function getCompetitiveCapacityLimits(title: string) {
     normalized.includes("debate") ||
     normalized.includes("mun x tech")
   ) {
-    return { maxTeams: 18, maxParticipants: 54 };
+    return { maxTeams: 12, maxParticipants: 36 };
   }
 
-  if (normalized.includes("quantum canvas") || normalized.includes("poster")) {
-    return { maxTeams: 16, maxParticipants: 32 };
+  if (normalized.includes("tech escape")) {
+    return { maxTeams: 15, maxParticipants: 45 };
   }
 
   return null;

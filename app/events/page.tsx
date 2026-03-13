@@ -13,15 +13,16 @@ const WORKSHOP_CAPACITY = 180;
 const eventContent = [
   {
     title: "1️⃣ NeuralForge Ideathon",
-    time: "🕒 10:00 AM – 12:00 PM & 1:00 PM – 2:00 PM",
+    time: "🕒 9:45 AM – 2:15 PM",
     teamSize: "👥 Team Size: 3–4",
+    capacity: "📊 Capacity: 12–15 Teams (~45–55 participants)",
     fee: "💰 Fee: ₹145 per team",
     brief:
-      "Teams innovate solutions for real-world problems using technology. They design ideas, system flow, and possible implementation strategy, then pitch to judges.",
+      "Teams design impactful solutions for real-world problems and present them through structured ideation, reviews, and final pitching.",
     rounds: [
       {
         name: "🔹 Round 1 — Briefing & Problem Release",
-        time: "10:00 – 10:15",
+        time: "9:45 – 10:00",
         points: [
           "Welcome & rules explanation.",
           "Problem statements revealed.",
@@ -30,7 +31,7 @@ const eventContent = [
       },
       {
         name: "🔹 Round 2 — Ideation & Development",
-        time: "10:15 – 11:30",
+        time: "10:00 – 11:30",
         points: [
           "Teams brainstorm solutions.",
           "Create system flow & architecture.",
@@ -42,25 +43,29 @@ const eventContent = [
         time: "11:30 – 12:00",
         points: [
           "Teams present progress updates.",
-          "Judges provide feedback.",
-          "Refinement suggestions shared."
+          "Mentor/judge feedback provided."
         ]
+      },
+      {
+        name: "🍽 Lunch Break",
+        time: "12:00 – 1:00",
+        points: ["Break before final pitching rounds."]
       },
       {
         name: "🔹 Round 4 — Final Pitch",
         time: "1:00 – 1:45",
         points: [
-          "Finalists present full idea.",
-          "Live explanation of workflow.",
+          "Finalists present complete idea.",
+          "Demonstration of solution approach.",
           "Q&A session with judges."
         ]
       },
       {
-        name: "🔹 Round 5 — Deliberation & Result Finalization",
-        time: "1:45 – 2:00",
+        name: "🔹 Round 5 — Deliberation & Results",
+        time: "1:45 – 2:15",
         points: [
           "Judges finalize scores.",
-          "Winners decided."
+          "Winner announcement."
         ]
       }
     ],
@@ -74,36 +79,42 @@ const eventContent = [
   },
   {
     title: "2️⃣ Logic Arena: Tech X Debate",
-    time: "🕒 10:00 AM – 12:00 PM & 1:00 PM – 2:00 PM",
+    time: "🕒 9:45 AM – 2:15 PM",
     teamSize: "👥 Team Size: 3",
+    capacity: "📊 Capacity: 10–12 Teams (~30–36 participants)",
     fee: "💰 Fee: ₹145 per team",
     brief:
-      "A tech-focused debate inspired by MUN format. Teams discuss future technology policies, AI ethics, and tech-related global issues.",
+      "A high-structure technical debate where teams prepare, rebut, and defend positions across moderated rounds.",
     rounds: [
       {
-        name: "🔹 Round 1 — Topic Allocation & Research",
-        time: "10:00 – 10:20",
-        points: ["Topics distributed.", "Teams prepare structured arguments."]
+        name: "🔹 Round 1 — Topic Allocation & Preparation",
+        time: "9:45 – 10:15",
+        points: ["Debate topics distributed.", "Teams prepare arguments."]
       },
       {
         name: "🔹 Round 2 — Opening Debate",
-        time: "10:20 – 11:20",
-        points: ["Structured arguments presented.", "Equal speaking time enforced."]
+        time: "10:15 – 11:15",
+        points: ["Teams present structured arguments.", "Moderated speaking rounds."]
       },
       {
         name: "🔹 Round 3 — Rebuttal Round",
         time: "11:20 – 12:00",
-        points: ["Counter-arguments presented.", "Cross-questioning allowed."]
+        points: ["Counter arguments presented.", "Cross questioning allowed."]
+      },
+      {
+        name: "🍽 Lunch Break",
+        time: "12:00 – 1:00",
+        points: ["Break before final statements and judging."]
       },
       {
         name: "🔹 Round 4 — Final Statements",
         time: "1:00 – 1:40",
-        points: ["Closing arguments delivered.", "Final defense of position."]
+        points: ["Closing arguments delivered.", "Final defense of positions."]
       },
       {
         name: "🔹 Round 5 — Judge Discussion & Results",
-        time: "1:40 – 2:00",
-        points: ["Judges evaluate performance.", "Final scores declared."]
+        time: "1:45 – 2:15",
+        points: ["Judges evaluate performances.", "Final rankings announced."]
       }
     ],
     judging: [
@@ -115,38 +126,61 @@ const eventContent = [
     ]
   },
   {
-    title: "3️⃣ Quantum Canvas (Tech Poster)",
-    time: "🕒 10:00 AM – 11:00 AM",
-    teamSize: "👥 Team Size: 2–3",
+    title: "3️⃣ Tech Escape Challenge",
+    time: "🕒 9:45 AM – 2:15 PM",
+    teamSize: "👥 Team Size: 3",
+    capacity: "📊 Capacity: 12–15 Teams (~36–45 participants)",
     fee: "💰 Fee: ₹145 per team",
     brief:
-      "Teams creatively visualize technology ideas through posters that communicate innovation clearly and attractively.",
+      "A multi-stage puzzle and logic event where teams solve increasingly difficult technical challenges under time pressure.",
     rounds: [
       {
-        name: "🔹 Round 1 — Theme Announcement",
-        time: "10:00 – 10:10",
-        points: ["Theme revealed.", "Guidelines explained."]
-      },
-      {
-        name: "🔹 Round 2 — Poster Creation",
-        time: "10:10 – 10:50",
+        name: "🔹 Round 1 — Instructions & Orientation",
+        time: "9:45 – 10:00",
         points: [
-          "Concept development.",
-          "Design & creative execution."
+          "Event rules explained.",
+          "Overview of challenge structure.",
+          "Sample puzzle demonstration."
         ]
       },
       {
-        name: "🔹 Round 3 — Submission & Evaluation",
-        time: "10:50 – 11:00",
-        points: ["Poster display.", "Judges walk-through & scoring."]
+        name: "🔹 Round 2 — Puzzle & Logic Rounds",
+        time: "10:00 – 11:30",
+        points: [
+          "Teams solve multiple technical puzzles.",
+          "Challenges include logic, algorithms, and problem solving."
+        ]
+      },
+      {
+        name: "🔹 Round 3 — Advanced Challenge",
+        time: "11:30 – 12:00",
+        points: ["Higher difficulty puzzles released.", "Teams race to solve final tasks."]
+      },
+      {
+        name: "🍽 Lunch Break",
+        time: "12:00 – 1:00",
+        points: ["Break before final escape round."]
+      },
+      {
+        name: "🔹 Round 4 — Final Escape Round",
+        time: "1:00 – 1:45",
+        points: [
+          "Complex multi-stage challenge.",
+          "Teams combine logic, coding ideas, and reasoning."
+        ]
+      },
+      {
+        name: "🔹 Round 5 — Score Finalization & Results",
+        time: "1:45 – 2:15",
+        points: ["Scores evaluated.", "Top teams announced."]
       }
     ],
     judging: [
-      "Creativity & originality",
-      "Visual design quality",
-      "Tech relevance",
-      "Message clarity",
-      "Innovation communication"
+      "Accuracy of solutions",
+      "Speed and completion",
+      "Logical thinking",
+      "Problem solving approach",
+      "Team coordination"
     ]
   }
 ];
@@ -253,6 +287,7 @@ export default async function EventsPage() {
       time: event.time,
       teamSize: event.teamSize,
       brief: event.brief,
+      capacity: event.capacity,
       rounds: event.rounds,
       judging: event.judging
     };
