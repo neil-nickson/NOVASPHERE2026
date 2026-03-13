@@ -192,7 +192,7 @@ const workshops = [
     time: "🕒 9:30 AM – 12:30 PM",
     fee: "💰 Fee: ₹149 per person",
     price: WORKSHOP_PRICE,
-    brochureImage: "/workshop.png"
+    brochureImage: "/workshop%20.png"
   },
   {
     dbTitle: "AI TOOLS (WORKSHOP)",
@@ -200,7 +200,7 @@ const workshops = [
     time: "🕒 1:00 PM – 3:00 PM",
     fee: "💰 Fee: ₹149 per person",
     price: WORKSHOP_PRICE,
-    brochureImage: "/workshop.png"
+    brochureImage: "/workshop%20.png"
   }
 ];
 
