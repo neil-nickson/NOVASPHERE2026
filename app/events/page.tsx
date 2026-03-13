@@ -15,7 +15,7 @@ const eventContent = [
     title: "1️⃣ NeuralForge Ideathon",
     time: "🕒 10:00 AM – 12:00 PM & 1:00 PM – 2:00 PM",
     teamSize: "👥 Team Size: 3–4",
-    fee: "💰 Fee: ₹145 per person",
+    fee: "💰 Fee: ₹145 per team",
     brief:
       "Teams innovate solutions for real-world problems using technology. They design ideas, system flow, and possible implementation strategy, then pitch to judges.",
     rounds: [
@@ -76,7 +76,7 @@ const eventContent = [
     title: "2️⃣ Logic Arena: Tech X Debate",
     time: "🕒 10:00 AM – 12:00 PM & 1:00 PM – 2:00 PM",
     teamSize: "👥 Team Size: 3",
-    fee: "💰 Fee: ₹145 per person",
+    fee: "💰 Fee: ₹145 per team",
     brief:
       "A tech-focused debate inspired by MUN format. Teams discuss future technology policies, AI ethics, and tech-related global issues.",
     rounds: [
@@ -118,7 +118,7 @@ const eventContent = [
     title: "3️⃣ Quantum Canvas (Tech Poster)",
     time: "🕒 10:00 AM – 11:00 AM",
     teamSize: "👥 Team Size: 2–3",
-    fee: "💰 Fee: ₹145 per person",
+    fee: "💰 Fee: ₹145 per team",
     brief:
       "Teams creatively visualize technology ideas through posters that communicate innovation clearly and attractively.",
     rounds: [
@@ -147,68 +147,6 @@ const eventContent = [
       "Tech relevance",
       "Message clarity",
       "Innovation communication"
-    ]
-  },
-  {
-    title: "4️⃣ Tech Escape Challenge",
-    time: "🕒 11:00 AM – 12:00 PM",
-    teamSize: "👥 Team Size: 3",
-    fee: "💰 Fee: ₹145 per person",
-    brief:
-      "A fast-paced multi-level challenge where teams solve tech puzzles, logic tasks, and mini challenges to unlock final solutions.",
-    rounds: [
-      {
-        name: "🔹 Round 1 — Instructions & Warm-Up",
-        time: "11:00 – 11:10",
-        points: ["Rules explained.", "Sample puzzle demonstrated."]
-      },
-      {
-        name: "🔹 Round 2 — Technical Puzzle Round",
-        time: "11:10 – 11:50",
-        points: ["Logic-based challenges solved.", "Algorithm & reasoning tasks completed."]
-      },
-      {
-        name: "🔹 Round 3 — Final Unlock Challenge",
-        time: "11:50 – 12:00",
-        points: ["High-difficulty final task.", "Scores finalized."]
-      }
-    ],
-    judging: [
-      "Accuracy of solutions",
-      "Speed",
-      "Logical thinking",
-      "Team collaboration"
-    ]
-  },
-  {
-    title: "5️⃣ Debug Dominion",
-    time: "🕒 1:00 PM – 2:00 PM",
-    teamSize: "👥 Team Size: 2",
-    fee: "💰 Fee: ₹145 per person",
-    brief:
-      "Teams identify and fix errors in provided code. Focus is on debugging skills, accuracy, and speed.",
-    rounds: [
-      {
-        name: "🔹 Round 1 — Code Distribution & Briefing",
-        time: "1:00 – 1:10",
-        points: ["Buggy code files shared.", "Rules clarified."]
-      },
-      {
-        name: "🔹 Round 2 — Debugging Phase",
-        time: "1:10 – 1:50",
-        points: ["Identify syntax errors.", "Fix logical mistakes.", "Ensure correct output."]
-      },
-      {
-        name: "🔹 Round 3 — Submission & Evaluation",
-        time: "1:50 – 2:00",
-        points: ["Final code submission.", "Judges evaluate correctness."]
-      }
-    ],
-    judging: [
-      "Number of bugs fixed",
-      "Correct output",
-      "Code efficiency",
-      "Completion speed"
     ]
   }
 ];

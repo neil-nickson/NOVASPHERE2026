@@ -46,28 +46,21 @@ export default function SchedulePage() {
             <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-purple-400 md:-left-[39px]" />
             <p className="text-sm font-semibold text-purple-300">10:00 AM – 12:00 PM & 1:00 PM – 2:00 PM</p>
             <h3 className="mt-2 text-lg font-semibold text-white">2️⃣ NeuralForge Ideathon</h3>
-            <p className="mt-3 text-sm text-white/75">Entry Fee: ₹145 per person</p>
+            <p className="mt-3 text-sm text-white/75">Entry Fee: ₹145 per team</p>
           </article>
 
           <article className="relative rounded-2xl border border-white/10 bg-black/35 p-5">
             <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-purple-400 md:-left-[39px]" />
             <p className="text-sm font-semibold text-purple-300">10:00 AM – 11:00 AM</p>
             <h3 className="mt-2 text-lg font-semibold text-white">3️⃣ Quantum Canvas (Tech Poster)</h3>
-            <p className="mt-3 text-sm text-white/75">Entry Fee: ₹145 per person</p>
+            <p className="mt-3 text-sm text-white/75">Entry Fee: ₹145 per team</p>
           </article>
 
           <article className="relative rounded-2xl border border-white/10 bg-black/35 p-5">
             <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-purple-400 md:-left-[39px]" />
             <p className="text-sm font-semibold text-purple-300">10:00 AM – 12:00 PM & 1:00 PM – 2:00 PM</p>
             <h3 className="mt-2 text-lg font-semibold text-white">4️⃣ Logic Arena: Tech X Debate</h3>
-            <p className="mt-3 text-sm text-white/75">Entry Fee: ₹145 per person</p>
-          </article>
-
-          <article className="relative rounded-2xl border border-white/10 bg-black/35 p-5">
-            <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-purple-400 md:-left-[39px]" />
-            <p className="text-sm font-semibold text-purple-300">11:00 AM – 12:00 PM</p>
-            <h3 className="mt-2 text-lg font-semibold text-white">5️⃣ Tech Escape Challenge</h3>
-            <p className="mt-3 text-sm text-white/75">Entry Fee: ₹145 per person</p>
+            <p className="mt-3 text-sm text-white/75">Entry Fee: ₹145 per team</p>
           </article>
 
           <article className="relative rounded-2xl border border-white/10 bg-black/35 p-5">
@@ -76,18 +69,11 @@ export default function SchedulePage() {
             <h3 className="mt-2 text-lg font-semibold text-white">🍽️ Lunch Break</h3>
           </article>
 
-          <article className="relative rounded-2xl border border-white/10 bg-black/35 p-5">
-            <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-purple-400 md:-left-[39px]" />
-            <p className="text-sm font-semibold text-purple-300">1:00 PM – 2:00 PM</p>
-            <h3 className="mt-2 text-lg font-semibold text-white">6️⃣ Debug Dominion</h3>
-            <p className="mt-3 text-sm text-white/75">Entry Fee: ₹145 per person</p>
-          </article>
-
           <article className="relative rounded-2xl border border-purple-500/30 bg-black/35 p-5">
             <span className="absolute -left-[31px] top-6 h-3 w-3 rounded-full bg-purple-400 md:-left-[39px]" />
             <p className="text-sm font-semibold text-purple-300">1:00 PM – 3:00 PM</p>
             <h3 className="mt-2 text-lg font-semibold text-white">
-              <span className="text-purple-300">7️⃣</span> AI TOOLS (WORKSHOP)
+              <span className="text-purple-300">5️⃣</span> AI TOOLS (WORKSHOP)
             </h3>
             <p className="mt-3 text-sm text-white/75">Entry Fee: ₹149 per person</p>
           </article>

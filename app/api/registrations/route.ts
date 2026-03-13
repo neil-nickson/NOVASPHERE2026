@@ -32,7 +32,6 @@ const schema = z.object({
   eventTime: z.string().trim().min(1).optional(),
   teamName: z.string().trim().min(2).optional(),
   members: z.array(memberSchema),
-  workshopFormFilled: z.boolean().optional(),
   transactionId: z.string().trim().min(4, "Transaction ID must be at least 4 characters"),
   paymentUpiId: z.string().trim().min(3, "UPI ID must be at least 3 characters")
 });
@@ -168,7 +167,6 @@ export async function POST(req: Request) {
       eventTime,
       teamName,
       members,
-      workshopFormFilled,
       transactionId,
       paymentUpiId
     } = parsed.data;
@@ -273,13 +271,6 @@ export async function POST(req: Request) {
       );
     }
 
-    if (isWorkshopTitle(event.title) && workshopFormFilled !== true) {
-      return NextResponse.json(
-        { error: "Please fill the workshop Google Form before completing registration." },
-        { status: 400 }
-      );
-    }
-
     if (!isWorkshopTitle(event.title)) {
       const limits = getCompetitiveCapacityLimits(event.title);
 
@@ -358,7 +349,8 @@ export async function POST(req: Request) {
       }
     }
 
-    const amount = participantCount * resolvedEventPrice * 100;
+    const amount =
+      (isWorkshopTitle(event.title) ? participantCount * resolvedEventPrice : resolvedEventPrice) * 100;
     const manualOrderId = `manual_${transactionId}`;
 
     const registration = await Registration.create({

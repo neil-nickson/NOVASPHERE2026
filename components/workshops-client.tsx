@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { TeamRegistrationForm } from "@/components/team-registration-form";
 
 interface WorkshopItem {
   id: string;
@@ -18,8 +21,19 @@ interface Props {
 }
 
 export function WorkshopsClient({ workshops }: Props) {
+  const { status } = useSession();
+  const router = useRouter();
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
-  const workshopRegistrationLink = "https://forms.gle/9qBmjfR3cMUU7WRo6";
+  const [registrationOpenId, setRegistrationOpenId] = useState<string | null>(null);
+
+  async function handleRegisterClick(workshop: WorkshopItem) {
+    if (status !== "authenticated") {
+      router.push("/login");
+      return;
+    }
+
+    setRegistrationOpenId((current) => (current === workshop.id ? null : workshop.id));
+  }
 
   return (
     <div className="grid gap-4 md:grid-cols-2">
@@ -44,16 +58,19 @@ export function WorkshopsClient({ workshops }: Props) {
                 >
                   {isOpen ? "Hide details" : "More details"}
                 </button>
-                <a
-                  href={workshopRegistrationLink}
-                  target="_blank"
-                  rel="noreferrer"
+                <button
+                  onClick={() => handleRegisterClick(workshop)}
+                  disabled={isSoldOut || status === "loading"}
                   className={`rounded-md bg-purple-500 px-3 py-1.5 text-xs font-semibold text-white hover:bg-purple-400 ${
                     isSoldOut ? "pointer-events-none opacity-60" : ""
                   }`}
                 >
-                  {isSoldOut ? "Seats Full" : "Register"}
-                </a>
+                  {isSoldOut
+                    ? "Seats Full"
+                    : registrationOpenId === workshop.id
+                      ? "Close Registration"
+                      : "Register"}
+                </button>
               </div>
             </div>
 
@@ -70,6 +87,17 @@ export function WorkshopsClient({ workshops }: Props) {
                   className="h-auto w-full rounded-lg object-cover"
                 />
               </div>
+            )}
+
+            {registrationOpenId === workshop.id && !isSoldOut && (
+              <TeamRegistrationForm
+                eventId={workshop.id}
+                eventTitle={workshop.title}
+                eventTime={workshop.time}
+                eventPrice={workshop.price}
+                teamSizeText="1"
+                onSuccess={() => router.push("/dashboard")}
+              />
             )}
           </article>
         );

@@ -84,9 +84,6 @@ export default async function DashboardPage() {
         <p className="mt-2 text-xs text-amber-200/90">
           Single-event policy: one account can register for only one event.
         </p>
-        <p className="mt-1 text-xs text-cyan-200/90">
-          Note: Workshop registrations are collected through Google Form and may not appear in this dashboard.
-        </p>
       </div>
 
       <section className="grid gap-6 md:grid-cols-3">

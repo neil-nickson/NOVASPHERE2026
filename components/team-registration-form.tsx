@@ -71,9 +71,6 @@ function isWorkshopEvent(eventTitle: string) {
   );
 }
 
-const WORKSHOP_GFORM_LINK =
-  "https://docs.google.com/forms/d/e/1FAIpQLSe4Eokz4C6oP9Foa_87wLvgl1ApCsTcxceNJHiAoqYSXTHW-Q/viewform?usp=sharing&ouid=115248159311321367419";
-
 export function TeamRegistrationForm({
   eventId,
   eventTitle,
@@ -95,13 +92,12 @@ export function TeamRegistrationForm({
   );
   const [transactionId, setTransactionId] = useState("");
   const [paymentUpiId, setPaymentUpiId] = useState("");
-  const [workshopFormFilled, setWorkshopFormFilled] = useState<"yes" | "no" | "">("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
   const participantCount = 1 + members.length;
-  const totalAmount = participantCount * eventPrice;
+  const totalAmount = isWorkshop ? participantCount * eventPrice : eventPrice;
   const leaderName = session?.user?.name ?? "";
   const leaderEmail = (session?.user as any)?.email ?? "";
   const leaderMobile = (session?.user as any)?.mobileNumber ?? "";
@@ -151,11 +147,6 @@ export function TeamRegistrationForm({
       return;
     }
 
-    if (isWorkshop && workshopFormFilled !== "yes") {
-      setError("Please fill the workshop Google Form and select Yes before submitting.");
-      return;
-    }
-
     setSubmitting(true);
 
     try {
@@ -170,8 +161,7 @@ export function TeamRegistrationForm({
           teamName: isSingleParticipant ? `${leaderName} Registration` : teamName,
           members,
           transactionId,
-          paymentUpiId,
-          workshopFormFilled: isWorkshop ? workshopFormFilled === "yes" : undefined
+          paymentUpiId
         })
       });
 
@@ -404,7 +394,9 @@ export function TeamRegistrationForm({
       </div>
 
       <div className="rounded-md border border-emerald-500/35 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-200">
-        Amount to pay: ₹{totalAmount} ({participantCount} participant{participantCount > 1 ? "s" : ""} × ₹{eventPrice})
+        Amount to pay: ₹{totalAmount} {isWorkshop
+          ? `(${participantCount} participant${participantCount > 1 ? "s" : ""} × ₹${eventPrice})`
+          : "(₹145 per team)"}
       </div>
 
       {error && (
@@ -422,34 +414,6 @@ export function TeamRegistrationForm({
       <div className="rounded-md border border-purple-300/35 bg-purple-500/10 px-3 py-2 text-sm text-purple-100">
         Check confirmation mail for more details.
       </div>
-
-      {isWorkshop && (
-        <div className="rounded-md border border-cyan-400/35 bg-cyan-500/10 px-3 py-3 text-sm text-cyan-100">
-          <p className="font-semibold">Workshop Google Form</p>
-          <a
-            href={WORKSHOP_GFORM_LINK}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-1 inline-block text-cyan-200 underline underline-offset-2 hover:text-cyan-100"
-          >
-            Open Workshop Form
-          </a>
-
-          <div className="mt-3">
-            <label className="mb-1 block text-xs text-cyan-100/90">Have you filled the Google Form?</label>
-            <select
-              required
-              value={workshopFormFilled}
-              onChange={(e) => setWorkshopFormFilled(e.target.value as "yes" | "no" | "")}
-              className="w-full rounded-md border border-white/15 bg-black/40 px-3 py-2 text-sm text-white outline-none focus:border-cyan-300"
-            >
-              <option value="">Select an option</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </select>
-          </div>
-        </div>
-      )}
 
       <button
         type="submit"
