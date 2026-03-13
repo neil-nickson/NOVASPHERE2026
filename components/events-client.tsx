@@ -12,7 +12,6 @@ interface EventDto {
   price: number;
   time?: string;
   teamSize?: string;
-  capacity?: string;
   brief?: string;
   rounds?: Array<{
     name: string;
@@ -89,10 +88,6 @@ export function EventsClient({ events }: Props) {
               <div>
                 <p className="text-[11px] uppercase tracking-wider text-slate-400">Team Size</p>
                 <p className="mt-1 font-medium text-slate-100">{event.teamSize ?? "TBA"}</p>
-              </div>
-              <div>
-                <p className="text-[11px] uppercase tracking-wider text-slate-400">Capacity</p>
-                <p className="mt-1 font-medium text-slate-100">{event.capacity ?? "TBA"}</p>
               </div>
               <div>
                 <p className="text-[11px] uppercase tracking-wider text-slate-400">Registration Fee</p>
