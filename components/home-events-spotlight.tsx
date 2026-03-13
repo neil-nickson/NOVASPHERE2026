@@ -18,7 +18,7 @@ const HOME_EVENTS: HomeEventCard[] = [
     code: "001",
     title: "NeuralForge Ideathon",
     category: "TECH",
-    time: "10:00 AM – 12:00 PM & 1:00 PM – 2:00 PM",
+    time: "9:45 AM – 2:15 PM",
     fee: "₹145 per team"
   },
   {
@@ -26,15 +26,15 @@ const HOME_EVENTS: HomeEventCard[] = [
     code: "002",
     title: "Logic Arena: Tech X Debate",
     category: "DEBATE",
-    time: "10:00 AM – 12:00 PM & 1:00 PM – 2:00 PM",
+    time: "9:45 AM – 2:15 PM",
     fee: "₹145 per team"
   },
   {
-    id: "quantum-canvas",
+    id: "tech-escape",
     code: "003",
-    title: "Quantum Canvas",
-    category: "DESIGN",
-    time: "10:00 AM – 11:00 AM",
+    title: "Tech Escape Challenge",
+    category: "CHALLENGE",
+    time: "9:45 AM – 2:15 PM",
     fee: "₹145 per team"
   },
   {

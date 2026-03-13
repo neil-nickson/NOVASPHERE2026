@@ -2,7 +2,7 @@ const faqItems = [
   {
     question: "1️⃣ What is NOVASPHERE 2026?",
     answer:
-      "NOVASPHERE 2026 is an inter-college innovation summit featuring Ideathon, poster design, tech debate, and two hands-on technical workshops."
+      "NOVASPHERE 2026 is an inter-college innovation summit featuring Ideathon, Tech X Debate, Tech Escape Challenge, and two hands-on technical workshops."
   },
   {
     question: "2️⃣ Who can participate?",

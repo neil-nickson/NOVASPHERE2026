@@ -105,7 +105,7 @@ export default function HomePage() {
               collaborative problem-solving.
             </p>
             <p className="mt-4">
-              Across three flagship events — Ideathon, Quantum Canvas, and TechX Debate —
+              Across three flagship events — Ideathon, TechX Debate, and Tech Escape Challenge —
               participants will test their creativity, analytical thinking, technical
               knowledge, and presentation mastery in a celebration of ideas over execution.
             </p>
