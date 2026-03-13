@@ -3,8 +3,19 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import { useSession } from "next-auth/react";
-import { TeamRegistrationForm } from "@/components/team-registration-form";
+
+const TeamRegistrationForm = dynamic(
+  () => import("@/components/team-registration-form").then((mod) => mod.TeamRegistrationForm),
+  {
+    loading: () => (
+      <div className="mt-4 rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white/70">
+        Loading registration form...
+      </div>
+    )
+  }
+);
 
 interface WorkshopItem {
   id: string;
