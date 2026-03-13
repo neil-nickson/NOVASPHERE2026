@@ -91,7 +91,15 @@ export default async function AdminPage() {
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-purple-300">Admin Panel</p>
           <h1 className="mt-1 text-2xl font-bold text-white md:text-3xl">Event Registrations</h1>
         </div>
-        <AdminLogoutButton />
+        <div className="flex items-center gap-2">
+          <a
+            href="/api/admin/export-workshops"
+            className="rounded-lg border border-emerald-300/40 bg-emerald-500/10 px-3 py-2 text-xs font-semibold text-emerald-100 hover:bg-emerald-500/20"
+          >
+            Download Workshops Excel (CSV)
+          </a>
+          <AdminLogoutButton />
+        </div>
       </div>
 
       {groups.length === 0 ? (

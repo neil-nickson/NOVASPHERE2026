@@ -47,7 +47,6 @@ export default function SchedulePage() {
             <p className="text-sm font-semibold text-purple-300">9:45 AM – 2:15 PM</p>
             <h3 className="mt-2 text-lg font-semibold text-white">1️⃣ NeuralForge Ideathon</h3>
             <p className="mt-3 text-sm text-white/75">Entry Fee: ₹145 per team</p>
-            <p className="mt-1 text-xs text-white/60">📍 Seminar Hall 2</p>
           </article>
 
           <article className="relative rounded-2xl border border-white/10 bg-black/35 p-5">
@@ -55,7 +54,6 @@ export default function SchedulePage() {
             <p className="text-sm font-semibold text-purple-300">9:45 AM – 2:15 PM</p>
             <h3 className="mt-2 text-lg font-semibold text-white">2️⃣ Logic Arena: Tech X Debate</h3>
             <p className="mt-3 text-sm text-white/75">Entry Fee: ₹145 per team</p>
-            <p className="mt-1 text-xs text-white/60">📍 Seminar Hall 3</p>
           </article>
 
           <article className="relative rounded-2xl border border-white/10 bg-black/35 p-5">
