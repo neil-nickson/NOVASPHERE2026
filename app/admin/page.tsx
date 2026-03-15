@@ -55,15 +55,18 @@ type RegistrationView = {
 };
 
 export default async function AdminPage() {
+  const cookieStore = cookies();
+  const token = cookieStore.get(ADMIN_COOKIE_NAME)?.value;
+  const verified = verifyAdminSessionToken(token);
+
+  if (!verified) {
+    redirect("/admin/login");
+  }
+
+  let groups: Array<[string, RegistrationView[]]> = [];
+  let loadError: string | null = null;
+
   try {
-    const cookieStore = cookies();
-    const token = cookieStore.get(ADMIN_COOKIE_NAME)?.value;
-    const verified = verifyAdminSessionToken(token);
-
-    if (!verified) {
-      redirect("/admin/login");
-    }
-
     await connectDB();
 
     const registrationsRaw = (await Registration.find({})
@@ -78,16 +81,23 @@ export default async function AdminPage() {
     for (const registration of registrationsRaw) {
       const populatedEventTitle =
         typeof registration.eventId === "object" ? registration.eventId?.title : undefined;
-      const title = registration.eventTitle || populatedEventTitle || "Unknown Event";
+      const rawTitle = registration.eventTitle || populatedEventTitle;
+      const title = typeof rawTitle === "string" && rawTitle.trim().length > 0
+        ? rawTitle.trim()
+        : "Unknown Event";
       const current = grouped.get(title) ?? [];
       current.push(registration);
       grouped.set(title, current);
     }
 
-    const groups = Array.from(grouped.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+    groups = Array.from(grouped.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+  } catch (error) {
+    console.error("Admin page failed to load registrations", error);
+    loadError = "Unable to load registrations right now. Please try again shortly.";
+  }
 
-    return (
-      <section className="space-y-6">
+  return (
+    <section className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-purple-500/30 bg-black/45 p-5">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-purple-300">Admin Panel</p>
@@ -97,6 +107,12 @@ export default async function AdminPage() {
           <AdminLogoutButton />
         </div>
       </div>
+
+      {loadError ? (
+        <div className="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-5 text-sm text-amber-100">
+          {loadError}
+        </div>
+      ) : null}
 
       {groups.length === 0 ? (
         <div className="rounded-2xl border border-white/10 bg-black/40 p-5 text-sm text-white/70">
@@ -138,7 +154,7 @@ export default async function AdminPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {rows.map((row) => {
+                    {rows.map((row, rowIndex) => {
                       const fallbackUser =
                         typeof row.userId === "object" ? row.userId : undefined;
 
@@ -150,7 +166,8 @@ export default async function AdminPage() {
                       const year = row.year || fallbackUser?.year || "-";
                       const teamName = row.teamName || "-";
                       const leaderName = row.teamLeaderName || row.teamLeaderDetails?.name || name;
-                      const teammateNames = (row.teamMembers || [])
+                      const teamMembers = Array.isArray(row.teamMembers) ? row.teamMembers : [];
+                      const teammateNames = teamMembers
                         .map((member) => member.name)
                         .filter(Boolean) as string[];
                       const participants = [leaderName, ...teammateNames];
@@ -167,7 +184,7 @@ export default async function AdminPage() {
                           role: "Leader",
                           ...leaderDetails
                         },
-                        ...(row.teamMembers || []).map((member) => ({
+                        ...teamMembers.map((member) => ({
                           role: "Member",
                           name: member.name || "-",
                           email: member.email || "-",
@@ -178,13 +195,21 @@ export default async function AdminPage() {
                         }))
                       ];
 
+                      const createdAtText =
+                        row.createdAt && !Number.isNaN(new Date(row.createdAt).getTime())
+                          ? new Date(row.createdAt).toLocaleString()
+                          : "-";
+
+                      const amountValue = typeof row.amount === "number" ? row.amount : Number(row.amount || 0);
+                      const rowKey = String((row as { _id?: unknown })._id ?? `${eventTitle}-${rowIndex}`);
+
                       return (
-                        <tr key={row._id} className="border-b border-white/5 align-top">
+                        <tr key={rowKey} className="border-b border-white/5 align-top">
                           <td className="px-2 py-2">{teamName}</td>
                           <td className="px-2 py-2">
                             <div className="space-y-1">
                               {participants.map((participant, idx) => (
-                                <div key={`${row._id}-participant-${idx}`}>{participant}</div>
+                                <div key={`${rowKey}-participant-${idx}`}>{participant}</div>
                               ))}
                             </div>
                           </td>
@@ -192,7 +217,7 @@ export default async function AdminPage() {
                             <div className="space-y-2">
                               {memberDetails.map((member, idx) => (
                                 <div
-                                  key={`${row._id}-member-detail-${idx}`}
+                                  key={`${rowKey}-member-detail-${idx}`}
                                   className="rounded-md border border-white/10 bg-black/30 p-2"
                                 >
                                   <div className="font-semibold text-purple-200">
@@ -216,11 +241,11 @@ export default async function AdminPage() {
                           <td className="px-2 py-2">{college}</td>
                           <td className="px-2 py-2">{course}</td>
                           <td className="px-2 py-2">{year}</td>
-                          <td className="px-2 py-2">₹{((row.amount || 0) / 100).toFixed(0)}</td>
+                          <td className="px-2 py-2">₹{(amountValue / 100).toFixed(0)}</td>
                           <td className="px-2 py-2">{row.status || "-"}</td>
                           <td className="max-w-[180px] truncate px-2 py-2 font-mono text-[11px]">{row.paymentId || "-"}</td>
                           <td className="max-w-[180px] truncate px-2 py-2 font-mono text-[11px]">{row.paymentUpiId || "-"}</td>
-                          <td className="px-2 py-2">{row.createdAt ? new Date(row.createdAt).toLocaleString() : "-"}</td>
+                          <td className="px-2 py-2">{createdAtText}</td>
                         </tr>
                       );
                     })}
@@ -231,16 +256,6 @@ export default async function AdminPage() {
           ))}
         </div>
       )}
-      </section>
-    );
-  } catch (error) {
-    console.error("Admin page failed to load", error);
-    return (
-      <section className="space-y-6">
-        <div className="rounded-2xl border border-red-500/30 bg-red-500/10 p-5 text-sm text-red-200">
-          Admin panel is temporarily unavailable. Please retry in a few moments.
-        </div>
-      </section>
-    );
-  }
+    </section>
+  );
 }

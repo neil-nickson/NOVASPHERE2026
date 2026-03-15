@@ -90,6 +90,7 @@ Fill in:
 
 - `MONGODB_URI` – MongoDB Atlas connection string
 - `NEXTAUTH_SECRET` – long random string
+- `ADMIN_PASSWORD` – password used on `/admin/login`
 - `NEXTAUTH_URL` / `NEXT_PUBLIC_APP_URL` – usually `http://localhost:3000` in dev
 - SMTP settings (`EMAIL_*`)
 - Razorpay keys: `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`, `NEXT_PUBLIC_RAZORPAY_KEY_ID`

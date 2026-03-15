@@ -30,6 +30,11 @@ function signValue(value: string) {
 }
 
 export function getAdminPassword() {
+  const envPassword = process.env.ADMIN_PASSWORD?.trim();
+  if (envPassword) {
+    return envPassword;
+  }
+
   return ADMIN_FIXED_PASSWORD;
 }
 
