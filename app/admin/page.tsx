@@ -6,6 +6,7 @@ import { ADMIN_COOKIE_NAME, verifyAdminSessionToken } from "@/lib/admin-auth";
 import { AdminLogoutButton } from "@/components/admin-logout-button";
 
 export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 type RegistrationView = {
   _id: string;
@@ -54,38 +55,39 @@ type RegistrationView = {
 };
 
 export default async function AdminPage() {
-  const cookieStore = cookies();
-  const token = cookieStore.get(ADMIN_COOKIE_NAME)?.value;
-  const verified = verifyAdminSessionToken(token);
+  try {
+    const cookieStore = cookies();
+    const token = cookieStore.get(ADMIN_COOKIE_NAME)?.value;
+    const verified = verifyAdminSessionToken(token);
 
-  if (!verified) {
-    redirect("/admin/login");
-  }
+    if (!verified) {
+      redirect("/admin/login");
+    }
 
-  await connectDB();
+    await connectDB();
 
-  const registrationsRaw = (await Registration.find({})
-    .populate("eventId", "title")
-    .populate("userId", "name email mobileNumber college course year")
-    .sort({ createdAt: -1 })
-    .lean()
-    .exec()) as unknown as RegistrationView[];
+    const registrationsRaw = (await Registration.find({})
+      .populate("eventId", "title")
+      .populate("userId", "name email mobileNumber college course year")
+      .sort({ createdAt: -1 })
+      .lean()
+      .exec()) as unknown as RegistrationView[];
 
-  const grouped = new Map<string, RegistrationView[]>();
+    const grouped = new Map<string, RegistrationView[]>();
 
-  for (const registration of registrationsRaw) {
-    const populatedEventTitle =
-      typeof registration.eventId === "object" ? registration.eventId?.title : undefined;
-    const title = registration.eventTitle || populatedEventTitle || "Unknown Event";
-    const current = grouped.get(title) ?? [];
-    current.push(registration);
-    grouped.set(title, current);
-  }
+    for (const registration of registrationsRaw) {
+      const populatedEventTitle =
+        typeof registration.eventId === "object" ? registration.eventId?.title : undefined;
+      const title = registration.eventTitle || populatedEventTitle || "Unknown Event";
+      const current = grouped.get(title) ?? [];
+      current.push(registration);
+      grouped.set(title, current);
+    }
 
-  const groups = Array.from(grouped.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+    const groups = Array.from(grouped.entries()).sort((a, b) => a[0].localeCompare(b[0]));
 
-  return (
-    <section className="space-y-6">
+    return (
+      <section className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-purple-500/30 bg-black/45 p-5">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-purple-300">Admin Panel</p>
@@ -229,6 +231,16 @@ export default async function AdminPage() {
           ))}
         </div>
       )}
-    </section>
-  );
+      </section>
+    );
+  } catch (error) {
+    console.error("Admin page failed to load", error);
+    return (
+      <section className="space-y-6">
+        <div className="rounded-2xl border border-red-500/30 bg-red-500/10 p-5 text-sm text-red-200">
+          Admin panel is temporarily unavailable. Please retry in a few moments.
+        </div>
+      </section>
+    );
+  }
 }

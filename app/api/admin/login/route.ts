@@ -3,6 +3,8 @@ import { z } from "zod";
 import { ADMIN_COOKIE_NAME, createAdminSessionToken, getAdminPassword } from "@/lib/admin-auth";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 
+export const runtime = "nodejs";
+
 const schema = z.object({
   password: z.string().min(1)
 });
@@ -56,7 +58,8 @@ export async function POST(req: Request) {
     });
 
     return response;
-  } catch {
+  } catch (error) {
+    console.error("Admin login route failed", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
