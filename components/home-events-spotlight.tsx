@@ -136,11 +136,20 @@ export function HomeEventsSpotlight() {
             >
               Learn More
             </Link>
-            <span
-              className="rounded-md bg-white/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/40 border border-white/10 cursor-not-allowed"
-            >
-              Coming Soon
-            </span>
+            {activeEvent.category === "WORKSHOP" ? (
+              <Link
+                href="/events"
+                className="rounded-md bg-purple-600 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-purple-700"
+              >
+                Register Now
+              </Link>
+            ) : (
+              <span
+                className="rounded-md bg-white/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/40 border border-white/10 cursor-not-allowed"
+              >
+                Coming Soon
+              </span>
+            )}
           </div>
         </article>
 

@@ -352,14 +352,14 @@ export default async function EventsPage() {
         </p>
       </div>
 
-      <section className="space-y-6">
-        <h2 className="text-2xl font-semibold text-purple-400">Competitive Events</h2>
-        <EventsClient events={eventCards} />
-      </section>
-
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold text-purple-400">Workshops</h2>
         <WorkshopsClient workshops={workshopCards} />
+      </section>
+
+      <section className="space-y-6">
+        <h2 className="text-2xl font-semibold text-purple-400">Competitive Events</h2>
+        <EventsClient events={eventCards} />
       </section>
 
     </div>
