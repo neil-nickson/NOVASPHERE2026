@@ -55,7 +55,7 @@ const faqItems = [
   {
     question: "1️⃣2️⃣ What is the registration fee?",
     answer:
-      "Competitive events are ₹145 per team. Workshops are ₹149 per person."
+      "Competitive events are ₹99 per head. Workshops are ₹149 per person."
   },
   {
     question: "1️⃣3️⃣ What happens if a participant arrives late?",

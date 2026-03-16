@@ -1,4 +1,7 @@
+import { redirect } from "next/navigation";
+
 export default function SchedulePage() {
+  redirect("/");
   return (
     <section className="rounded-3xl border border-purple-500/30 bg-black/45 px-8 py-12 md:px-12 md:py-14">
       <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-3">

@@ -98,7 +98,7 @@ export function EventsClient({ events }: Props) {
               </div>
               <div>
                 <p className="text-[11px] uppercase tracking-wider text-slate-400">Registration Fee</p>
-                <p className="mt-1 font-semibold text-purple-200">₹{event.price.toFixed(0)} per team</p>
+                <p className="mt-1 font-semibold text-purple-200">₹{event.price.toFixed(0)} per head</p>
               </div>
             </div>
 

@@ -97,7 +97,7 @@ export function TeamRegistrationForm({
   const [success, setSuccess] = useState<string | null>(null);
 
   const participantCount = 1 + members.length;
-  const totalAmount = isWorkshop ? participantCount * eventPrice : eventPrice;
+  const totalAmount = participantCount * eventPrice;
   const leaderName = session?.user?.name ?? "";
   const leaderEmail = (session?.user as any)?.email ?? "";
   const leaderMobile = (session?.user as any)?.mobileNumber ?? "";
@@ -396,7 +396,7 @@ export function TeamRegistrationForm({
       <div className="rounded-md border border-emerald-500/35 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-200">
         Amount to pay: ₹{totalAmount} {isWorkshop
           ? `(${participantCount} participant${participantCount > 1 ? "s" : ""} × ₹${eventPrice})`
-          : "(₹145 per team)"}
+          : `(${participantCount} participant${participantCount > 1 ? "s" : ""} × ₹${eventPrice})`}
       </div>
 
       {error && (

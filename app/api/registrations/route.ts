@@ -10,7 +10,7 @@ import { User } from "@/models/User";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 import { sendRegistrationConfirmationEmail } from "@/lib/email";
 
-const COMPETITIVE_EVENT_PRICE = 145;
+const COMPETITIVE_EVENT_PRICE = 99;
 const WORKSHOP_PRICE = 149;
 const WORKSHOP_CAPACITY = 180;
 
@@ -333,8 +333,7 @@ export async function POST(req: Request) {
       }
     }
 
-    const amount =
-      (isWorkshopTitle(event.title) ? participantCount * resolvedEventPrice : resolvedEventPrice) * 100;
+    const amount = participantCount * resolvedEventPrice * 100;
     const manualOrderId = `manual_${transactionId}`;
 
     const registration = await Registration.create({

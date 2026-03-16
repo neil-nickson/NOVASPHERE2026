@@ -6,7 +6,7 @@ import { WorkshopsClient } from "@/components/workshops-client";
 
 export const dynamic = "force-dynamic";
 
-const COMPETITIVE_EVENT_PRICE = 145;
+const COMPETITIVE_EVENT_PRICE = 99;
 const WORKSHOP_PRICE = 149;
 const WORKSHOP_CAPACITY = 180;
 
@@ -15,7 +15,7 @@ const eventContent = [
     title: "1️⃣ NeuralForge Ideathon",
     teamSize: "👥 Team Size: 3–4",
     capacity: "📊 Capacity: 12–15 Teams (~45–55 participants)",
-    fee: "💰 Fee: ₹145 per team",
+    fee: "💰 Fee: ₹99 per head",
     brief:
       "Teams design impactful solutions for real-world problems and present them through structured ideation, reviews, and final pitching.",
     rounds: [
@@ -80,7 +80,7 @@ const eventContent = [
     title: "2️⃣ Logic Arena: Tech X Debate",
     teamSize: "👥 Team Size: 3",
     capacity: "📊 Capacity: 10–12 Teams (~30–36 participants)",
-    fee: "💰 Fee: ₹145 per team",
+    fee: "💰 Fee: ₹99 per head",
     brief:
       "A high-structure technical debate where teams prepare, rebut, and defend positions across moderated rounds.",
     rounds: [
@@ -127,7 +127,7 @@ const eventContent = [
     title: "3️⃣ Tech Escape Challenge",
     teamSize: "👥 Team Size: 3",
     capacity: "📊 Capacity: 12–15 Teams (~36–45 participants)",
-    fee: "💰 Fee: ₹145 per team",
+    fee: "💰 Fee: ₹99 per head",
     brief:
       "A multi-stage puzzle and logic event where teams solve increasingly difficult technical challenges under time pressure.",
     rounds: [
@@ -184,7 +184,7 @@ const eventContent = [
     title: "4️⃣ Debug Dominion",
     teamSize: "👥 Team Size: 2–3",
     capacity: "📊 Capacity: TBA",
-    fee: "💰 Fee: ₹145 per team",
+    fee: "💰 Fee: ₹99 per head",
     brief:
       "A competitive debugging challenge where teams race to identify and fix bugs across multiple rounds of increasing difficulty.",
     rounds: [],
@@ -199,7 +199,7 @@ const eventContent = [
     title: "5️⃣ Tech Poster",
     teamSize: "👥 Team Size: 1–2",
     capacity: "📊 Capacity: TBA",
-    fee: "💰 Fee: ₹145 per team",
+    fee: "💰 Fee: ₹99 per head",
     brief:
       "Showcase your technical knowledge and creativity through well-designed poster presentations evaluated on content depth, design, and clarity.",
     rounds: [],

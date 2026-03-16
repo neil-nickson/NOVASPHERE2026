@@ -17,35 +17,35 @@ const HOME_EVENTS: HomeEventCard[] = [
     code: "001",
     title: "NeuralForge Ideathon",
     category: "TECH",
-    fee: "₹145 per team"
+    fee: "₹99 per head"
   },
   {
     id: "logic-arena",
     code: "002",
     title: "Logic Arena: Tech X Debate",
     category: "DEBATE",
-    fee: "₹145 per team"
+    fee: "₹99 per head"
   },
   {
     id: "tech-escape",
     code: "003",
     title: "Tech Escape Challenge",
     category: "CHALLENGE",
-    fee: "₹145 per team"
+    fee: "₹99 per head"
   },
   {
     id: "debug-dominion",
     code: "004",
     title: "Debug Dominion",
     category: "DEBUG",
-    fee: "₹145 per team"
+    fee: "₹99 per head"
   },
   {
     id: "tech-poster",
     code: "005",
     title: "Tech Poster",
     category: "DESIGN",
-    fee: "₹145 per team"
+    fee: "₹99 per head"
   },
   {
     id: "webdev-workshop-morning",

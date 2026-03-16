@@ -74,7 +74,6 @@ export function Navbar() {
           <div className="flex min-w-max items-center gap-1">
             <NavLink href="/">Home</NavLink>
             <NavLink href="/events">Events</NavLink>
-            <NavLink href="/schedule">Schedule</NavLink>
             <NavLink href="/leaderboard">Leaderboard</NavLink>
             <NavLink href="/faq">FAQ</NavLink>
             <NavLink href="/dashboard">Dashboard</NavLink>
