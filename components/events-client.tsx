@@ -108,11 +108,10 @@ export function EventsClient({ events }: Props) {
 
             <div className="relative z-10 mt-5 grid gap-3 sm:grid-cols-2">
               <button
-                onClick={() => handleRegisterClick(event)}
-                disabled={status === "loading"}
-                className="rounded-xl bg-purple-500 px-4 py-3 text-sm font-semibold uppercase tracking-wider text-white transition-all hover:bg-purple-400 disabled:opacity-60"
+                disabled
+                className="rounded-xl bg-white/8 px-4 py-3 text-sm font-semibold uppercase tracking-wider text-white/40 cursor-not-allowed border border-white/10"
               >
-                {registrationOpenId === event.id ? "Close Registration" : "Register Now"}
+                Coming Soon
               </button>
               <button
                 onClick={() =>
@@ -158,7 +157,7 @@ export function EventsClient({ events }: Props) {
               </div>
             )}
 
-            {registrationOpenId === event.id && (
+            {false && registrationOpenId === event.id && (
               <TeamRegistrationForm
                 eventId={event.id}
                 eventTitle={event.title}

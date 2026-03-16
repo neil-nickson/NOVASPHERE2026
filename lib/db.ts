@@ -27,7 +27,14 @@ export async function connectDB() {
     cache.promise = mongoose.connect(mongoUri).then((m) => m);
   }
 
-  cache.conn = await cache.promise;
+  try {
+    cache.conn = await cache.promise;
+  } catch (err) {
+    // Reset so the next request can attempt a fresh connection
+    cache.promise = null;
+    throw err;
+  }
+
   global.mongooseCache = cache;
   return cache.conn;
 }
