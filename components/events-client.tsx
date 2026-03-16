@@ -36,7 +36,7 @@ interface Props {
   events: EventDto[];
 }
 
-const CATEGORY_BY_INDEX = ["TECH", "DEBATE", "CHALLENGE"];
+const CATEGORY_BY_INDEX = ["TECH", "DEBATE", "CHALLENGE", "DEBUG", "DESIGN"];
 
 function getCleanTitle(title: string) {
   const parts = title.trim().split(" ");
@@ -93,10 +93,6 @@ export function EventsClient({ events }: Props) {
 
             <div className="relative z-10 mt-5 grid grid-cols-1 gap-3 border-y border-purple-300/15 py-4 text-sm text-slate-200 sm:grid-cols-2">
               <div>
-                <p className="text-[11px] uppercase tracking-wider text-slate-400">Time</p>
-                <p className="mt-1 font-medium text-slate-100">{event.time ?? "TBA"}</p>
-              </div>
-              <div>
                 <p className="text-[11px] uppercase tracking-wider text-slate-400">Team Size</p>
                 <p className="mt-1 font-medium text-slate-100">{event.teamSize ?? "TBA"}</p>
               </div>
@@ -132,7 +128,6 @@ export function EventsClient({ events }: Props) {
                       {event.rounds.map((round) => (
                         <div key={round.name} className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
                           <p className="font-semibold text-slate-100">{round.name}</p>
-                          <p className="text-xs text-purple-200">{round.time}</p>
                           <ul className="mt-2 list-disc space-y-1 pl-5 text-slate-300">
                             {round.points.map((point) => (
                               <li key={point}>{point}</li>

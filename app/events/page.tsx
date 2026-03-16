@@ -13,7 +13,6 @@ const WORKSHOP_CAPACITY = 180;
 const eventContent = [
   {
     title: "1️⃣ NeuralForge Ideathon",
-    time: "🕒 9:45 AM – 2:15 PM",
     teamSize: "👥 Team Size: 3–4",
     capacity: "📊 Capacity: 12–15 Teams (~45–55 participants)",
     fee: "💰 Fee: ₹145 per team",
@@ -79,7 +78,6 @@ const eventContent = [
   },
   {
     title: "2️⃣ Logic Arena: Tech X Debate",
-    time: "🕒 9:45 AM – 2:15 PM",
     teamSize: "👥 Team Size: 3",
     capacity: "📊 Capacity: 10–12 Teams (~30–36 participants)",
     fee: "💰 Fee: ₹145 per team",
@@ -127,7 +125,6 @@ const eventContent = [
   },
   {
     title: "3️⃣ Tech Escape Challenge",
-    time: "🕒 9:45 AM – 2:15 PM",
     teamSize: "👥 Team Size: 3",
     capacity: "📊 Capacity: 12–15 Teams (~36–45 participants)",
     fee: "💰 Fee: ₹145 per team",
@@ -181,6 +178,36 @@ const eventContent = [
       "Logical thinking",
       "Problem solving approach",
       "Team coordination"
+    ]
+  },
+  {
+    title: "4️⃣ Debug Dominion",
+    teamSize: "👥 Team Size: 2–3",
+    capacity: "📊 Capacity: TBA",
+    fee: "💰 Fee: ₹145 per team",
+    brief:
+      "A competitive debugging challenge where teams race to identify and fix bugs across multiple rounds of increasing difficulty.",
+    rounds: [],
+    judging: [
+      "Debugging speed",
+      "Code accuracy",
+      "Problem solving approach",
+      "Logical thinking"
+    ]
+  },
+  {
+    title: "5️⃣ Tech Poster",
+    teamSize: "👥 Team Size: 1–2",
+    capacity: "📊 Capacity: TBA",
+    fee: "💰 Fee: ₹145 per team",
+    brief:
+      "Showcase your technical knowledge and creativity through well-designed poster presentations evaluated on content depth, design, and clarity.",
+    rounds: [],
+    judging: [
+      "Content depth",
+      "Visual design",
+      "Presentation clarity",
+      "Technical accuracy"
     ]
   }
 ];
@@ -284,7 +311,6 @@ export default async function EventsPage() {
       title: event.title,
       description: event.brief,
       price: Number(dbEvent?.price ?? COMPETITIVE_EVENT_PRICE),
-      time: event.time,
       teamSize: event.teamSize,
       brief: event.brief,
       capacity: event.capacity,

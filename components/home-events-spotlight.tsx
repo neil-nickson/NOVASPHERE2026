@@ -8,7 +8,6 @@ type HomeEventCard = {
   code: string;
   title: string;
   category: string;
-  time: string;
   fee: string;
 };
 
@@ -18,7 +17,6 @@ const HOME_EVENTS: HomeEventCard[] = [
     code: "001",
     title: "NeuralForge Ideathon",
     category: "TECH",
-    time: "9:45 AM – 2:15 PM",
     fee: "₹145 per team"
   },
   {
@@ -26,7 +24,6 @@ const HOME_EVENTS: HomeEventCard[] = [
     code: "002",
     title: "Logic Arena: Tech X Debate",
     category: "DEBATE",
-    time: "9:45 AM – 2:15 PM",
     fee: "₹145 per team"
   },
   {
@@ -34,23 +31,34 @@ const HOME_EVENTS: HomeEventCard[] = [
     code: "003",
     title: "Tech Escape Challenge",
     category: "CHALLENGE",
-    time: "9:45 AM – 2:15 PM",
+    fee: "₹145 per team"
+  },
+  {
+    id: "debug-dominion",
+    code: "004",
+    title: "Debug Dominion",
+    category: "DEBUG",
+    fee: "₹145 per team"
+  },
+  {
+    id: "tech-poster",
+    code: "005",
+    title: "Tech Poster",
+    category: "DESIGN",
     fee: "₹145 per team"
   },
   {
     id: "webdev-workshop-morning",
-    code: "004",
+    code: "006",
     title: "Web Development Workshop",
     category: "WORKSHOP",
-    time: "9:30 AM – 12:30 PM",
     fee: "₹149 per person"
   },
   {
     id: "ai-tools-workshop",
-    code: "005",
+    code: "007",
     title: "AI Tools Workshop",
     category: "WORKSHOP",
-    time: "1:00 PM – 3:00 PM",
     fee: "₹149 per person"
   }
 ];
@@ -116,10 +124,6 @@ export function HomeEventsSpotlight() {
               <p className="mt-1 font-medium text-purple-100">{activeEvent.category}</p>
             </div>
             <div>
-              <p className="text-[11px] uppercase tracking-[0.12em] text-purple-200/70">Time</p>
-              <p className="mt-1 font-medium text-white">{activeEvent.time}</p>
-            </div>
-            <div className="sm:col-span-2">
               <p className="text-[11px] uppercase tracking-[0.12em] text-purple-200/70">Fee</p>
               <p className="mt-1 font-medium text-white">{activeEvent.fee}</p>
             </div>
