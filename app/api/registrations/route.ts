@@ -13,6 +13,27 @@ import { sendRegistrationConfirmationEmail } from "@/lib/email";
 const COMPETITIVE_EVENT_PRICE = 99;
 const WORKSHOP_PRICE = 149;
 const WORKSHOP_CAPACITY = 180;
+let paymentIdIndexEnsured = false;
+
+async function ensurePaymentIdDuplicatesAllowed() {
+  if (paymentIdIndexEnsured) return;
+
+  try {
+    await Registration.collection.dropIndex("paymentId_1");
+  } catch (error: any) {
+    const message = String(error?.message || "");
+    const indexNotFound =
+      error?.codeName === "IndexNotFound" ||
+      error?.code === 27 ||
+      message.includes("index not found");
+
+    if (!indexNotFound) {
+      console.warn("Could not drop legacy paymentId unique index", error);
+    }
+  } finally {
+    paymentIdIndexEnsured = true;
+  }
+}
 
 const memberSchema = z.object({
   name: z.string().trim().min(2),
@@ -155,7 +176,11 @@ export async function POST(req: Request) {
       paymentUpiId
     } = parsed.data;
 
+    const trimmedTransactionId = transactionId.trim();
+    const trimmedPaymentUpiId = paymentUpiId.trim();
+
     await connectDB();
+    await ensurePaymentIdDuplicatesAllowed();
 
     const isObjectId = mongoose.Types.ObjectId.isValid(eventId);
     let eventDoc = isObjectId ? await Event.findById(eventId).exec() : null;
@@ -227,14 +252,6 @@ export async function POST(req: Request) {
           { status: 409 }
         );
       }
-    }
-
-    const transactionTaken = await Registration.findOne({ paymentId: transactionId })
-      .lean()
-      .exec();
-
-    if (transactionTaken) {
-      return NextResponse.json({ error: "Transaction ID already used" }, { status: 409 });
     }
 
     const constraints = getTeamConstraintsFromTitle(eventTitle || event.title);
@@ -334,7 +351,7 @@ export async function POST(req: Request) {
     }
 
     const amount = participantCount * resolvedEventPrice * 100;
-    const manualOrderId = `manual_${transactionId}`;
+    const manualOrderId = `manual_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
 
     const registration = await Registration.create({
       userId,
@@ -348,10 +365,10 @@ export async function POST(req: Request) {
       eventTitle: event.title,
       eventTime: normalizedEventTime,
       eventPrice: resolvedEventPrice,
-      paymentId: transactionId,
+      paymentId: trimmedTransactionId,
       orderId: manualOrderId,
-      transactionId,
-      paymentUpiId,
+      transactionId: trimmedTransactionId,
+      paymentUpiId: trimmedPaymentUpiId,
       teamName: resolvedTeamName,
       teamLeaderName: user.name,
       teamLeaderDetails: {
@@ -388,7 +405,7 @@ export async function POST(req: Request) {
         eventTitle: event.title,
         eventPrice: resolvedEventPrice,
         amountPaise: amount,
-        paymentId: transactionId,
+        paymentId: trimmedTransactionId,
         orderId: manualOrderId,
         registrationId: String(registration._id)
       });
