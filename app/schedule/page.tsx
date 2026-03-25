@@ -7,7 +7,7 @@ export default function SchedulePage() {
       <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-purple-300 md:text-sm">
-            // 7 April 2026
+            // 10 April 2026
           </p>
 
           <h1 className="text-5xl font-extrabold tracking-tight md:text-7xl">
