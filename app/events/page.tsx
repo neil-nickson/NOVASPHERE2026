@@ -216,7 +216,7 @@ const eventContent = [
 const workshops = [
   {
     dbTitle: COMBINED_WORKSHOP_TITLE,
-    title: "WORKSHOP AI TOOLS & WEB DEVELOPMENT",
+    title: "WORKSHOP (AI TOOLS & WEB DEVELOPMENT)",
     time: "🕒 9:30 AM – 12:30 PM (Web Development) | 1:00 PM – 3:00 PM (AI Tools)",
     fee: "💰 Fee: ₹149 per person",
     price: WORKSHOP_PRICE,

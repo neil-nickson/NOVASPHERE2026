@@ -48,7 +48,7 @@ export function WorkshopsClient({ workshops }: Props) {
   }
 
   return (
-    <div className="grid gap-4 md:grid-cols-1">
+    <div className="grid gap-6 lg:grid-cols-2">
       {workshops.map((workshop, index) => {
         const isOpen = expandedIndex === index;
         const seatsLeft = workshop.seatsLeft ?? 0;
@@ -91,7 +91,7 @@ export function WorkshopsClient({ workshops }: Props) {
             <p className="mt-2 text-sm text-slate-300">{workshop.fee}</p>
             <div className="mt-3 flex flex-wrap items-center gap-2">
               <span className="rounded-full border border-amber-300/40 bg-amber-500/10 px-2.5 py-1 text-xs font-semibold text-amber-200">
-                {isSoldOut ? "Slots full" : `${seatsLeft} slots left`}
+                {isSoldOut ? "Slots full" : "Slots available"}
               </span>
               {isAlmostFull && (
                 <span className="rounded-full border border-rose-300/40 bg-rose-500/10 px-2.5 py-1 text-xs font-semibold text-rose-200">
