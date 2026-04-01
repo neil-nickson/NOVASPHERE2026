@@ -36,6 +36,7 @@ export function WorkshopsClient({ workshops }: Props) {
   const router = useRouter();
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [registrationOpenId, setRegistrationOpenId] = useState<string | null>(null);
+  const almostFullThreshold = 30;
 
   async function handleRegisterClick(workshop: WorkshopItem) {
     if (status !== "authenticated") {
@@ -47,11 +48,12 @@ export function WorkshopsClient({ workshops }: Props) {
   }
 
   return (
-    <div className="grid gap-4 md:grid-cols-2">
+    <div className="grid gap-4 md:grid-cols-1">
       {workshops.map((workshop, index) => {
         const isOpen = expandedIndex === index;
         const seatsLeft = workshop.seatsLeft ?? 0;
         const isSoldOut = seatsLeft <= 0;
+        const isAlmostFull = !isSoldOut && seatsLeft <= almostFullThreshold;
 
         return (
           <article
@@ -87,6 +89,16 @@ export function WorkshopsClient({ workshops }: Props) {
 
             <p className="mt-2 text-sm text-purple-200">{workshop.time}</p>
             <p className="mt-2 text-sm text-slate-300">{workshop.fee}</p>
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <span className="rounded-full border border-amber-300/40 bg-amber-500/10 px-2.5 py-1 text-xs font-semibold text-amber-200">
+                {isSoldOut ? "Slots full" : `${seatsLeft} slots left`}
+              </span>
+              {isAlmostFull && (
+                <span className="rounded-full border border-rose-300/40 bg-rose-500/10 px-2.5 py-1 text-xs font-semibold text-rose-200">
+                  Slots almost full
+                </span>
+              )}
+            </div>
 
             {isOpen && (
               <div className="mt-4 overflow-hidden rounded-xl border border-purple-300/20 bg-black/20 p-2">

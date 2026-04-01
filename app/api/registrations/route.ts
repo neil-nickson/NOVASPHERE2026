@@ -13,6 +13,7 @@ import { sendRegistrationConfirmationEmail } from "@/lib/email";
 const COMPETITIVE_EVENT_PRICE = 99;
 const WORKSHOP_PRICE = 149;
 const WORKSHOP_CAPACITY = 180;
+const WORKSHOP_TITLE_REGEX = /(workshop|web development|ai tools)/i;
 let paymentIdIndexEnsured = false;
 
 async function ensurePaymentIdDuplicatesAllowed() {
@@ -96,12 +97,7 @@ function getPricePerParticipant(title: string) {
 }
 
 function isWorkshopTitle(title: string) {
-  const normalized = title.toLowerCase();
-  return (
-    normalized.includes("workshop") ||
-    normalized.includes("web development") ||
-    normalized.includes("ai tools")
-  );
+  return WORKSHOP_TITLE_REGEX.test(title);
 }
 
 function getCompetitiveCapacityLimits(title: string) {
@@ -220,13 +216,23 @@ export async function POST(req: Request) {
       );
     }
 
-    const alreadyRegistered = await Registration.findOne({
-      userId,
-      eventId: eventDoc._id,
-      status: "paid"
-    })
-      .lean()
-      .exec();
+    const isWorkshopEvent = isWorkshopTitle(event.title || eventTitle);
+
+    const alreadyRegistered = isWorkshopEvent
+      ? await Registration.findOne({
+          userId,
+          status: "paid",
+          eventTitle: { $regex: WORKSHOP_TITLE_REGEX }
+        })
+          .lean()
+          .exec()
+      : await Registration.findOne({
+          userId,
+          eventId: eventDoc._id,
+          status: "paid"
+        })
+          .lean()
+          .exec();
 
     if (alreadyRegistered) {
       return NextResponse.json({ error: "You are already registered for this event" }, { status: 409 });
@@ -319,11 +325,20 @@ export async function POST(req: Request) {
       }
     }
 
-    if (isWorkshopTitle(event.title)) {
+    if (isWorkshopEvent) {
+      const workshopEvents = await Event.find({
+        title: { $regex: WORKSHOP_TITLE_REGEX }
+      })
+        .select({ _id: 1 })
+        .lean()
+        .exec();
+
+      const workshopEventIds = workshopEvents.map((workshopEvent) => workshopEvent._id);
+
       const workshopStats = await Registration.aggregate<{ total: number }>([
         {
           $match: {
-            eventId: eventDoc._id,
+            eventId: { $in: workshopEventIds },
             status: "paid"
           }
         },

@@ -9,6 +9,7 @@ export const dynamic = "force-dynamic";
 const COMPETITIVE_EVENT_PRICE = 99;
 const WORKSHOP_PRICE = 149;
 const WORKSHOP_CAPACITY = 180;
+const COMBINED_WORKSHOP_TITLE = "WORKSHOP AI TOOLS & WEB DEVELOPMENT";
 
 const eventContent = [
   {
@@ -214,17 +215,9 @@ const eventContent = [
 
 const workshops = [
   {
-    dbTitle: "WEB DEVELOPMENT (WORKSHOP)",
-    title: "1️⃣ WEB DEVELOPMENT (WORKSHOP)",
-    time: "🕒 9:30 AM – 12:30 PM",
-    fee: "💰 Fee: ₹149 per person",
-    price: WORKSHOP_PRICE,
-    brochureImage: "/worshop.jpeg"
-  },
-  {
-    dbTitle: "AI TOOLS (WORKSHOP)",
-    title: "2️⃣ AI TOOLS (WORKSHOP)",
-    time: "🕒 1:00 PM – 3:00 PM",
+    dbTitle: COMBINED_WORKSHOP_TITLE,
+    title: "WORKSHOP AI TOOLS & WEB DEVELOPMENT",
+    time: "🕒 9:30 AM – 12:30 PM (Web Development) | 1:00 PM – 3:00 PM (AI Tools)",
     fee: "💰 Fee: ₹149 per person",
     price: WORKSHOP_PRICE,
     brochureImage: "/worshop.jpeg"
@@ -281,7 +274,14 @@ export default async function EventsPage() {
     workshopEventDocs.map((event) => [event.title, event])
   );
 
-  const workshopEventIds = workshopEventDocs.map((event) => event._id);
+  const allWorkshopEvents = await Event.find({
+    title: { $regex: /(workshop|web development|ai tools)/i }
+  })
+    .select({ _id: 1 })
+    .lean()
+    .exec();
+
+  const workshopEventIds = allWorkshopEvents.map((event) => event._id);
   const workshopRegistrations: Array<{ _id: unknown; total: number }> =
     workshopEventIds.length > 0
       ? await Registration.aggregate<{ _id: unknown; total: number }>([
@@ -300,10 +300,6 @@ export default async function EventsPage() {
         ])
       : [];
 
-  const workshopRegisteredCountById = new Map(
-    workshopRegistrations.map((entry) => [String(entry._id), entry.total])
-  );
-
   const eventCards = eventContent.map((event, index) => {
     const dbEvent = competitiveEventMap.get(event.title);
     return {
@@ -319,6 +315,11 @@ export default async function EventsPage() {
     };
   });
 
+  const totalWorkshopRegisteredCount = workshopRegistrations.reduce(
+    (sum, entry) => sum + entry.total,
+    0
+  );
+
   const workshopCards = workshops
     .map((workshop) => {
       const dbEvent = workshopEventMap.get(workshop.dbTitle);
@@ -331,10 +332,7 @@ export default async function EventsPage() {
         fee: workshop.fee,
         price: Number(dbEvent.price),
         brochureImage: workshop.brochureImage,
-        seatsLeft: Math.max(
-          0,
-          WORKSHOP_CAPACITY - (workshopRegisteredCountById.get(String(dbEvent._id)) ?? 0)
-        )
+        seatsLeft: Math.max(0, WORKSHOP_CAPACITY - totalWorkshopRegisteredCount)
       };
     })
     .filter((item): item is NonNullable<typeof item> => Boolean(item));
