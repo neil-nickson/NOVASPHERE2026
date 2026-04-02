@@ -104,14 +104,16 @@ export default function AdminLoginPage() {
           {loading ? "Signing in..." : "Sign in"}
         </button>
 
-        <button
-          type="button"
-          onClick={handleDownloadRegistrations}
-          disabled={downloading}
-          className="w-full rounded-xl border border-purple-300/40 bg-transparent px-4 py-2.5 font-semibold text-purple-100 transition hover:bg-purple-500/15 disabled:opacity-70"
-        >
-          {downloading ? "Preparing Excel..." : "Download All Registrations (Excel)"}
-        </button>
+        {password.trim().length > 0 ? (
+          <button
+            type="button"
+            onClick={handleDownloadRegistrations}
+            disabled={downloading}
+            className="w-full rounded-xl border border-purple-300/40 bg-transparent px-4 py-2.5 font-semibold text-purple-100 transition hover:bg-purple-500/15 disabled:opacity-70"
+          >
+            {downloading ? "Preparing Excel..." : "Download All Registrations (Excel)"}
+          </button>
+        ) : null}
       </form>
     </section>
   );
