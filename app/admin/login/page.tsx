@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function AdminLoginPage() {
@@ -8,7 +8,31 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [downloading, setDownloading] = useState(false);
+  const [adminAuthenticated, setAdminAuthenticated] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadSession() {
+      try {
+        const res = await fetch("/api/admin/session", { method: "GET" });
+        if (!res.ok) return;
+        const data = (await res.json()) as { authenticated?: boolean };
+        if (mounted) {
+          setAdminAuthenticated(Boolean(data?.authenticated));
+        }
+      } catch {
+        // Keep default false when session check fails.
+      }
+    }
+
+    void loadSession();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -28,6 +52,8 @@ export default function AdminLoginPage() {
         setError(data.error || "Login failed");
         return;
       }
+
+      setAdminAuthenticated(true);
 
       router.push("/admin");
       router.refresh();
@@ -104,7 +130,7 @@ export default function AdminLoginPage() {
           {loading ? "Signing in..." : "Sign in"}
         </button>
 
-        {password.trim().length > 0 ? (
+        {adminAuthenticated ? (
           <button
             type="button"
             onClick={handleDownloadRegistrations}
