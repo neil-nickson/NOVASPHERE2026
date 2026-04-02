@@ -104,6 +104,12 @@ export default async function AdminPage() {
           <h1 className="mt-1 text-2xl font-bold text-white md:text-3xl">Event Registrations</h1>
         </div>
         <div className="flex items-center gap-2">
+          <a
+            href="/api/admin/export-workshops"
+            className="rounded-xl border border-cyan-300/35 bg-cyan-500/10 px-4 py-2.5 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-500/20"
+          >
+            Download All Registrations (Excel)
+          </a>
           <AdminLogoutButton />
         </div>
       </div>
