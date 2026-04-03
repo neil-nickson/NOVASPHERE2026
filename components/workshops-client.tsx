@@ -91,11 +91,11 @@ export function WorkshopsClient({ workshops }: Props) {
             <p className="mt-2 text-sm text-slate-300">{workshop.fee}</p>
             <div className="mt-3 flex flex-wrap items-center gap-2">
               <span className="rounded-full border border-amber-300/40 bg-amber-500/10 px-2.5 py-1 text-xs font-semibold text-amber-200">
-                {isSoldOut ? "Slots full" : "Slots almost full"}
+                {isSoldOut ? "Slots full" : "Other college registrations are full"}
               </span>
               {isAlmostFull && (
                 <span className="rounded-full border border-rose-300/40 bg-rose-500/10 px-2.5 py-1 text-xs font-semibold text-rose-200">
-                  Slots almost full
+                  Other college registrations are full
                 </span>
               )}
             </div>

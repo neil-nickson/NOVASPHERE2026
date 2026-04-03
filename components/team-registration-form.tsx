@@ -25,6 +25,7 @@ type TeamRegistrationFormProps = {
 };
 
 const YEARS: StudyYear[] = ["1st", "2nd", "3rd", "4th"];
+const WORKSHOP_COLLEGE_NAME = "Sathyabama Institute of Science and Technology";
 
 function parseTeamSize(teamSizeText?: string) {
   if (!teamSizeText) {
@@ -101,7 +102,9 @@ export function TeamRegistrationForm({
   const leaderName = session?.user?.name ?? "";
   const leaderEmail = (session?.user as any)?.email ?? "";
   const leaderMobile = (session?.user as any)?.mobileNumber ?? "";
-  const leaderCollege = (session?.user as any)?.college ?? "";
+  const leaderCollege = isWorkshop
+    ? WORKSHOP_COLLEGE_NAME
+    : (session?.user as any)?.college ?? "";
   const leaderCourse = (session?.user as any)?.course ?? "";
   const leaderYear = ((session?.user as any)?.year as StudyYear | undefined) ?? "1st";
 
