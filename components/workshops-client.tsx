@@ -53,7 +53,6 @@ export function WorkshopsClient({ workshops }: Props) {
         const isOpen = expandedIndex === index;
         const seatsLeft = workshop.seatsLeft ?? 0;
         const isSoldOut = seatsLeft <= 0;
-        const isAlmostFull = !isSoldOut && seatsLeft <= almostFullThreshold;
 
         return (
           <article
@@ -93,11 +92,6 @@ export function WorkshopsClient({ workshops }: Props) {
               <span className="rounded-full border border-amber-300/40 bg-amber-500/10 px-2.5 py-1 text-xs font-semibold text-amber-200">
                 {isSoldOut ? "Slots full" : "Other college registrations are full"}
               </span>
-              {isAlmostFull && (
-                <span className="rounded-full border border-rose-300/40 bg-rose-500/10 px-2.5 py-1 text-xs font-semibold text-rose-200">
-                  Other college registrations are full
-                </span>
-              )}
             </div>
 
             {isOpen && (

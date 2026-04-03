@@ -26,6 +26,12 @@ type TeamRegistrationFormProps = {
 
 const YEARS: StudyYear[] = ["1st", "2nd", "3rd", "4th"];
 const WORKSHOP_COLLEGE_NAME = "Sathyabama Institute of Science and Technology";
+const ALLOWED_WORKSHOP_COLLEGES = new Set([
+  "sathyabama institute of science and technology",
+  "sist",
+  "sathyabama university",
+  "sathyabama institute of science & technology"
+]);
 
 function parseTeamSize(teamSizeText?: string) {
   if (!teamSizeText) {
@@ -70,6 +76,10 @@ function isWorkshopEvent(eventTitle: string) {
     normalized.includes("web development") ||
     normalized.includes("ai tools")
   );
+}
+
+function normalizeCollegeName(value: string) {
+  return value.trim().toLowerCase().replace(/\s+/g, " ");
 }
 
 export function TeamRegistrationForm({
@@ -148,6 +158,14 @@ export function TeamRegistrationForm({
     if (!leaderName || !leaderEmail || !leaderMobile || !leaderCollege || !leaderCourse) {
       setError("Your account profile is incomplete. Please update your account details and try again.");
       return;
+    }
+
+    if (isWorkshop) {
+      const profileCollege = normalizeCollegeName(String((session?.user as any)?.college ?? ""));
+      if (!ALLOWED_WORKSHOP_COLLEGES.has(profileCollege)) {
+        setError("Only students from Sathyabama Institute of Science and Technology can register for workshop events.");
+        return;
+      }
     }
 
     setSubmitting(true);
