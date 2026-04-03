@@ -31,11 +31,23 @@ interface Props {
   workshops: WorkshopItem[];
 }
 
+const ALLOWED_WORKSHOP_COLLEGES = new Set([
+  "sathyabama institute of science and technology",
+  "sist",
+  "sathyabama university",
+  "sathyabama institute of science & technology"
+]);
+
+function normalizeCollegeName(value: string) {
+  return value.trim().toLowerCase().replace(/\s+/g, " ");
+}
+
 export function WorkshopsClient({ workshops }: Props) {
-  const { status } = useSession();
+  const { status, data } = useSession();
   const router = useRouter();
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [registrationOpenId, setRegistrationOpenId] = useState<string | null>(null);
+  const [registrationError, setRegistrationError] = useState<string | null>(null);
   const almostFullThreshold = 30;
 
   async function handleRegisterClick(workshop: WorkshopItem) {
@@ -44,6 +56,14 @@ export function WorkshopsClient({ workshops }: Props) {
       return;
     }
 
+    const profileCollege = normalizeCollegeName(String((data?.user as any)?.college ?? ""));
+    if (!ALLOWED_WORKSHOP_COLLEGES.has(profileCollege)) {
+      setRegistrationError("Only students from Sathyabama Institute of Science and Technology can register for workshop events.");
+      setRegistrationOpenId(null);
+      return;
+    }
+
+    setRegistrationError(null);
     setRegistrationOpenId((current) => (current === workshop.id ? null : workshop.id));
   }
 
@@ -88,6 +108,11 @@ export function WorkshopsClient({ workshops }: Props) {
 
             <p className="mt-2 text-sm text-purple-200">{workshop.time}</p>
             <p className="mt-2 text-sm text-slate-300">{workshop.fee}</p>
+            {registrationError ? (
+              <div className="mt-3 rounded-xl border border-red-500/40 bg-red-500/10 px-3 py-2 text-sm text-red-200">
+                {registrationError}
+              </div>
+            ) : null}
             <div className="mt-3 flex flex-wrap items-center gap-2">
               <span className="rounded-full border border-amber-300/40 bg-amber-500/10 px-2.5 py-1 text-xs font-semibold text-amber-200">
                 {isSoldOut ? "Slots full" : "Other college registrations are full"}
