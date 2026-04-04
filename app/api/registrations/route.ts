@@ -14,12 +14,6 @@ const COMPETITIVE_EVENT_PRICE = 99;
 const WORKSHOP_PRICE = 149;
 const WORKSHOP_CAPACITY = 180;
 const WORKSHOP_TITLE_REGEX = /(workshop|web development|ai tools)/i;
-const ALLOWED_WORKSHOP_COLLEGES = new Set([
-  "sathyabama institute of science and technology",
-  "sist",
-  "sathyabama university",
-  "sathyabama institute of science & technology"
-]);
 let paymentIdIndexEnsured = false;
 
 async function ensurePaymentIdDuplicatesAllowed() {
@@ -104,10 +98,6 @@ function getPricePerParticipant(title: string) {
 
 function isWorkshopTitle(title: string) {
   return WORKSHOP_TITLE_REGEX.test(title);
-}
-
-function normalizeCollegeName(value: string) {
-  return value.trim().toLowerCase().replace(/\s+/g, " ");
 }
 
 function getCompetitiveCapacityLimits(title: string) {
@@ -227,19 +217,6 @@ export async function POST(req: Request) {
     }
 
     const isWorkshopEvent = isWorkshopTitle(event.title || eventTitle);
-
-    if (isWorkshopEvent) {
-      const normalizedCollege = normalizeCollegeName(user.college);
-      if (!ALLOWED_WORKSHOP_COLLEGES.has(normalizedCollege)) {
-        return NextResponse.json(
-          {
-            error:
-              "Only students from Sathyabama Institute of Science and Technology can register for workshop events."
-          },
-          { status: 403 }
-        );
-      }
-    }
 
     const alreadyRegistered = isWorkshopEvent
       ? await Registration.findOne({
