@@ -12,7 +12,7 @@ import { sendRegistrationConfirmationEmail } from "@/lib/email";
 
 const COMPETITIVE_EVENT_PRICE = 99;
 const WORKSHOP_PRICE = 149;
-const WORKSHOP_CAPACITY = 180;
+const WORKSHOP_CAPACITY = 190;
 const WORKSHOP_TITLE_REGEX = /(workshop|web development|ai tools)/i;
 let paymentIdIndexEnsured = false;
 
