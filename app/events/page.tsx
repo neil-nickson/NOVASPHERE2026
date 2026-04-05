@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 
 const COMPETITIVE_EVENT_PRICE = 99;
 const WORKSHOP_PRICE = 149;
-const WORKSHOP_CAPACITY = 180;
+const WORKSHOP_CAPACITY = 190;
 const COMBINED_WORKSHOP_TITLE = "WORKSHOP AI TOOLS & WEB DEVELOPMENT";
 
 const eventContent = [
