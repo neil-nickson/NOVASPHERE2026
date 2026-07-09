@@ -147,7 +147,7 @@ export function HomeEventsSpotlight() {
               <span
                 className="rounded-md bg-white/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/40 border border-white/10 cursor-not-allowed"
               >
-                Coming Soon
+                Event Concluded
               </span>
             )}
           </div>

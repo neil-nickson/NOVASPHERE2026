@@ -107,7 +107,7 @@ export function EventsClient({ events }: Props) {
                 disabled
                 className="rounded-xl bg-white/8 px-4 py-3 text-sm font-semibold uppercase tracking-wider text-white/40 cursor-not-allowed border border-white/10"
               >
-                Coming Soon
+                Event Concluded
               </button>
               <button
                 onClick={() =>
