@@ -1,4 +1,4 @@
-// File: C:\Users\neiln\OneDrive\Desktop\novasphere\app\leaderboard\page.tsx
+// File: /Users/neilnickson/Documents/NOVASPHERE 2026/NOVASPHERE2026/app/leaderboard/page.tsx
 import * as entry from '../../../../app/leaderboard/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

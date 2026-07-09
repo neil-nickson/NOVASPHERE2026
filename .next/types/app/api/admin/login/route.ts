@@ -1,4 +1,4 @@
-// File: C:\Users\neiln\OneDrive\Desktop\novasphere\app\api\admin\login\route.ts
+// File: /Users/neilnickson/Documents/NOVASPHERE 2026/NOVASPHERE2026/app/api/admin/login/route.ts
 import * as entry from '../../../../../../app/api/admin/login/route.js'
 import type { NextRequest } from 'next/server.js'
 

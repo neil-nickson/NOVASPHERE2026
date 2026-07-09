@@ -1,4 +1,4 @@
-// File: C:\Users\neiln\OneDrive\Desktop\novasphere\app\verify-otp\page.tsx
+// File: /Users/neilnickson/Documents/NOVASPHERE 2026/NOVASPHERE2026/app/verify-otp/page.tsx
 import * as entry from '../../../../app/verify-otp/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

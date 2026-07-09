@@ -68,9 +68,6 @@ export default function FaqPage() {
   return (
     <section className="rounded-3xl border border-purple-500/30 bg-black/45 px-8 py-12 md:px-12 md:py-14">
       <div className="mx-auto max-w-3xl">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-purple-300 md:text-sm">
-          // common questions
-        </p>
         <h1 className="mt-3 text-5xl font-extrabold tracking-tight text-slate-100 md:text-7xl">
           FAQ
         </h1>

@@ -1,1 +1,1 @@
-{"version":1,"functions":{"/code-of-conduct":{},"/admin":{},"/legal-privacy-policy":{},"/dashboard":{},"/events":{}}}
+{"version":1,"functions":{"/api/admin/logout":{},"/api/admin/login":{},"/code-of-conduct":{},"/events":{},"/legal-privacy-policy":{},"/dashboard":{},"/admin":{},"/api/admin/export-workshops":{}}}

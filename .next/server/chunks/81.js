@@ -1,1 +1,0 @@
-"use strict";exports.id=81,exports.ids=[81],exports.modules={96081:(e,t,s)=>{s.r(t),s.d(t,{HomeEventsSpotlight:()=>o});let o=(0,s(2772).createProxy)(String.raw`C:\Users\neiln\OneDrive\Desktop\novasphere\components\home-events-spotlight.tsx#HomeEventsSpotlight`)}};

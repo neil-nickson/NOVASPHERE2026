@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{}";
+self.__REACT_LOADABLE_MANIFEST='{"components/events-client.tsx -> @/components/team-registration-form":{"id":490,"files":["static/chunks/490.6a2b1b9a209dd65b.js"]},"components/workshops-client.tsx -> @/components/team-registration-form":{"id":490,"files":["static/chunks/490.6a2b1b9a209dd65b.js"]}}';

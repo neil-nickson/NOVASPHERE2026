@@ -118,8 +118,6 @@ export async function GET() {
         "createdAt"
       ]
     });
-
-    // Increase spacing in exported sheet columns for better readability.
     worksheet["!cols"] = [
       { wch: 8 },
       { wch: 30 },

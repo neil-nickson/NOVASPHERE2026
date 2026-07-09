@@ -1,4 +1,4 @@
-// File: C:\Users\neiln\OneDrive\Desktop\novasphere\app\schedule\page.tsx
+// File: /Users/neilnickson/Documents/NOVASPHERE 2026/NOVASPHERE2026/app/schedule/page.tsx
 import * as entry from '../../../../app/schedule/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

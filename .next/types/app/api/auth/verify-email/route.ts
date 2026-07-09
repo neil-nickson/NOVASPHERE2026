@@ -1,4 +1,4 @@
-// File: C:\Users\neiln\OneDrive\Desktop\novasphere\app\api\auth\verify-email\route.ts
+// File: /Users/neilnickson/Documents/NOVASPHERE 2026/NOVASPHERE2026/app/api/auth/verify-email/route.ts
 import * as entry from '../../../../../../app/api/auth/verify-email/route.js'
 import type { NextRequest } from 'next/server.js'
 
