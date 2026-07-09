@@ -58,8 +58,8 @@ export function Countdown({ date }: { date: string }) {
 
   if (expired) {
     return (
-      <div className="mt-6 inline-flex rounded-full border border-emerald-500/40 bg-emerald-500/10 px-4 py-1 text-xs font-medium text-emerald-200">
-        Live now on campus
+      <div className="mt-6 inline-flex rounded-full border border-purple-500/40 bg-purple-500/10 px-4 py-1 text-xs font-medium text-purple-200">
+        Event Concluded
       </div>
     );
   }
